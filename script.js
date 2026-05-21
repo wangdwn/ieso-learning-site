@@ -2615,6 +2615,451 @@ function toggleDarkMode() {
   }
 })();
 
+// ====== 页面初始化 ======
+document.addEventListener('DOMContentLoaded', function() {
+  // 渲染资源列表
+  if (typeof renderFilteredResources === 'function') {
+    renderFilteredResources();
+  }
+
+  // 初始化社区帖子
+  if (typeof initCommunity === 'function') {
+    initCommunity();
+  }
+
+  // 初始化题库统计
+  if (typeof updateQuizStats === 'function') {
+    updateQuizStats();
+  }
+  if (typeof updateWrongReviewBtn === 'function') {
+    updateWrongReviewBtn();
+  }
+
+  // 绑定教程卡片点击事件
+  initTutorialCards();
+
+  // 绑定教程标签筛选
+  initTutorialTabs();
+});
+
+// ====== 教程详情数据 ======
+const TUTORIALS = [
+  {
+    id: 'geo-1',
+    title: '矿物与岩石基础',
+    category: 'geology',
+    level: '入门',
+    duration: '45分钟',
+    chapters: ['矿物的基本概念', '矿物的物理性质', '常见造岩矿物', '火成岩分类', '沉积岩特征', '变质岩类型', '岩石循环', '野外识别技巧'],
+    content: `<p>本教程将系统介绍矿物和岩石的基础知识，帮助你掌握：</p>
+    <ul>
+      <li><strong>矿物鉴定</strong>：学习如何通过颜色、条痕、光泽、硬度、解理等物理性质鉴定常见矿物</li>
+      <li><strong>岩石分类</strong>：了解火成岩、沉积岩、变质岩的成因和特征</li>
+      <li><strong>岩石循环</strong>：理解三大类岩石之间的相互转化关系</li>
+    </ul>
+    <p>推荐先学习本章，再进入板块构造等进阶内容。</p>`
+  },
+  {
+    id: 'geo-2',
+    title: '板块构造理论',
+    category: 'geology',
+    level: '进阶',
+    duration: '60分钟',
+    chapters: ['板块构造理论发展史', '板块边界类型', '离散边界与大洋中脊', '聚合边界与俯冲带', '转换边界与地震', '热点与地幔柱', '板块运动驱动力', '威尔逊旋回', '板块重建', '中国板块构造', '板块构造与资源', 'IESO真题解析'],
+    content: `<p>板块构造理论是现代地球科学的基石，本教程将深入讲解：</p>
+    <ul>
+      <li><strong>三种板块边界</strong>：离散、聚合、转换边界的特征与地质现象</li>
+      <li><strong>威尔逊旋回</strong>：大洋从张开到闭合的完整演化过程</li>
+      <li><strong>板块运动机制</strong>：地幔对流、脊推力、板片拖曳力</li>
+    </ul>
+    <p>本教程是 IESO 考试的重点内容，建议配合真题练习。</p>`
+  },
+  {
+    id: 'geo-3',
+    title: '地质年代与地层学',
+    category: 'geology',
+    level: '入门',
+    duration: '30分钟',
+    chapters: ['相对年代测定', '绝对年代测定', '地质年代表', '标准化石', '地层对比', 'IESO典型试题'],
+    content: `<p>本教程介绍地质时间的概念和测量方法：</p>
+    <ul>
+      <li><strong>相对年代</strong>：地层层序律、切割关系、生物地层学</li>
+      <li><strong>绝对年代</strong>：放射性同位素定年原理与应用</li>
+      <li><strong>地质年代表</strong>：宙、代、纪、世的划分</li>
+    </ul>`
+  },
+  {
+    id: 'geo-4',
+    title: '构造地质学与地质图判读',
+    category: 'geology',
+    level: '进阶',
+    duration: '55分钟',
+    chapters: ['应力与应变', '褶皱构造', '断层构造', '节理与劈理', '地质图基础', '走向与倾向', '地质剖面图', '构造演化分析', '野外构造观察', 'IESO实践题解析'],
+    content: `<p>构造地质学是理解地球变形的关键，本教程涵盖：</p>
+    <ul>
+      <li><strong>褶皱与断层</strong>：识别特征、形成机制、分类</li>
+      <li><strong>地质图判读</strong>：走向、倾向的测量与表示</li>
+      <li><strong>剖面图绘制</strong>：从地质图到剖面图的转换</li>
+    </ul>`
+  },
+  {
+    id: 'geo-5',
+    title: '古生物学与标准化石',
+    category: 'geology',
+    level: '入门',
+    duration: '35分钟',
+    chapters: ['化石的形成', '化石类型', '重要化石门类', '标准化石概念', '生物演化阶段', 'IESO常见化石题'],
+    content: `<p>古生物学帮助我们了解地球生命演化：</p>
+    <ul>
+      <li><strong>化石形成条件</strong>：埋藏、矿化、保存</li>
+      <li><strong>标准化石</strong>：用于地层划分的指示化石</li>
+      <li><strong>重要演化事件</strong>：寒武纪大爆发、大灭绝事件</li>
+    </ul>`
+  },
+  {
+    id: 'met-1',
+    title: '大气环流与气候系统',
+    category: 'meteorology',
+    level: '进阶',
+    duration: '50分钟',
+    chapters: ['大气组成与结构', '大气能量平衡', '三圈环流', '季风系统', '天气尺度系统', '锋面与气旋', '气候带分布', '气候变化', 'ENSO现象', 'IESO真题'],
+    content: `<p>大气环流是气象学的核心内容：</p>
+    <ul>
+      <li><strong>三圈环流</strong>：哈德莱环流、费雷尔环流、极地环流</li>
+      <li><strong>季风</strong>：亚洲季风的形成机制</li>
+      <li><strong>ENSO</strong>：厄尔尼诺/拉尼娜现象及其影响</li>
+    </ul>`
+  },
+  {
+    id: 'met-2',
+    title: '天气图判读与分析',
+    category: 'meteorology',
+    level: '入门',
+    duration: '40分钟',
+    chapters: ['天气图基础', '等压线分析', '高压与低压系统', '锋面识别', '天气符号', '高空图简介', '天气预报基础'],
+    content: `<p>天气图是气象分析的基本工具：</p>
+    <ul>
+      <li><strong>等压线</strong>：识别高压、低压、脊、槽</li>
+      <li><strong>锋面系统</strong>：冷锋、暖锋、静止锋的特征</li>
+      <li><strong>天气符号</strong>：降水类型、云量、风向风速</li>
+    </ul>`
+  },
+  {
+    id: 'met-3',
+    title: '热带气旋与极端天气',
+    category: 'meteorology',
+    level: '竞赛',
+    duration: '35分钟',
+    chapters: ['热带气旋形成条件', '气旋结构', '台风路径', '强度预报', '龙卷风', '强对流天气', '暴雨与洪涝', 'IESO真题解析'],
+    content: `<p>热带气旋是 IESO 气象学的重点：</p>
+    <ul>
+      <li><strong>形成条件</strong>：海温、科里奥利力、垂直风切变</li>
+      <li><strong>结构特征</strong>：眼区、眼壁、螺旋雨带</li>
+      <li><strong>路径预报</strong>：副热带高压的引导作用</li>
+    </ul>`
+  },
+  {
+    id: 'met-4',
+    title: '气候学与气候变化',
+    category: 'meteorology',
+    level: '入门',
+    duration: '45分钟',
+    chapters: ['气候定义', '气候要素', '气候带划分', '气候类型', '气候变化原因', '全球变暖', '气候模型', 'IESO相关试题'],
+    content: `<p>气候学是气象学与地理学的交叉领域：</p>
+    <ul>
+      <li><strong>气候带</strong>：热带、温带、寒带的特征</li>
+      <li><strong>气候变化</strong>：自然因素与人类活动的影响</li>
+      <li><strong>全球变暖</strong>：温室效应、碳循环</li>
+    </ul>`
+  },
+  {
+    id: 'met-5',
+    title: '气象观测与数据处理',
+    category: 'meteorology',
+    level: '进阶',
+    duration: '40分钟',
+    chapters: ['地面观测站', '高空气象探测', '气象卫星', '雷达观测', '数据质量控制', '气象数据分析', 'IESO实践题'],
+    content: `<p>气象观测是天气预报的基础：</p>
+    <ul>
+      <li><strong>观测要素</strong>：温度、湿度、气压、风、降水</li>
+      <li><strong>仪器原理</strong>：温度计、气压计、风速仪</li>
+      <li><strong>数据分析</strong>：时间序列、统计方法</li>
+    </ul>`
+  },
+  {
+    id: 'oce-1',
+    title: '海洋环流与温盐输送',
+    category: 'oceanography',
+    level: '进阶',
+    duration: '55分钟',
+    chapters: ['海洋概况', '风生环流', '温盐环流', '全球输送带', '埃克曼输送', '上升流与下降流', 'ENSO与海洋', '洋流与气候', 'IESO真题解析'],
+    content: `<p>海洋环流是海洋学的核心内容：</p>
+    <ul>
+      <li><strong>表层环流</strong>：风海流、地转流</li>
+      <li><strong>深层环流</strong>：温盐环流、北大西洋深层水</li>
+      <li><strong>ENSO</strong>：海气相互作用、厄尔尼诺/拉尼娜</li>
+    </ul>`
+  },
+  {
+    id: 'oce-2',
+    title: '潮汐与海洋波动',
+    category: 'oceanography',
+    level: '入门',
+    duration: '40分钟',
+    chapters: ['潮汐成因', '潮汐类型', '潮汐预报', '海浪基础', '波浪传播', '海啸', '内波', 'IESO相关试题'],
+    content: `<p>潮汐和波浪是海洋动力学的基础：</p>
+    <ul>
+      <li><strong>潮汐</strong>：月球与太阳的引潮力、大潮小潮</li>
+      <li><strong>海浪</strong>：风浪、涌浪、破碎波</li>
+      <li><strong>海啸</strong>：成因、传播特征、预警</li>
+    </ul>`
+  },
+  {
+    id: 'oce-3',
+    title: '海洋化学与生物地球化学循环',
+    category: 'oceanography',
+    level: '进阶',
+    duration: '50分钟',
+    chapters: ['海水化学组成', '盐度分布', '溶解气体', '营养盐', '碳循环', '氮循环', '海洋酸化', 'IESO相关试题'],
+    content: `<p>海洋化学是理解海洋生态系统的基础：</p>
+    <ul>
+      <li><strong>海水组成</strong>：主要离子、盐度定义</li>
+      <li><strong>溶解氧</strong>：分布规律、最小氧层</li>
+      <li><strong>碳循环</strong>：海洋碳汇、酸化问题</li>
+    </ul>`
+  },
+  {
+    id: 'oce-4',
+    title: '海洋生态系统导论',
+    category: 'oceanography',
+    level: '入门',
+    duration: '35分钟',
+    chapters: ['海洋生物分区', '浮游生物', '海洋食物链', '珊瑚礁生态', '深海生态', '海洋保护', 'IESO相关试题'],
+    content: `<p>海洋生态系统是海洋学的重要分支：</p>
+    <ul>
+      <li><strong>生物分区</strong>：潮间带、浅海、深海</li>
+      <li><strong>生产力</strong>：初级生产力、上升流渔场</li>
+      <li><strong>生态系统</strong>：珊瑚礁、红树林、海草床</li>
+    </ul>`
+  },
+  {
+    id: 'ast-1',
+    title: '太阳系概论',
+    category: 'astronomy',
+    level: '入门',
+    duration: '45分钟',
+    chapters: ['太阳系概况', '类地行星', '类木行星', '小行星带', '彗星与流星', '太阳系形成', '行星运动定律', 'IESO真题解析'],
+    content: `<p>太阳系是天文学的入门内容：</p>
+    <ul>
+      <li><strong>八大行星</strong>：水金地火木土天海的特征对比</li>
+      <li><strong>小天体</strong>：小行星、彗星、流星体</li>
+      <li><strong>开普勒定律</strong>：行星运动的基本规律</li>
+    </ul>`
+  },
+  {
+    id: 'ast-2',
+    title: '恒星演化与H-R图',
+    category: 'astronomy',
+    level: '进阶',
+    duration: '60分钟',
+    chapters: ['恒星基本属性', '恒星光谱分类', '赫罗图', '恒星形成', '主序阶段', '红巨星阶段', '恒星死亡', '白矮星与中子星', 'IESO真题解析'],
+    content: `<p>恒星演化是理解宇宙的关键：</p>
+    <ul>
+      <li><strong>H-R图</strong>：光度与温度的关系</li>
+      <li><strong>演化路径</strong>：从星云到主序到终结</li>
+      <li><strong>最终命运</strong>：白矮星、中子星、黑洞</li>
+    </ul>`
+  },
+  {
+    id: 'ast-3',
+    title: '宇宙学基础与大爆炸理论',
+    category: 'astronomy',
+    level: '竞赛',
+    duration: '50分钟',
+    chapters: ['宇宙学简史', '宇宙膨胀', '大爆炸理论', '宇宙微波背景', '暗物质', '暗能量', '宇宙的命运', 'IESO真题解析'],
+    content: `<p>宇宙学是现代天文学的前沿：</p>
+    <ul>
+      <li><strong>哈勃定律</strong>：宇宙膨胀的证据</li>
+      <li><strong>CMB</strong>：宇宙微波背景辐射</li>
+      <li><strong>暗物质与暗能量</strong>：宇宙的组成</li>
+    </ul>`
+  },
+  {
+    id: 'ast-4',
+    title: '日食与月食现象',
+    category: 'astronomy',
+    level: '入门',
+    duration: '30分钟',
+    chapters: ['日食原理', '日食类型', '月食原理', '月食类型', '食相观测', '沙罗周期', 'IESO相关试题'],
+    content: `<p>日月食是天文观测的经典内容：</p>
+    <ul>
+      <li><strong>日食</strong>：日全食、日偏食、日环食</li>
+      <li><strong>月食</strong>：月全食、月偏食、"血月"</li>
+      <li><strong>观测</strong>：安全注意事项、拍摄技巧</li>
+    </ul>`
+  },
+  {
+    id: 'ast-5',
+    title: '系外行星探测方法',
+    category: 'astronomy',
+    level: '竞赛',
+    duration: '45分钟',
+    chapters: ['系外行星发现史', '凌星法', '径向速度法', '直接成像', '微引力透镜', '宜居带概念', '开普勒任务', 'IESO真题解析'],
+    content: `<p>系外行星是现代天文学的热点：</p>
+    <ul>
+      <li><strong>凌星法</strong>：开普勒望远镜的工作原理</li>
+      <li><strong>径向速度</strong>：多普勒效应测行星质量</li>
+      <li><strong>宜居带</strong>：寻找第二个地球</li>
+    </ul>`
+  },
+  {
+    id: 'com-1',
+    title: '地球系统科学导论',
+    category: 'all',
+    level: '进阶',
+    duration: '90分钟',
+    chapters: ['地球系统概念', '大气圈', '水圈', '岩石圈', '生物圈', '圈层相互作用', '能量循环', '物质循环', '地球系统模型', '全球变化', '可持续发展', 'IESO综合题'],
+    content: `<p>地球系统科学是 IESO 的核心理念：</p>
+    <ul>
+      <li><strong>四大圈层</strong>：大气、水圈、岩石圈、生物圈</li>
+      <li><strong>相互作用</strong>：圈层间的能量和物质交换</li>
+      <li><strong>全球变化</strong>：人类活动对地球系统的影响</li>
+    </ul>`
+  },
+  {
+    id: 'com-2',
+    title: 'IESO 野外考察技能培训',
+    category: 'all',
+    level: '竞赛',
+    duration: '120分钟',
+    chapters: ['野外装备', '地质锤使用', '罗盘测量', '野外记录', '标本采集', '岩石识别', '构造分析', '剖面测量', '地质图绘制', '安全事项', 'IESO实践测试', '案例分析'],
+    content: `<p>野外考察是 IESO 实践测试的重点：</p>
+    <ul>
+      <li><strong>基本技能</strong>：罗盘、地质锤、放大镜的使用</li>
+      <li><strong>野外记录</strong>：野外笔记规范</li>
+      <li><strong>标本采集</strong>：采样方法、标签记录</li>
+    </ul>`
+  },
+  {
+    id: 'com-3',
+    title: 'IESO 考试技巧与策略',
+    category: 'all',
+    level: '进阶',
+    duration: '60分钟',
+    chapters: ['IESO考试结构', '理论笔试技巧', '实践测试技巧', '时间管理', '答题策略', '常见错误', '复习计划', 'IESO真题解析'],
+    content: `<p>本教程帮助你高效备考 IESO：</p>
+    <ul>
+      <li><strong>理论笔试</strong>：选择题技巧、计算题方法</li>
+      <li><strong>实践测试</strong>：野外考察、实验室操作</li>
+      <li><strong>备考计划</strong>：12-18个月系统复习方案</li>
+    </ul>`
+  }
+];
+
+// 教程卡片点击初始化
+function initTutorialCards() {
+  document.querySelectorAll('.tutorial-card').forEach(card => {
+    card.addEventListener('click', function() {
+      const category = this.dataset.category;
+      const title = this.querySelector('h3').textContent;
+      openTutorialModal(title, category);
+    });
+  });
+}
+
+// 教程标签筛选初始化
+function initTutorialTabs() {
+  document.querySelectorAll('.tutorial-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      // 更新标签状态
+      document.querySelectorAll('.tutorial-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+
+      // 筛选教程
+      const filter = this.dataset.filter;
+      document.querySelectorAll('.tutorial-card').forEach(card => {
+        if (filter === 'all' || card.dataset.category === filter || card.dataset.category === 'all') {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
+// 打开教程详情模态框
+function openTutorialModal(title, category) {
+  // 查找匹配的教程
+  let tutorial = TUTORIALS.find(t => t.title === title);
+  if (!tutorial) {
+    tutorial = TUTORIALS.find(t => t.category === category);
+  }
+  if (!tutorial) {
+    tutorial = TUTORIALS[0];
+  }
+
+  const overlay = document.getElementById('modalOverlay');
+  const content = document.getElementById('modalContent');
+
+  const levelClass = tutorial.level === '入门' ? 'level-beginner' :
+                     tutorial.level === '进阶' ? 'level-intermediate' : 'level-advanced';
+
+  const catClass = `cat-${tutorial.category === 'all' ? 'comprehensive' : tutorial.category.slice(0, -2)}`;
+
+  content.innerHTML = `
+    <div style="margin-bottom:24px;">
+      <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <span class="tutorial-cat ${catClass}">${getCategoryName(tutorial.category)}</span>
+        <span class="tutorial-level ${levelClass}">${tutorial.level}</span>
+      </div>
+      <h2 style="font-size:26px;font-weight:800;margin-bottom:12px;">${tutorial.title}</h2>
+      <div style="display:flex;gap:16px;color:var(--text-muted);font-size:14px;margin-bottom:20px;">
+        <span><i class="fas fa-clock"></i> ${tutorial.duration}</span>
+        <span><i class="fas fa-book"></i> ${tutorial.chapters.length} 章节</span>
+      </div>
+    </div>
+
+    <div style="background:var(--gray-50);padding:20px;border-radius:12px;margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">📚 课程简介</h3>
+      ${tutorial.content}
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;">📑 课程大纲</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
+        ${tutorial.chapters.map((ch, i) => `
+          <div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:8px;">
+            <span style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">${i + 1}</span>
+            <span style="font-size:14px;">${ch}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;">
+      <a href="https://www.icourse163.org" target="_blank" class="btn btn-primary" style="flex:1;justify-content:center;">
+        <i class="fas fa-external-link-alt"></i> 前往学习
+      </a>
+      <button onclick="closeModal()" class="btn btn-outline" style="flex:1;justify-content:center;">关闭</button>
+    </div>
+  `;
+
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function getCategoryName(cat) {
+  const map = {
+    geology: '地质学',
+    meteorology: '气象学',
+    oceanography: '海洋学',
+    astronomy: '天文学',
+    all: '综合'
+  };
+  return map[cat] || cat;
+}
+
 // ====== 阅读进度条 ======
 (function initReadingProgress() {
   const fill = document.getElementById('rpFill');
