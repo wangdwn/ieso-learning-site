@@ -66,9 +66,9 @@
         从地质学到天文学，从理论到实践。系统化的教程、专业的题库、活跃的社区，助你征服 IESO。
       </p>
       <div class="hero-actions-apple">
-        <a href="#tutorials" class="btn-apple btn-primary-apple">
+        <button onclick="scrollToTutorials()" class="btn-apple btn-primary-apple">
           <i class="fas fa-play-circle"></i> 开始学习
-        </a>
+        </button>
         <a href="#quiz" class="btn-apple btn-secondary-apple">
           <i class="fas fa-bolt"></i> 立即刷题
         </a>
@@ -974,6 +974,27 @@
   </div>
 
   <script src="script.js"></script>
+
+  <!-- 确保按钮事件正确绑定 -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 为 "开始学习" 按钮添加事件监听器（备选方案）
+    const startBtn = document.querySelector('button[onclick="scrollToTutorials()"]');
+    if (startBtn) {
+      startBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToTutorials();
+      });
+    }
+    
+    // 延迟执行以确保 scrollToTutorials 函数已加载
+    setTimeout(function() {
+      if (typeof scrollToTutorials !== 'function') {
+        console.error('scrollToTutorials function not available');
+      }
+    }, 100);
+  });
+  </script>
 
   <!-- 兜底：确保 openTutorialModal 始终可用 -->
   <script>

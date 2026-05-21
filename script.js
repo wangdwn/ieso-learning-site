@@ -3361,6 +3361,31 @@ function updateQuizCounts() {
   if (allBtn) allBtn.textContent = Math.min(totalQuestions, 10) + ' 题';
 }
 
+// ====== 快速导航函数 ======
+function scrollToTutorials() {
+  try {
+    const tutorialsSection = document.getElementById('tutorials');
+    if (tutorialsSection) {
+      // 使用 smoothscroll polyfill 方式确保兼容性
+      tutorialsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // 添加脉冲动画反馈 - 使用更安全的方法
+      tutorialsSection.classList.add('pulse-animation');
+      setTimeout(() => {
+        tutorialsSection.classList.remove('pulse-animation');
+      }, 600);
+    } else {
+      console.warn('tutorials section not found, falling back to anchor scroll');
+      // 备选方案：使用锚点跳转
+      window.location.hash = '#tutorials';
+    }
+  } catch (err) {
+    console.error('scrollToTutorials error:', err);
+    // 最终备选方案
+    window.location.hash = '#tutorials';
+  }
+}
+
 // 页面加载时更新题数和错题本按钮
 setTimeout(() => {
   updateQuizCounts();
@@ -3372,5 +3397,11 @@ setTimeout(() => {
   if (statEls.length > 1) {
     const resourcesStat = statEls[1];
     if (resourcesStat) resourcesStat.dataset.target = totalQuestions;
+  }
+  
+  // 确保资源列表被正确渲染
+  const resourceContainer = document.getElementById('resourceBrowserResults');
+  if (resourceContainer && resourceContainer.innerHTML.trim() === '') {
+    renderFilteredResources();
   }
 }, 200);
