@@ -66,7 +66,7 @@
         从地质学到天文学，从理论到实践。系统化的教程、专业的题库、活跃的社区，助你征服 IESO。
       </p>
       <div class="hero-actions-apple">
-        <button onclick="scrollToTutorials()" class="btn-apple btn-primary-apple">
+        <button id="startLearningBtn" class="btn-apple btn-primary-apple">
           <i class="fas fa-play-circle"></i> 开始学习
         </button>
         <a href="#quiz" class="btn-apple btn-secondary-apple">
@@ -975,26 +975,20 @@
 
   <script src="script.js"></script>
 
-  <!-- 最小化和直接的初始化脚本 -->
+  <!-- 在所有脚本加载后立即绑定事件 -->
   <script>
-  // 1. 最简单的方式：直接调用函数，不依赖任何事件
-  if (typeof renderFilteredResources === 'function') {
-    renderFilteredResources();
-  }
-  
-  // 2. 在 DOM 解析完成后执行补充初始化
-  if (document.readyState === 'interactive' || document.readyState === 'complete') {
-    // 文档已加载
-    if (typeof renderFilteredResources === 'function') {
-      renderFilteredResources();
-    }
+  // 确保脚本加载完成后绑定事件
+  if (typeof bindAllEvents === 'function') {
+    bindAllEvents();
+    console.log('✅ Events bound from inline script');
   } else {
-    // 文档还在加载
-    document.addEventListener('DOMContentLoaded', function() {
-      if (typeof renderFilteredResources === 'function') {
-        renderFilteredResources();
+    console.warn('⚠️ bindAllEvents not available yet, will retry...');
+    setTimeout(function() {
+      if (typeof bindAllEvents === 'function') {
+        bindAllEvents();
+        console.log('✅ Events bound after delay');
       }
-    });
+    }, 100);
   }
   </script>
 

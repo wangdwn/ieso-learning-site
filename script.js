@@ -3412,18 +3412,21 @@ function updateQuizCounts() {
 
 // ====== 快速导航函数 ======
 function scrollToTutorials() {
+  console.log('🚀 scrollToTutorials() invoked');
   try {
     const tutorialsSection = document.getElementById('tutorials');
     if (tutorialsSection) {
+      console.log('✅ tutorials section found, scrolling...');
       // 确保 tutorials 元素可见
       tutorialsSection.style.display = 'block';
       
       // 使用多种方法确保平滑滚动
       setTimeout(function() {
         tutorialsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+        console.log('✅ scrollIntoView executed');
+      }, 50);
       
-      // 添加脉冲动画反馈 - 使用更安全的方法
+      // 添加脉冲动画反馈
       setTimeout(function() {
         if (tutorialsSection.classList) {
           tutorialsSection.classList.add('pulse-animation');
@@ -3431,11 +3434,9 @@ function scrollToTutorials() {
             tutorialsSection.classList.remove('pulse-animation');
           }, 600);
         }
-      }, 200);
-      
-      console.log('Scrolled to tutorials successfully');
+      }, 150);
     } else {
-      console.warn('tutorials section not found, falling back to anchor scroll');
+      console.warn('⚠️ tutorials section not found, using fallback');
       // 备选方案：使用锚点跳转
       window.location.hash = '#tutorials';
       setTimeout(function() {
@@ -3443,11 +3444,58 @@ function scrollToTutorials() {
       }, 200);
     }
   } catch (err) {
-    console.error('scrollToTutorials error:', err);
+    console.error('❌ scrollToTutorials error:', err);
     // 最终备选方案
     window.location.hash = '#tutorials';
   }
 }
+
+// 绑定所有事件的全局函数
+function bindAllEvents() {
+  console.log('🔗 Binding all events...');
+  
+  // 1. 绑定"开始学习"按钮
+  const startBtn = document.getElementById('startLearningBtn');
+  if (startBtn) {
+    startBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('👆 Start learning button clicked');
+      scrollToTutorials();
+    });
+    console.log('✅ Start learning button bound');
+  } else {
+    console.error('❌ Start learning button NOT found');
+  }
+  
+  // 2. 绑定资源筛选器
+  const resourceFilters = [
+    document.getElementById('resFilterType'),
+    document.getElementById('resFilterCategory'),
+    document.getElementById('resFilterDifficulty'),
+    document.getElementById('resFilterSearch')
+  ];
+  
+  resourceFilters.forEach((filter, i) => {
+    if (filter) {
+      if (filter.id === 'resFilterSearch') {
+        filter.addEventListener('input', function() {
+          console.log('🔍 Resource search input:', this.value);
+          applyResourceFilter();
+        });
+      } else {
+        filter.addEventListener('change', function() {
+          console.log('🔍 Resource filter changed:', this.id, '=', this.value);
+          applyResourceFilter();
+        });
+      }
+    }
+  });
+  console.log('✅ Resource filters bound');
+}
+
+// 确保事件绑定函数可以在任何时机被调用
+window.bindAllEvents = bindAllEvents;
 
 // ====== 页面加载完成后的初始化 ======
 // 在所有其他代码执行完毕后，执行最终初始化
@@ -3464,26 +3512,37 @@ function initializeResources() {
   }
 }
 
+// 组合初始化函数
+function fullInitialize() {
+  console.log('🔄 Full initialization (resources + events)...');
+  initializeResources();
+  if (typeof bindAllEvents === 'function') {
+    bindAllEvents();
+  }
+}
+
 // 第二步：在 DOM 加载完成时重新检查
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOMContentLoaded: Final resource check');
-  initializeResources();
+  console.log('📄 DOMContentLoaded: Full resource and event check');
+  fullInitialize();
 });
 
 // 第三步：在所有资源加载完成时再检查一遍
 window.addEventListener('load', function() {
-  console.log('window.load: Final resource check');
-  setTimeout(initializeResources, 100);
+  console.log('⏱️ window.load: Final check');
+  setTimeout(fullInitialize, 100);
 });
 
 // 第四步：立即尝试初始化（以防脚本在页面加载后引入）
 if (document.readyState !== 'loading') {
-  initializeResources();
+  console.log('📌 Document already loaded, initializing...');
+  fullInitialize();
 }
 
 // 第五步：作为最后的保险，在页面完全加载后检查
 setTimeout(function() {
-  initializeResources();
-}, 1000);
+  console.log('🎯 Final safety initialization check');
+  fullInitialize();
+}, 1500);
 
 console.log('🎉 IESO Learning Site script.js fully loaded and initialized');
