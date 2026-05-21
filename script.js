@@ -2617,29 +2617,70 @@ function toggleDarkMode() {
 
 // ====== 页面初始化 ======
 document.addEventListener('DOMContentLoaded', function() {
-  // 渲染资源列表
-  if (typeof renderFilteredResources === 'function') {
-    renderFilteredResources();
+  console.log('Page DOMContentLoaded event fired');
+  
+  // 渲染资源列表 - 带容错
+  try {
+    if (typeof renderFilteredResources === 'function') {
+      renderFilteredResources();
+      console.log('Resources rendered successfully');
+    } else {
+      console.warn('renderFilteredResources function not available');
+    }
+  } catch (e) {
+    console.error('Error rendering resources:', e);
   }
 
   // 初始化社区帖子
-  if (typeof initCommunity === 'function') {
-    initCommunity();
+  try {
+    if (typeof initCommunity === 'function') {
+      initCommunity();
+    }
+  } catch (e) {
+    console.error('Error initializing community:', e);
   }
 
   // 初始化题库统计
-  if (typeof updateQuizStats === 'function') {
-    updateQuizStats();
-  }
-  if (typeof updateWrongReviewBtn === 'function') {
-    updateWrongReviewBtn();
+  try {
+    if (typeof updateQuizStats === 'function') {
+      updateQuizStats();
+    }
+    if (typeof updateWrongReviewBtn === 'function') {
+      updateWrongReviewBtn();
+    }
+  } catch (e) {
+    console.error('Error updating quiz stats:', e);
   }
 
   // 绑定教程卡片点击事件
-  initTutorialCards();
+  try {
+    initTutorialCards();
+  } catch (e) {
+    console.error('Error initializing tutorial cards:', e);
+  }
 
   // 绑定教程标签筛选
-  initTutorialTabs();
+  try {
+    initTutorialTabs();
+  } catch (e) {
+    console.error('Error initializing tutorial tabs:', e);
+  }
+  
+  // 额外的后备初始化，确保所有交互元素都能工作
+  setTimeout(function() {
+    console.log('Post-load initialization check...');
+    // 检查 scrollToTutorials 是否可用
+    if (typeof scrollToTutorials !== 'function') {
+      console.warn('scrollToTutorials is not defined');
+    }
+    // 重新尝试资源渲染
+    if (document.getElementById('resourceBrowserResults').innerHTML === '') {
+      console.warn('Resource browser is empty, retrying...');
+      if (typeof renderFilteredResources === 'function') {
+        renderFilteredResources();
+      }
+    }
+  }, 500);
 });
 
 // ====== 教程详情数据 ======
@@ -3366,18 +3407,32 @@ function scrollToTutorials() {
   try {
     const tutorialsSection = document.getElementById('tutorials');
     if (tutorialsSection) {
-      // 使用 smoothscroll polyfill 方式确保兼容性
-      tutorialsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // 确保 tutorials 元素可见
+      tutorialsSection.style.display = 'block';
+      
+      // 使用多种方法确保平滑滚动
+      setTimeout(function() {
+        tutorialsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
       
       // 添加脉冲动画反馈 - 使用更安全的方法
-      tutorialsSection.classList.add('pulse-animation');
-      setTimeout(() => {
-        tutorialsSection.classList.remove('pulse-animation');
-      }, 600);
+      setTimeout(function() {
+        if (tutorialsSection.classList) {
+          tutorialsSection.classList.add('pulse-animation');
+          setTimeout(() => {
+            tutorialsSection.classList.remove('pulse-animation');
+          }, 600);
+        }
+      }, 200);
+      
+      console.log('Scrolled to tutorials successfully');
     } else {
       console.warn('tutorials section not found, falling back to anchor scroll');
       // 备选方案：使用锚点跳转
       window.location.hash = '#tutorials';
+      setTimeout(function() {
+        window.scrollBy(0, -80);
+      }, 200);
     }
   } catch (err) {
     console.error('scrollToTutorials error:', err);
@@ -3402,6 +3457,34 @@ setTimeout(() => {
   // 确保资源列表被正确渲染
   const resourceContainer = document.getElementById('resourceBrowserResults');
   if (resourceContainer && resourceContainer.innerHTML.trim() === '') {
+    console.log('Resource container empty, rendering now...');
     renderFilteredResources();
   }
 }, 200);
+
+// 最终确保文档加载完成后的所有功能都能使用
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Final initialization on DOMContentLoaded');
+    // 确保资源列表初始化
+    setTimeout(function() {
+      const resourceContainer = document.getElementById('resourceBrowserResults');
+      if (resourceContainer && resourceContainer.innerHTML.trim() === '') {
+        renderFilteredResources();
+      }
+    }, 300);
+  });
+}
+
+// 也在 window.onload 时执行
+window.addEventListener('load', function() {
+  console.log('Final initialization on window.load');
+  // 再次确保资源已初始化
+  setTimeout(function() {
+    const resourceContainer = document.getElementById('resourceBrowserResults');
+    if (resourceContainer && resourceContainer.innerHTML.trim() === '') {
+      console.log('Rendering resources on window load');
+      renderFilteredResources();
+    }
+  }, 300);
+});
