@@ -2959,7 +2959,12 @@ const TUTORIALS = [
 // 教程卡片点击初始化
 function initTutorialCards() {
   document.querySelectorAll('.tutorial-card').forEach(card => {
-    card.addEventListener('click', function() {
+    card.addEventListener('click', function(e) {
+      // 阻止链接默认行为，防止 href=# 导致的页面跳转
+      const link = e.target.closest('a');
+      if (link && link.classList.contains('tutorial-link')) {
+        e.preventDefault();
+      }
       const category = this.dataset.category;
       const title = this.querySelector('h3').textContent;
       openTutorialModal(title, category);
