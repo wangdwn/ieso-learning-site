@@ -1,3 +1,6 @@
+console.log('🚀 IESO Learning Site script.js loaded');
+console.log('📍 Page ready state:', document.readyState);
+
 // ====== 页面数据（含难度等级） ======
 // 难度: beginner / intermediate / advanced
 const RESOURCES = [
@@ -2196,8 +2199,13 @@ function getDiffLabel(diff) {
 }
 
 function renderFilteredResources() {
+  console.log('📚 renderFilteredResources() called');
   const container = document.getElementById('resourceBrowserResults');
-  if (!container) return;
+  if (!container) {
+    console.error('❌ Resource container NOT found!');
+    return;
+  }
+  console.log('✅ Resource container found, resources in RESOURCES:', RESOURCES.length);
 
   const typeEl = document.getElementById('resFilterType');
   const catEl = document.getElementById('resFilterCategory');
@@ -3441,50 +3449,41 @@ function scrollToTutorials() {
   }
 }
 
-// 页面加载时更新题数和错题本按钮
-setTimeout(() => {
-  updateQuizCounts();
-  updateWrongReviewBtn();
+// ====== 页面加载完成后的初始化 ======
+// 在所有其他代码执行完毕后，执行最终初始化
 
-  // 更新英雄区统计
-  const totalQuestions = Object.values(QUESTION_BANK).reduce((sum, arr) => sum + arr.length, 0);
-  const statEls = document.querySelectorAll('.stat-number');
-  if (statEls.length > 1) {
-    const resourcesStat = statEls[1];
-    if (resourcesStat) resourcesStat.dataset.target = totalQuestions;
-  }
-  
-  // 确保资源列表被正确渲染
+// 第一步：在脚本加载完毕后立即尝试初始化
+function initializeResources() {
   const resourceContainer = document.getElementById('resourceBrowserResults');
-  if (resourceContainer && resourceContainer.innerHTML.trim() === '') {
-    console.log('Resource container empty, rendering now...');
-    renderFilteredResources();
-  }
-}, 200);
-
-// 最终确保文档加载完成后的所有功能都能使用
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('Final initialization on DOMContentLoaded');
-    // 确保资源列表初始化
-    setTimeout(function() {
-      const resourceContainer = document.getElementById('resourceBrowserResults');
-      if (resourceContainer && resourceContainer.innerHTML.trim() === '') {
-        renderFilteredResources();
-      }
-    }, 300);
-  });
-}
-
-// 也在 window.onload 时执行
-window.addEventListener('load', function() {
-  console.log('Final initialization on window.load');
-  // 再次确保资源已初始化
-  setTimeout(function() {
-    const resourceContainer = document.getElementById('resourceBrowserResults');
-    if (resourceContainer && resourceContainer.innerHTML.trim() === '') {
-      console.log('Rendering resources on window load');
+  if (resourceContainer && typeof renderFilteredResources === 'function') {
+    // 只在容器为空时才渲染
+    if (resourceContainer.innerHTML.trim() === '') {
+      console.log('Rendering resources on initialization');
       renderFilteredResources();
     }
-  }, 300);
+  }
+}
+
+// 第二步：在 DOM 加载完成时重新检查
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOMContentLoaded: Final resource check');
+  initializeResources();
 });
+
+// 第三步：在所有资源加载完成时再检查一遍
+window.addEventListener('load', function() {
+  console.log('window.load: Final resource check');
+  setTimeout(initializeResources, 100);
+});
+
+// 第四步：立即尝试初始化（以防脚本在页面加载后引入）
+if (document.readyState !== 'loading') {
+  initializeResources();
+}
+
+// 第五步：作为最后的保险，在页面完全加载后检查
+setTimeout(function() {
+  initializeResources();
+}, 1000);
+
+console.log('🎉 IESO Learning Site script.js fully loaded and initialized');

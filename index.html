@@ -975,102 +975,27 @@
 
   <script src="script.js"></script>
 
-  <!-- 页面加载完成后的最终初始化 -->
+  <!-- 最小化和直接的初始化脚本 -->
   <script>
-  // 确保在所有脚本加载完成后运行
-  window.addEventListener('load', function() {
-    console.log('Window load event fired - all resources loaded');
-    
-    // 绑定开始学习按钮
-    const startBtn = document.querySelector('button[onclick="scrollToTutorials()"]');
-    if (startBtn) {
-      // 移除原有的 onclick 属性，用事件监听器替代
-      startBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Start learning button clicked');
-        if (typeof scrollToTutorials === 'function') {
-          scrollToTutorials();
-        } else {
-          console.error('scrollToTutorials function not available');
-          // 降级方案
-          document.getElementById('tutorials').scrollIntoView({ behavior: 'smooth' });
-        }
-      });
+  // 1. 最简单的方式：直接调用函数，不依赖任何事件
+  if (typeof renderFilteredResources === 'function') {
+    renderFilteredResources();
+  }
+  
+  // 2. 在 DOM 解析完成后执行补充初始化
+  if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    // 文档已加载
+    if (typeof renderFilteredResources === 'function') {
+      renderFilteredResources();
     }
-    
-    // 绑定资源筛选器
-    const resourceFilters = document.querySelectorAll('#resFilterType, #resFilterCategory, #resFilterDifficulty, #resFilterSearch');
-    resourceFilters.forEach(filter => {
-      if (filter) {
-        filter.addEventListener('change', function() {
-          console.log('Resource filter changed');
-          if (typeof applyResourceFilter === 'function') {
-            applyResourceFilter();
-          }
-        });
-        if (filter.id === 'resFilterSearch') {
-          filter.addEventListener('input', function() {
-            if (typeof applyResourceFilter === 'function') {
-              applyResourceFilter();
-            }
-          });
-        }
-      }
-    });
-    
-    // 确保资源初始化渲染
-    const resourceContainer = document.getElementById('resourceBrowserResults');
-    if (resourceContainer && resourceContainer.innerHTML.trim() === '') {
-      console.log('Initializing resource browser...');
+  } else {
+    // 文档还在加载
+    document.addEventListener('DOMContentLoaded', function() {
       if (typeof renderFilteredResources === 'function') {
         renderFilteredResources();
       }
-    }
-    
-    console.log('Final page initialization complete');
-  });
-  
-  // 备选方案：如果 window load 事件未及时触发，使用 setTimeout
-  setTimeout(function() {
-    if (document.readyState === 'loading') {
-      console.log('Page still loading, will retry initialization...');
-    }
-  }, 3000);
-  </script>
-
-  <!-- 确保按钮事件正确绑定 -->
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('Document DOMContentLoaded - setting up event listeners');
-    
-    // 为 "开始学习" 按钮添加事件监听器（备选方案）
-    const startBtn = document.querySelector('button[onclick="scrollToTutorials()"]');
-    if (startBtn) {
-      startBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('Start button clicked via DOMContentLoaded listener');
-        if (typeof scrollToTutorials === 'function') {
-          scrollToTutorials();
-        } else {
-          console.warn('scrollToTutorials not ready, using fallback');
-          const tutorialsSection = document.getElementById('tutorials');
-          if (tutorialsSection) {
-            tutorialsSection.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      });
-    }
-    
-    // 延迟执行以确保 scrollToTutorials 函数已加载
-    setTimeout(function() {
-      if (typeof scrollToTutorials !== 'function') {
-        console.error('scrollToTutorials function not available after DOMContentLoaded');
-      } else {
-        console.log('scrollToTutorials function confirmed available');
-      }
-    }, 100);
-  });
+    });
+  }
   </script>
 
   <!-- 兜底：确保 openTutorialModal 始终可用 -->
@@ -1147,19 +1072,17 @@
     };
 
     // 绑定 modal 外点击和 ESC 关闭
-    document.addEventListener('DOMContentLoaded', function() {
-      var overlay = document.getElementById('modalOverlay');
-      if (overlay) {
-        overlay.addEventListener('click', function(e) {
-          if (e.target === overlay) window.closeFallbackModal();
-        });
-      }
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          var ov = document.getElementById('modalOverlay');
-          if (ov && ov.classList.contains('show')) window.closeFallbackModal();
-        }
+    var overlay = document.getElementById('modalOverlay');
+    if (overlay) {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) window.closeFallbackModal();
       });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var ov = document.getElementById('modalOverlay');
+        if (ov && ov.classList.contains('show')) window.closeFallbackModal();
+      }
     });
   }
   </script>
