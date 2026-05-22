@@ -3276,13 +3276,15 @@ function initTextbookCards() {
 function initTutorialCards() {
   document.querySelectorAll('.tutorial-card').forEach(card => {
     card.addEventListener('click', function(e) {
-      // 阻止链接默认行为，防止 href=# 导致的页面跳转
+      // 如果点击的是 "开始学习" 链接，onclick 已经处理，不重复触发
       const link = e.target.closest('a');
       if (link && link.classList.contains('tutorial-link')) {
-        e.preventDefault();
+        return;
       }
       const category = this.dataset.category;
-      const title = this.querySelector('h3').textContent;
+      const h3 = this.querySelector('h3');
+      if (!h3) return;
+      const title = h3.textContent;
       openTutorialModal(title, category);
     });
   });
