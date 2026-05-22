@@ -2684,6 +2684,13 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('Error initializing tutorial cards:', e);
   }
 
+  // 绑定教材卡片点击事件
+  try {
+    initTextbookCards();
+  } catch (e) {
+    console.error('Error initializing textbook cards:', e);
+  }
+
   // 绑定教程标签筛选
   try {
     initTutorialTabs();
@@ -3108,6 +3115,143 @@ var TUTORIALS = [
     </ul>`
   }
 ];
+
+// ====== 教材数据 ======
+const TEXTBOOKS = [
+  {
+    id: 'tb-1',
+    title: 'Earth: Portrait of a Planet',
+    author: 'Stephen Marshak',
+    rank: 'gold',
+    category: '综合',
+    level: '入门/进阶',
+    pages: '800+',
+    language: '英文',
+    url: 'https://www.wwnorton.com/books/9780393882641',
+    description: '全球高校地球科学入门首选教材，图文并茂，内容覆盖地质学、地球系统科学等核心领域。',
+    features: ['图文并茂，插图精美', '内容系统全面', '适合入门和进阶', 'USESO/IESO 选手推荐'],
+    chapters: ['地球与太阳系', '矿物', '岩石', '地质时间', '板块构造', '地震', '地貌', '气候系统', '地球资源']
+  },
+  {
+    id: 'tb-2',
+    title: 'Understanding Earth',
+    author: 'Grotzinger & Jordan',
+    rank: 'silver',
+    category: '综合',
+    level: '进阶',
+    pages: '700+',
+    language: '英文',
+    url: 'https://www.macmillanlearning.com/college/us/product/Understanding-Earth/p/131905532X',
+    description: '进阶经典教材，内容更深，适合系统化深入学习地球系统科学。',
+    features: ['理论深度适中', '案例丰富', '适合竞赛准备', '强调系统思维'],
+    chapters: ['地球系统', '固体地球', '地表过程', '大气与海洋', '地球历史', '资源与环境']
+  },
+  {
+    id: 'tb-3',
+    title: 'Meteorology Today',
+    author: 'C. Ahrens',
+    rank: 'bronze',
+    category: '气象学',
+    level: '入门/进阶',
+    pages: '600+',
+    language: '英文',
+    url: 'https://www.cengage.com/c/meteorology-today-11e-ahrens/9781337612571/',
+    description: '气象学权威教材，覆盖大气科学、气候系统的完整知识体系。',
+    features: ['气象学权威教材', '图表示范清晰', '天气预报实践', '气候变化专题'],
+    chapters: ['大气组成与结构', '辐射与能量', '大气环流', '天气系统', '气候与气候变化', '气象观测']
+  },
+  {
+    id: 'tb-4',
+    title: '普通地质学（第三版）',
+    author: '舒良树',
+    rank: '',
+    category: '地质学',
+    level: '入门',
+    pages: '400+',
+    language: '中文',
+    url: 'https://book.douban.com/subject/10729193/',
+    description: '国内地质学入门经典，中文版首选，适合建立知识框架。',
+    features: ['中文首选', '内容精炼', '适合入门', '国内高校通用'],
+    chapters: ['矿物', '岩石', '地质构造', '板块构造', '地质作用', '地质环境']
+  }
+];
+
+// 打开教材详情
+function openTextbookModal(textbookId) {
+  const textbook = TEXTBOOKS.find(t => t.id === textbookId);
+  if (!textbook) return;
+
+  const overlay = document.getElementById('modalOverlay');
+  const content = document.getElementById('modalContent');
+  if (!overlay || !content) return;
+
+  const rankEmoji = textbook.rank === 'gold' ? '🥇' : textbook.rank === 'silver' ? '🥈' : textbook.rank === 'bronze' ? '🥉' : '📘';
+
+  content.innerHTML = `
+    <div style="margin-bottom:20px;">
+      <div style="font-size:48px;margin-bottom:12px;">${rankEmoji}</div>
+      <h2 style="font-size:24px;font-weight:800;margin-bottom:8px;">${textbook.title}</h2>
+      <p style="color:var(--gray-600);font-size:16px;">作者：${textbook.author}</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
+      <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px;">
+        <div style="font-size:14px;color:var(--gray-400);">学科</div>
+        <div style="font-weight:600;">${textbook.category}</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px;">
+        <div style="font-size:14px;color:var(--gray-400);">难度</div>
+        <div style="font-weight:600;">${textbook.level}</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px;">
+        <div style="font-size:14px;color:var(--gray-400);">页数</div>
+        <div style="font-weight:600;">${textbook.pages}</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px;">
+        <div style="font-size:14px;color:var(--gray-400);">语言</div>
+        <div style="font-weight:600;">${textbook.language}</div>
+      </div>
+    </div>
+
+    <div style="background:var(--gray-50);padding:20px;border-radius:12px;margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">📚 内容简介</h3>
+      <p style="line-height:1.7;">${textbook.description}</p>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">✨ 教材特点</h3>
+      <ul style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;list-style:none;padding:0;">
+        ${textbook.features.map(f => `<li style="padding:8px 12px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:6px;font-size:14px;">✓ ${f}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">📑 主要章节</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        ${textbook.chapters.map((ch, i) => `<span style="padding:6px 12px;background:var(--primary);color:white;border-radius:20px;font-size:13px;">${i + 1}. ${ch}</span>`).join('')}
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;">
+      <a href="${textbook.url}" target="_blank" class="btn btn-primary" style="flex:1;justify-content:center;">
+        <i class="fas fa-external-link-alt"></i> 查看详情/购买
+      </a>
+      <button onclick="closeModal()" class="btn btn-outline" style="flex:1;justify-content:center;">关闭</button>
+    </div>
+  `;
+
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+// 初始化教材卡片点击
+function initTextbookCards() {
+  document.querySelectorAll('.textbook-card').forEach((card, index) => {
+    card.style.cursor = 'pointer';
+    const textbookIds = ['tb-1', 'tb-2', 'tb-3', 'tb-4'];
+    card.addEventListener('click', () => openTextbookModal(textbookIds[index]));
+  });
+}
 
 // 教程卡片点击初始化
 function initTutorialCards() {
