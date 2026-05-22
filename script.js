@@ -2053,6 +2053,7 @@ const header = document.getElementById('header');
 let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
+  if (!header) return;
   const scrollY = window.scrollY;
   header.classList.toggle('scrolled', scrollY > 50);
 
@@ -2081,28 +2082,30 @@ window.addEventListener('scroll', () => {
 const menuToggle = document.getElementById('menuToggle');
 const nav = document.getElementById('nav');
 
-menuToggle.addEventListener('click', () => {
-  nav.classList.toggle('open');
-  document.body.classList.toggle('menu-open');
-});
-
-// 点击导航链接后关闭菜单
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    document.body.classList.remove('menu-open');
+if (menuToggle && nav) {
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    document.body.classList.toggle('menu-open');
   });
-});
 
-// 点击导航外部关闭菜单
-document.addEventListener('click', (e) => {
-  if (nav.classList.contains('open') &&
-      !nav.contains(e.target) &&
-      !menuToggle.contains(e.target)) {
-    nav.classList.remove('open');
-    document.body.classList.remove('menu-open');
-  }
-});
+  // 点击导航链接后关闭菜单
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      document.body.classList.remove('menu-open');
+    });
+  });
+
+  // 点击导航外部关闭菜单
+  document.addEventListener('click', (e) => {
+    if (nav.classList.contains('open') &&
+        !nav.contains(e.target) &&
+        !menuToggle.contains(e.target)) {
+      nav.classList.remove('open');
+      document.body.classList.remove('menu-open');
+    }
+  });
+}
 
 // ====== 滚动动画 ======
 const observer = new IntersectionObserver((entries) => {
@@ -2154,6 +2157,7 @@ const searchResults = document.getElementById('searchResults');
 // getDiffLabel is defined below in the resource filter section
 
 function performSearch() {
+  if (!searchInput || !searchResults) return;
   const query = searchInput.value.trim().toLowerCase();
   if (!query) {
     searchResults.innerHTML = '';
@@ -2183,10 +2187,14 @@ function performSearch() {
   `).join('');
 }
 
-if (searchBtn) searchBtn.addEventListener('click', performSearch);
-if (searchInput) searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') performSearch();
-});
+if (searchBtn) {
+  searchBtn.addEventListener('click', performSearch);
+}
+if (searchInput) {
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') performSearch();
+  });
+}
 
 // ====== 资源分类筛选浏览 ======
 function applyResourceFilter() {
@@ -2556,6 +2564,11 @@ function openModal(type) {
       content = '<p>功能开发中...</p>';
   }
 
+  if (!modalContent || !modalOverlay) {
+    console.error('Modal elements not found in openModal');
+    return;
+  }
+
   modalContent.innerHTML = content;
   modalOverlay.classList.add('show');
   document.body.style.overflow = 'hidden';
@@ -2586,13 +2599,17 @@ function openModal(type) {
 }
 
 function closeModal() {
-  modalOverlay.classList.remove('show');
+  if (modalOverlay) {
+    modalOverlay.classList.remove('show');
+  }
   document.body.style.overflow = '';
 }
 
-modalOverlay.addEventListener('click', (e) => {
-  if (e.target === modalOverlay) closeModal();
-});
+if (modalOverlay) {
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+}
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
@@ -3002,6 +3019,93 @@ var TUTORIALS = [
       <li><strong>实践测试</strong>：野外考察、实验室操作</li>
       <li><strong>备考计划</strong>：12-18个月系统复习方案</li>
     </ul>`
+  },
+  // ====== 新增教程数据 ======
+  {
+    id: 'met-6',
+    title: '气象卫星与遥感技术应用',
+    category: 'meteorology',
+    level: '进阶',
+    duration: '45分钟',
+    chapters: ['气象卫星发展史', '极轨卫星与静止卫星', '卫星云图类型', '红外与水汽通道', '云图判读技巧', '台风监测实例', '卫星数据应用'],
+    content: `<p>气象卫星是现代天气预报的重要工具：</p>
+    <ul>
+      <li><strong>卫星类型</strong>：极轨卫星（低分辨率、全球覆盖）与静止卫星（高频率、区域监测）</li>
+      <li><strong>云图判读</strong>：可见光、红外、水汽通道的不同应用</li>
+      <li><strong>实际应用</strong>：台风追踪、暴雨监测、气候研究</li>
+    </ul>`
+  },
+  {
+    id: 'oce-5',
+    title: '海底地形与洋壳构造',
+    category: 'oceanography',
+    level: '进阶',
+    duration: '50分钟',
+    chapters: ['海底探测技术', '大陆边缘地形', '大洋中脊系统', '深海平原与海山', '海沟与俯冲带', '洋壳组成与结构', '海底扩张证据', '热液喷口系统'],
+    content: `<p>探索神秘的海底世界：</p>
+    <ul>
+      <li><strong>海底地貌</strong>：大陆架、大陆坡、深海平原、海沟</li>
+      <li><strong>洋壳结构</strong>：层1（沉积层）、层2（玄武岩）、层3（辉长岩）</li>
+      <li><strong>特殊环境</strong>：热液喷口生物群落、冷泉系统</li>
+    </ul>`
+  },
+  {
+    id: 'ast-6',
+    title: '星座与天球坐标系',
+    category: 'astronomy',
+    level: '入门',
+    duration: '35分钟',
+    chapters: ['天球概念', '星座基础', '黄道十二宫', '赤道坐标系', '地平坐标系', '时角与星时'],
+    content: `<p>认识星空的第一步：</p>
+    <ul>
+      <li><strong>天球坐标</strong>：赤经、赤纬、时角的概念与应用</li>
+      <li><strong>主要星座</strong>：北斗七星、猎户座、天蝎座等辨识</li>
+      <li><strong>星空观测</strong>：不同季节可见的星座变化</li>
+    </ul>`
+  },
+  {
+    id: 'geo-6',
+    title: '地震学与地球内部结构',
+    category: 'geology',
+    level: '竞赛',
+    duration: '55分钟',
+    chapters: ['地震波基础', 'P波与S波特性', '地球内部圈层', '莫霍面与古登堡面', '地震定位原理', '震源机制解', '地震灾害评估', '海啸预警', 'IESO地震学真题', '综合案例分析'],
+    content: `<p>地震波是探测地球内部的"X射线"：</p>
+    <ul>
+      <li><strong>地震波</strong>：P波、S波、面波的传播特性差异</li>
+      <li><strong>地球圈层</strong>：地壳、地幔、外核、内核的发现证据</li>
+      <li><strong>震源机制</strong>：断层类型与地震危险性分析</li>
+    </ul>
+    <p>这是 IESO 考试的高频考点，需重点掌握。</p>`
+  },
+  {
+    id: 'com-4',
+    title: 'IESO 团队合作项目攻略',
+    category: 'all',
+    level: '竞赛',
+    duration: '90分钟',
+    chapters: ['IESO项目类型', '国际团队项目(MI)', '地球系统项目(ESP)', '团队协作技巧', '数据分析方法', '报告撰写规范', '演讲技巧', '往届真题解析'],
+    content: `<p>IESO 的独特之处在于团队协作项目：</p>
+    <ul>
+      <li><strong>MI项目</strong>：与不同国家选手组成国际团队，共同解决地球科学问题</li>
+      <li><strong>ESP项目</strong>：地球系统项目，综合运用多学科知识</li>
+      <li><strong>实用技巧</strong>：跨文化交流、时间分配、角色分工</li>
+    </ul>
+    <p>团队项目成绩占总分的重要部分，不可忽视！</p>`
+  },
+  {
+    id: 'geo-7',
+    title: '遥感技术在地质调查中的应用',
+    category: 'geology',
+    level: '进阶',
+    duration: '40分钟',
+    chapters: ['遥感原理基础', '多光谱与高光谱', '地质解译标志', '岩性识别', '构造解译', '矿物填图', '遥感找矿实例'],
+    content: `<p>遥感技术让地质调查更高效：</p>
+    <ul>
+      <li><strong>基本原理</strong>：不同岩性的光谱反射特征</li>
+      <li><strong>构造解译</strong>：断层、褶皱在遥感影像上的表现</li>
+      <li><strong>实际应用</strong>：矿产资源勘查、地质灾害监测</li>
+    </ul>`
   }
 ];
 
@@ -3044,6 +3148,8 @@ function initTutorialTabs() {
 
 // 打开教程详情模态框
 function openTutorialModal(title, category) {
+  console.log('openTutorialModal called with:', title, category);
+
   // 查找匹配的教程
   let tutorial = TUTORIALS.find(t => t.title === title);
   if (!tutorial) {
@@ -3053,13 +3159,20 @@ function openTutorialModal(title, category) {
     tutorial = TUTORIALS[0];
   }
 
+  console.log('Found tutorial:', tutorial ? tutorial.title : 'none');
+
   const overlay = document.getElementById('modalOverlay');
   const content = document.getElementById('modalContent');
+
+  if (!overlay || !content) {
+    console.error('Modal elements not found!');
+    return;
+  }
 
   const levelClass = tutorial.level === '入门' ? 'level-beginner' :
                      tutorial.level === '进阶' ? 'level-intermediate' : 'level-advanced';
 
-  const catClass = `cat-${tutorial.category === 'all' ? 'comprehensive' : tutorial.category.slice(0, -2)}`;
+  const catClass = `cat-${tutorial.category === 'all' ? 'comprehensive' : tutorial.category}`;
 
   content.innerHTML = `
     <div style="margin-bottom:24px;">
