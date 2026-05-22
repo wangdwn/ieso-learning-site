@@ -2183,8 +2183,8 @@ function performSearch() {
   `).join('');
 }
 
-searchBtn.addEventListener('click', performSearch);
-searchInput.addEventListener('keydown', (e) => {
+if (searchBtn) searchBtn.addEventListener('click', performSearch);
+if (searchInput) searchInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') performSearch();
 });
 
@@ -2692,7 +2692,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ====== 教程详情数据 ======
-const TUTORIALS = [
+var TUTORIALS = [
   {
     id: 'geo-1',
     title: '矿物与岩石基础',
@@ -3102,6 +3102,9 @@ function openTutorialModal(title, category) {
   overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
 }
+
+// 显式暴露到 window，确保 HTML onclick 可以访问
+window.openTutorialModal = openTutorialModal;
 
 function getCategoryName(cat) {
   const map = {
