@@ -2461,34 +2461,41 @@ function openModal(type) {
         <h2 style="font-size:24px;font-weight:700;margin-bottom:20px;">📖 推荐教材</h2>
         <p style="color:var(--gray-600);margin-bottom:20px;">IESO 官方推荐及历届奖牌得主亲荐经典教材。</p>
         <div style="display:grid;gap:12px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;">
+          <a href="https://www.wwnorton.com/books/9780393882641" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
             <div>
               <span style="font-weight:600;">Earth: Portrait of a Planet</span>
               <p style="font-size:12px;color:var(--gray-400);">Marshak · 入门首选</p>
             </div>
-            <span style="color:var(--primary);font-size:13px;">🥇 推荐</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;">
+            <span style="color:var(--primary);font-size:13px;">🥇 前往 →</span>
+          </a>
+          <a href="https://www.macmillanlearning.com/college/us/product/Understanding-Earth/p/131905532X" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
             <div>
               <span style="font-weight:600;">Understanding Earth</span>
               <p style="font-size:12px;color:var(--gray-400);">Grotzinger & Jordan · 进阶</p>
             </div>
-            <span style="color:var(--primary);font-size:13px;">🥈 推荐</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;">
+            <span style="color:var(--primary);font-size:13px;">🥈 前往 →</span>
+          </a>
+          <a href="https://www.cengage.com/c/meteorology-today-11e-ahrens/9781337612571/" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
             <div>
               <span style="font-weight:600;">Meteorology Today</span>
               <p style="font-size:12px;color:var(--gray-400);">Ahrens · 气象学权威</p>
             </div>
-            <span style="color:var(--gray-400);font-size:13px;">🥉</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;">
+            <span style="color:var(--primary);font-size:13px;">🥉 前往 →</span>
+          </a>
+          <a href="https://book.douban.com/subject/25850729/" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
+            <div>
+              <span style="font-weight:600;">普通地质学（第三版）</span>
+              <p style="font-size:12px;color:var(--gray-400);">舒良树 · 中文入门首选</p>
+            </div>
+            <span style="color:var(--primary);font-size:13px;">📘 前往 →</span>
+          </a>
+          <a href="http://www.ieso-info.org/wp-content/uploads/2012/11/IESO-official-Syllabus.pdf" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
             <div>
               <span style="font-weight:600;">IESO 官方 Syllabus</span>
               <p style="font-size:12px;color:var(--gray-400);">官方考试大纲 PDF</p>
             </div>
-            <a href="http://www.ieso-info.org/wp-content/uploads/2012/11/IESO-official-Syllabus.pdf" target="_blank" style="color:var(--primary);font-size:13px;">下载</a>
-          </div>
+            <span style="color:var(--primary);font-size:13px;">📥 下载</span>
+          </a>
         </div>
         <p style="margin-top:16px;color:var(--gray-400);font-size:13px;">共 12+ 本核心教材 · 部分资源可免费获取</p>
       `;
