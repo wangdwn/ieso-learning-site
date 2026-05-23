@@ -58,6 +58,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
 }
 .header .level-filter button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
+/* mobile sidebar toggle */
+.btn-sidebar { display:none; width:36px; height:36px; border:1px solid var(--border); border-radius:10px; background:transparent; font-size:18px; cursor:pointer; align-items:center; justify-content:center; color:var(--text-secondary); flex-shrink:0; }
+.sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:90; }
+
 .progress-wrap { padding: 12px 24px; background: #fff; border-bottom:1px solid var(--border); }
 .progress-label { display:flex; justify-content:space-between; font-size:12px; color: var(--text-secondary); margin-bottom:6px; }
 .progress-bar { height:6px; background: #e5e5ea; border-radius:3px; overflow:hidden; }
@@ -69,7 +73,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
 .main-wrap { display:flex; min-height:calc(100vh - var(--header-h)); }
 .sidebar {
   position:sticky; top:var(--header-h); width:240px; height:calc(100vh - var(--header-h)); overflow-y:auto;
-  background:#fff; border-right:1px solid var(--border); padding:8px 0; flex-shrink:0; scroll-behavior:smooth;
+  background:#fff; border-right:1px solid var(--border); padding:8px 0; flex-shrink:0;
 }
 .sidebar h3 {
   font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;
@@ -87,7 +91,23 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
 
 .content { flex:1; padding:24px; overflow-y:auto; }
 
-/* ── Section / Group Card ── */
+/* Skeleton loader */
+.skeleton-hero {
+  height:160px; background:linear-gradient(90deg, #e5e5ea 25%, #efefef 50%, #e5e5ea 75%);
+  background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:var(--radius) var(--radius) 0 0;
+}
+.skeleton-section {
+  margin-bottom:32px; background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow-sm); overflow:hidden;
+}
+.skeleton-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:10px; padding:12px 16px 16px; }
+.skeleton-card {
+  height:64px; border-radius:var(--radius-sm);
+  background:linear-gradient(90deg, #e5e5ea 25%, #efefef 50%, #e5e5ea 75%);
+  background-size:200% 100%; animation:shimmer 1.5s infinite;
+}
+@keyframes shimmer { 0% { background-position:200% 0; } 100% { background-position:-200% 0; } }
+
+/* Section */
 .section {
   margin-bottom:32px; background: var(--card-bg); border-radius: var(--radius);
   box-shadow: var(--shadow-sm); overflow:hidden;
@@ -97,8 +117,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
   position:relative; height:160px;
   display:flex; align-items:center; justify-content:center; gap:16px;
   cursor:pointer; user-select:none; overflow:hidden;
-  background-size: cover;
-  background-position: center;
+  background-size: cover; background-position: center;
+  background-color: #636366;
 }
 .section-hero::before {
   content:''; position:absolute; inset:0;
@@ -140,7 +160,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
 .section.collapsed .s-arrow { transform:rotate(-90deg); }
 .section.collapsed .word-grid { display:none; }
 
-/* ── Word Grid ── */
+/* Word Grid */
 .word-grid {
   display:grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap:10px;
   padding:12px 16px 16px;
@@ -194,19 +214,31 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
 .empty-state p { font-size:15px; }
 
 @media (max-width:900px) {
-  .sidebar { display:none; }
+  .btn-sidebar { display:flex; }
+  .sidebar {
+    position:fixed; left:-280px; top:var(--header-h); width:280px; height:calc(100vh - var(--header-h));
+    z-index:95; transition:left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 2px 0 16px rgba(0,0,0,0.15);
+  }
+  .sidebar.open { left:0; }
+  .sidebar-overlay.open { display:block; }
   .word-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
   .header .stats { display:none; }
   .header .level-filter { display:none; }
+  .header { padding:0 12px; gap:8px; }
+  .header .search-wrap { max-width:none; }
+  .skeleton-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 }
 @media (max-width:600px) {
-  .header { padding:0 12px; }
+  .header { padding:0 12px; gap:8px; }
   .header .logo { font-size:16px; }
   .word-grid { grid-template-columns:1fr; padding:8px; }
   .content { padding:12px; }
   .section-hero { height:120px; }
   .section-hero .hero-emoji { font-size:36px; }
   .section-hero .hero-text .hero-title { font-size:18px; }
+  .skeleton-hero { height:120px; }
+  .skeleton-grid { grid-template-columns:1fr; padding:8px; }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -228,12 +260,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
   .word-card .btn-learned.done { background: #1a3a20; }
   .word-card .btn-learned:hover { background: #1a3a20; }
   .section-header .s-arrow { background: #3a3a3c; }
+  .skeleton-hero, .skeleton-card { background:linear-gradient(90deg, #3a3a3c 25%, #48484a 50%, #3a3a3c 75%); background-size:200% 100%; }
 }
 </style>
 </head>
 <body>
 
 <div class="header">
+  <button class="btn-sidebar" id="btnSidebar" onclick="toggleSidebar()" title="词根导航">☰</button>
   <div class="logo">IESO <span>词汇3500</span></div>
   <div class="search-wrap">
     <input type="text" id="searchInput" placeholder="搜索单词或中文释义…">
@@ -245,30 +279,172 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
     <button data-level="中频">中频</button>
   </div>
   <div class="stats">
-    <div>已掌握 <strong id="learnedCount">0</strong></div>
-    <div>剩余 <strong id="remainCount">0</strong></div>
+    <div>已掌握 <strong id="learnedCount">…</strong></div>
+    <div>剩余 <strong id="remainCount">…</strong></div>
   </div>
   <button class="btn-reset" onclick="resetProgress()">重置</button>
 </div>
 
 <div class="progress-wrap">
-  <div class="progress-label"><span>学习进度</span><span id="progressPercent">0%</span></div>
+  <div class="progress-label"><span>学习进度</span><span id="progressPercent">…</span></div>
   <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 </div>
 
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="main-wrap">
-  <div class="sidebar" id="sidebar"></div>
+  <div class="sidebar" id="sidebar">
+    <h3>词根导图</h3>
+  </div>
   <div class="content" id="content">
-    <div class="empty-state"><div class="big-emoji">🌈</div><h2>加载中…</h2></div>
+    <!-- Skeleton screen -->
+    <div class="skeleton-section"><div class="skeleton-hero"></div></div>
+    <div class="skeleton-section"><div class="skeleton-hero"></div></div>
+    <div class="skeleton-section">
+      <div class="skeleton-hero"></div>
+      <div class="skeleton-grid">
+        <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
+      </div>
+    </div>
+    <div class="skeleton-section">
+      <div class="skeleton-hero"></div>
+      <div class="skeleton-grid">
+        <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-const GROUPS = [];
-
+let GROUPS = [];
 let learnedSet = new Set();
 let activeLevel = 'all';
 let searchQuery = '';
+let totalWords = 0;
+
+// Theme emoji mapping — full 388 themes
+const themeEmoji = {
+  'you':'👤','create':'✨','family':'👨‍👩‍👧‍👦','act':'🎬','part':'🧩','form':'📋','service':'🛎️','ball':'⚽','sea':'🌊',
+  'be':'🔗','graph':'📊','air':'💨','circle':'⭕','reply':'💬','expect':'👀','man':'👨','report':'📡','question':'❓',
+  'succeed':'🏆','collect':'📚','school':'🏫','day':'📅','work':'💼','effect':'⚡','admit':'🚪','rain':'🌧️','light':'💡',
+  'night':'🌙','angry':'😤','yourself':'🪞','plant':'🌱','purchase':'🛒','purpose':'🎯','clean':'🧹','shirt':'👔',
+  'strawberry':'🍓','time':'⏰','continue':'➡️','responsible':'🤝','addict':'📖','true':'✅','tomato':'🍅','body':'🧍',
+  'kilo':'⚖️','arm':'🛡️','accept':'🤲','bus':'🚌','colour':'🎨','attend':'🎯','conversation':'🗣️','able':'✅',
+  'abroad':'✈️','accident':'⚠️','ache':'🤕','appear':'👁️','art':'🎨','back':'🔙','balance':'⚖️','base':'🏗️','believe':'💭',
+  'big':'🐘','break':'💔','breath':'💨','call':'📞','care':'❤️','carry':'👜','center':'🎯','change':'🔄','choose':'👆',
+  'class':'🏛️','clear':'💎','close':'🔒','come':'🚶','common':'🤝','complete':'✔️','compute':'💻','condition':'📏',
+  'connect':'🔗','consider':'🤔','constitution':'📜','control':'🎮','cook':'🍳','count':'🔢','country':'🌍','couple':'💑',
+  'cover':'📔','cross':'✝️','culture':'🏛️','current':'⚡','cut':'✂️','dance':'💃','danger':'☠️','deal':'🤝','decide':'🧠',
+  'deep':'🕳️','defend':'🛡️','depend':'🔗','design':'🎨','develop':'🌱','die':'💀','different':'🌈','direct':'➡️',
+  'discover':'🔍','discuss':'💬','disease':'🦠','divide':'➗','do':'🔧','draw':'✏️','drive':'🚗','economy':'💰',
+  'educate':'📖','electr':'🔌','employ':'🏢','end':'🏁','energy':'🔋','environment':'🌿','equal':'🟰','establish':'🏗️',
+  'event':'🎪','exist':'🧬','explain':'📝','express':'📢','face':'😶','fail':'❌','fair':'⚖️','fall':'🍂','feel':'💗',
+  'fight':'⚔️','final':'🏁','finance':'🏦','finish':'🏁','fit':'👔','flow':'🌊','fly':'🕊️','follow':'🚶','force':'💪',
+  'free':'🕊️','friend':'👫','give':'🎁','go':'🏃','good':'👍','govern':'🏛️','great':'🌟','group':'👥','grow':'🌱',
+  'guide':'🧭','happen':'🎲','hard':'🪨','have':'🫴','head':'🗣️','health':'💪','hear':'👂','help':'🆘','here':'📍',
+  'high':'📈','history':'📜','hit':'👊','hold':'✋','home':'🏠','hope':'🌟','human':'🧍','hunt':'🏹','idea':'💡',
+  'imagine':'💭','include':'📦','invest':'📈','join':'🔗','keep':'🔐','key':'🔑','kind':'🤝','know':'🧠','language':'🗣️',
+  'large':'🏢','late':'⏰','laugh':'😂','law':'⚖️','lead':'👣','learn':'📚','level':'📊','liber':'🕊️','limit':'🚫',
+  'line':'📏','live':'🏠','local':'📍','long':'📏','look':'👀','lose':'💨','luck':'🍀','machine':'⚙️','major':'📌',
+  'market':'🏪','matter':'🧱','mean':'🎯','measure':'📐','media':'📺','medical':'💊','memory':'🧠','message':'💬',
+  'middle':'📍','miss':'🎯','mix':'🔀','model':'🧩','modern':'🏙️','moral':'📜','more':'➕','motor':'🔧','move':'🏃',
+  'music':'🎵','name':'🏷️','nation':'🌍','nature':'🌿','near':'📍','need':'🆘','nerve':'⚡','new':'🆕','North':'🧭',
+  'note':'📝','notice':'👀','number':'🔢','object':'📦','offer':'🤝','office':'🏢','operate':'⚙️','opinion':'💭',
+  'order':'📋','organ':'🫀','other':'🔄','out':'🚪','own':'🏠','pack':'📦','page':'📄','paint':'🎨','paper':'📄',
+  'parent':'👨‍👩‍👧','pass':'🎫','past':'⏮️','pattern':'🔲','pay':'💳','peace':'☮️','people':'👥','period':'📆',
+  'person':'🧑','phone':'📱','photo':'📷','physical':'🏋️','picture':'🖼️','place':'📍','plan':'📋','play':'🎮',
+  'please':'😊','point':'📍','police':'👮','politics':'🏛️','poor':'😢','popular':'⭐','possible':'🔓','power':'⚡',
+  'practice':'🏋️','prefer':'❤️','prepare':'📋','present':'🎁','press':'🖨️','price':'💲','print':'🖨️','private':'🔒',
+  'produce':'🏭','profess':'📢','project':'📊','protect':'🛡️','prove':'✅','provide':'📦','public':'🌐','push':'👈',
+  'put':'📥','quality':'⭐','quick':'⚡','quiet':'🤫','race':'🏃','radio':'📻','range':'↔️','rate':'📊','rather':'🎯',
+  'reach':'🤚','real':'✅','reason':'🧠','refer':'📎','reflect':'🪞','regard':'👀','region':'🗺️','relate':'🔗',
+  'relax':'😌','religion':'⛪','remain':'⏳','remember':'🧠','remove':'🗑️','repeat':'🔁','replace':'🔄','represent':'🗣️',
+  'result':'🏁','return':'🔙','reveal':'👁️','right':'✅','rise':'📈','risk':'⚠️','room':'🏠','round':'⭕','rule':'📏',
+  'safe':'🔐','same':'🟰','save':'💾','scene':'🎬','schedule':'📅','science':'🔬','search':'🔍','season':'🍂',
+  'second':'🥈','secret':'🤫','secure':'🔒','see':'👁️','seek':'🔍','seem':'👀','sell':'💸','send':'📤','sense':'🧠',
+  'separate':'✂️','serious':'😐','set':'📐','settle':'🏠','share':'🤝','short':'📏','show':'🎪','side':'↔️',
+  'sign':'✍️','silence':'🤫','simple':'🪶','since':'⏱️','single':'1️⃣','situation':'🗺️','skill':'🎯','sleep':'😴',
+  'small':'🐜','social':'👥','society':'🏘️','solve':'🧩','sort':'🗂️','sound':'🔊','source':'⛲','space':'🌌',
+  'speak':'🗣️','special':'⭐','spend':'💸','spirit':'✨','sport':'🏅','spread':'📢','stage':'🎭','stand':'🧍',
+  'start':'🚀','state':'🏛️','stay':'🏠','step':'👣','stick':'📍','still':'⏸️','stop':'🚫','store':'🏬','story':'📖',
+  'strong':'💪','structure':'🏗️','struggle':'🤼','study':'📚','style':'👔','subject':'📋','suffer':'😣','suggest':'💡',
+  'supply':'📦','sure':'✅','surprise':'😲','survey':'📊','survive':'🆘','symbol':'🔣','system':'⚙️','take':'✋',
+  'talk':'💬','target':'🎯','task':'📋','tax':'💸','teach':'👨‍🏫','team':'👥','technology':'🔧','tell':'🗣️',
+  'temperature':'🌡️','term':'📝','test':'📝','text':'📄','theory':'🧪','third':'3️⃣','though':'🤔','threat':'⚠️',
+  'through':'➡️','till':'⏱️','tire':'😫','tool':'🔧','top':'🔝','total':'🔢','touch':'👆','tour':'🧳','track':'🛤️',
+  'trade':'🤝','tradition':'🏛️','train':'🚆','travel':'✈️','treat':'🤝','trial':'⚖️','trouble':'⚠️','trust':'🤝',
+  'try':'🔍','turn':'🔄','type':'⌨️','understand':'🧠','unique':'1️⃣','unit':'🧩','use':'🔧','value':'💎','variety':'🌈',
+  'view':'👁️','violence':'💥','visit':'🚶','voice':'🗣️','vote':'🗳️','wait':'⏳','walk':'🚶','want':'🫴','water':'💧',
+  'way':'🛣️','wear':'👔','weather':'🌤️','week':'📅','weight':'⚖️','well':'👍','wide':'↔️','will':'📜','win':'🏆',
+  'wonder':'🤩','word':'📝','worth':'💰','young':'🌱','open':'🔓','waste':'🗑️','watch':'⌚','wave':'👋','whole':'💯',
+  'wood':'🪵',
+  // Additional 184 themes
+  'achieve':'🏅','add':'➕','admire':'😍','advantage':'📈','again':'🔁','age':'📆','agency':'🏢','agree':'🤝',
+  'all':'💯','any':'❓','architect':'📐','argue':'🗣️','arrive':'🛬','ask':'🙋','assess':'📋','attract':'🧲',
+  'author':'✍️','avoid':'🙈','bag':'👜','beautiful':'💐','because':'↩️','bed':'🛏️','behave':'🙂','benefit':'🎁',
+  'board':'📋','box':'📦','boy':'👦','budget':'💰','build':'🏗️','but':'↩️','can':'🥫','centre':'🎯','certain':'✅',
+  'chair':'🪑','character':'🎭','child':'👶','class':'🏫','clothes':'👗','commercial':'🏬','community':'🏘️',
+  'compare':'⚖️','compete':'🏁','concern':'😟','confidence':'💪','content':'📄','contribute':'🤝','convenient':'👍',
+  'convey':'📨','courage':'🦁','cover':'📘','curious':'🧐','dark':'🌑','dead':'💀','decide':'✅','defend':'🛡️',
+  'depend':'🔗','desire':'🔥','develop':'📈','dinner':'🍽️','dish':'🍛','distance':'📏','double':'✌️','down':'⬇️',
+  'during':'⏳','ear':'👂','easy':'😊','eat':'🍴','either':'↔️','electric':'⚡','employ':'💼','end':'🏁',
+  'enter':'🚪','equal':'🟰','ever':'♾️','every':'🔢','excited':'🎉','experience':'🧪','explain':'🗣️',
+  'face':'😶','fact':'📊','fail':'❌','fair':'🎡','fall':'🍂','famous':'⭐','fast':'⚡','favourite':'❤️',
+  'feel':'🤲','finish':'🏁','fire':'🔥','fit':'✅','flu':'🤒','for':'🎯','force':'💪','fortunate':'🍀',
+  'found':'🏗️','frequently':'🔄','friend':'👫','front':'🔝','general':'📋','gentleman':'🎩','geography':'🌍',
+  'go':'🏃','good':'👍','grade':'📊','ground':'🌍','habit':'🔄','hand':'✋','happy':'😊','hard':'💪',
+  'head':'🧠','health':'❤️','hear':'👂','help':'🆘','high':'⬆️','hit':'👊','hope':'🙏','house':'🏠',
+  'how':'❓','icecream':'🍦','ill':'🤒','imagine':'💭','initial':'🔤','instruction':'📖','interesting':'🤩',
+  'invent':'💡','involve':'🔄','issue':'📰','join':'🤝','joy':'😄','just':'✅','key':'🔑','kind':'💝',
+  'know':'🧠','lab':'🔬','land':'🌍','late':'⏰','laugh':'😄','law':'⚖️','lead':'🥇','learn':'📚',
+  'less':'➖','lift':'🆙','like':'❤️','line':'➖','live':'🏠','local':'📍','lock':'🔒','long':'📏',
+  'look':'👀','mail':'📧','main':'🔝','man':'👨','mark':'✅','mass':'📊','mean':'➡️','meet':'🤝',
+  'memory':'🧠','merely':'➖','middle':'🎯','might':'💪','mile':'🛣️','mind':'🧠','miss':'😢',
+  'model':'🧩','most':'🔝','motion':'🏃','move':'🚚','near':'📍','no':'🚫','number':'🔢',
+  'offer':'🤝','office':'🏢','oil':'🛢️','old':'👴','operate':'⚙️','option':'🔘','other':'🔄',
+  'over':'⬆️','paint':'🎨','pair':'👫','parent':'👨‍👩‍👧','pass':'✅','patient':'🤒','pay':'💳',
+  'pen':'🖊️','physics':'⚛️','pick':'👆','place':'📍','play':'🎮','please':'🙏','pocket':'👖',
+  'point':'📍','position':'📍','possible':'✅','post':'📮','pot':'🫖','praise':'👏','prepare':'🍳',
+  'present':'🎁','press':'📰','primary':'🥇','private':'🔒','produce':'🏭','protect':'🛡️','prove':'✅',
+  'punish':'⚖️','put':'📥','question':'❓','rain':'🌧️','range':'↔️','read':'📖','ready':'✅',
+  'real':'💯','receive':'📥','reduce':'📉','refer':'🔗','reflect':'🪞','regard':'👀','relationship':'💑',
+  'rely':'🤝','reply':'💬','report':'📊','responsible':'✅','rest':'😴','result':'📊','right':'👉',
+  'road':'🛣️','room':'🚪','sad':'😢','save':'💾','school':'🏫','sea':'🌊','secret':'🤫','see':'👀',
+  'sell':'💰','sense':'🧠','service':'🔧','set':'📐','shame':'😳','share':'🤝','shine':'✨',
+  'shirt':'👔','shop':'🛍️','short':'📏','should':'✅','shut':'🚪','sick':'🤒','side':'↔️',
+  'sign':'🖊️','simple':'😊','sing':'🎤','sit':'🪑','sleep':'😴','snow':'❄️','so':'👉',
+  'society':'👥','solve':'✅','some':'📦','speak':'🗣️','special':'⭐','spend':'💸','spirit':'✨',
+  'stable':'🏠','staff':'👥','stand':'🧍','state':'🏛️','stop':'🛑','store':'🏪','strange':'❓',
+  'strawberry':'🍓','strong':'💪','subject':'📋','succeed':'🏆','suggest':'💡','sun':'☀️','super':'🦸',
+  'sure':'✅','swim':'🏊','take':'✋','taste':'👅','technology':'💻','tell':'🗣️','term':'📝',
+  'terrible':'😱','test':'📝','text':'📄','the':'📍','then':'⏩','thing':'📦','think':'🤔',
+  'though':'🤷','time':'⏰','tired':'😫','tomato':'🍅','top':'🔝','town':'🏘️','true':'✅',
+  'turn':'🔄','type':'⌨️','under':'⬇️','understand':'💡','until':'⏳','up':'⬆️','use':'🔧',
+  'value':'💎','various':'🌈','victory':'🏆','video':'📹','view':'👁️','visit':'🏠','wait':'⏳',
+  'warm':'🔥','warn':'⚠️','watch':'⌚','way':'🛣️','wear':'👕','week':'📅','weigh':'⚖️',
+  'well':'👍','where':'📍','who':'❓','will':'📜','win':'🏆','wind':'💨','wing':'🪽','with':'🤝',
+  'wonderful':'🌟','work':'💼','worldwide':'🌐','worth':'💎','you':'👤','young':'🧒','yourself':'🪞',
+  '其他':'📦'
+};
+
+(async function loadGroups() {
+  try {
+    const resp = await fetch('vocab_3500.json');
+    const words = await resp.json();
+    const themeMap = {};
+    for (const w of words) {
+      if (!themeMap[w.theme]) themeMap[w.theme] = [];
+      themeMap[w.theme].push(w);
+    }
+    for (const [theme, wlist] of Object.entries(themeMap)) {
+      GROUPS.push({ theme, emoji: themeEmoji[theme] || '📌', words: wlist });
+    }
+    GROUPS.sort((a, b) => b.words.length - a.words.length);
+    initApp();
+  } catch(e) {
+    document.getElementById('content').innerHTML = '<div class="empty-state"><div class="big-emoji">⚠️</div><h2>数据加载失败</h2><p>请检查网络连接后刷新页面</p></div>';
+    console.error(e);
+  }
+})();
 
 (function(){
   try {
@@ -281,8 +457,12 @@ function saveProgress() {
   localStorage.setItem('ieso_vocab_3500_learned', JSON.stringify([...learnedSet]));
 }
 
-let totalWords = 0;
-GROUPS.forEach(g => totalWords += g.words.length);
+function initApp() {
+  GROUPS.forEach(g => totalWords += g.words.length);
+  updateStats();
+  renderAll();
+  setupScrollSpy();
+}
 
 function getStats() {
   const learned = GROUPS.reduce((sum, g) => sum + g.words.filter(w => learnedSet.has(w.en)).length, 0);
@@ -313,6 +493,7 @@ function renderAll() {
   renderSidebar(fg);
   renderContent(fg);
   updateStats();
+  setupScrollSpy();
 }
 
 function renderSidebar(filteredGroups) {
@@ -333,6 +514,22 @@ function scrollToGroup(id) {
   }
   document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
   document.querySelector('[data-target="' + id + '"]')?.classList.add('active');
+  closeSidebar();
+}
+
+function setupScrollSpy() {
+  const sections = document.querySelectorAll('.section[id]');
+  if (sections.length === 0) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+        const sid = e.target.id;
+        document.querySelector('[data-target="' + sid + '"]')?.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
 }
 
 function renderContent(filteredGroups) {
@@ -345,9 +542,9 @@ function renderContent(filteredGroups) {
 
   ct.innerHTML = filteredGroups.map(g => {
     const gid = 'g-' + encodeURIComponent(g.theme);
-    const imgName = g.theme.replace(/[^a-zA-Z0-9 -]/g, '_').replace(/ /g, '_');
+    const imgName = encodeURIComponent(g.theme);
     return '<div class="section collapsed" id="' + gid + '">' +
-      '<div class="section-hero" style="background-image:url(img/' + encodeURIComponent(imgName) + '.jpg)" onclick="toggleSection(this.parentElement)">' +
+      '<div class="section-hero" style="background-image:url(img/' + imgName + '.jpg)" onclick="toggleSection(this.parentElement)">' +
         '<div class="hero-emoji">' + g.emoji + '</div>' +
         '<div class="hero-text">' +
           '<div class="hero-title">' + esc(g.theme) + '</div>' +
@@ -423,6 +620,16 @@ function resetProgress() {
   }
 }
 
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
 document.getElementById('searchInput').addEventListener('input', function() {
   searchQuery = this.value;
   renderAll();
@@ -436,9 +643,6 @@ document.querySelectorAll('.level-filter button').forEach(btn => {
     renderAll();
   });
 });
-
-updateStats();
-renderAll();
 </script>
 </body>
 </html>
