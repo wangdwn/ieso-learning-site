@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IESO 高中英语3500词 · 思维导图记忆</title>
+<style>
+:root {
+  --bg: #f5f5f7;
+  --card-bg: #ffffff;
+  --text: #1d1d1f;
+  --text-secondary: #86868b;
+  --accent: #0071e3;
+  --accent-light: #e8f0fe;
+  --border: #e5e5ea;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --header-h: 64px;
+  --high-color: #34c759;
+  --mid-color: #ff9500;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height:1.5; -webkit-font-smoothing:antialiased; }
+
+.header {
+  position: sticky; top:0; z-index:100; height: var(--header-h);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+  display:flex; align-items:center; padding:0 24px; gap:16px;
+}
+.header .logo { font-size:20px; font-weight:700; letter-spacing:-0.3px; white-space:nowrap; }
+.header .logo span { color: var(--accent); }
+.header .search-wrap { flex:1; max-width:480px; position:relative; }
+.header .search-wrap input {
+  width:100%; height:38px; border:1px solid var(--border); border-radius:20px;
+  background: var(--bg); padding:0 40px 0 16px; font-size:14px; outline:none;
+  transition: all 0.2s;
+}
+.header .search-wrap input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,113,227,0.12); }
+.header .search-wrap .search-icon { position:absolute; right:12px; top:50%; transform:translateY(-50%); color: var(--text-secondary); font-size:16px; pointer-events:none; }
+.header .stats { display:flex; gap:20px; font-size:13px; color: var(--text-secondary); white-space:nowrap; }
+.header .stats strong { color: var(--text); font-size:15px; }
+.header .btn-reset {
+  padding:6px 14px; border:1px solid var(--border); border-radius:18px;
+  background:transparent; font-size:12px; color: var(--text-secondary);
+  cursor:pointer; transition:all 0.15s;
+}
+.header .btn-reset:hover { background: #f0f0f5; color: var(--text); }
+.header .level-filter { display:flex; gap:4px; }
+.header .level-filter button {
+  padding:4px 12px; border:1px solid var(--border); border-radius:14px;
+  background:transparent; font-size:12px; cursor:pointer; transition:all 0.15s;
+  color: var(--text-secondary);
+}
+.header .level-filter button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.progress-wrap { padding: 12px 24px; background: #fff; border-bottom:1px solid var(--border); }
+.progress-label { display:flex; justify-content:space-between; font-size:12px; color: var(--text-secondary); margin-bottom:6px; }
+.progress-bar { height:6px; background: #e5e5ea; border-radius:3px; overflow:hidden; }
+.progress-fill {
+  height:100%; background: linear-gradient(90deg, var(--accent), #5e9eff); border-radius:3px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-wrap { display:flex; min-height:calc(100vh - var(--header-h)); }
+.sidebar {
+  position:sticky; top:var(--header-h); width:240px; height:calc(100vh - var(--header-h)); overflow-y:auto;
+  background:#fff; border-right:1px solid var(--border); padding:8px 0; flex-shrink:0; scroll-behavior:smooth;
+}
+.sidebar h3 {
+  font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;
+  color: var(--text-secondary); padding:12px 20px 8px;
+}
+.sidebar-item {
+  display:flex; align-items:center; gap:8px;
+  padding:7px 20px; font-size:13px; cursor:pointer; transition:all 0.12s;
+  border-left:3px solid transparent; color: var(--text);
+}
+.sidebar-item:hover { background: var(--bg); }
+.sidebar-item.active { background: var(--accent-light); border-left-color: var(--accent); color: var(--accent); font-weight:600; }
+.sidebar-item .emoji { font-size:15px; flex-shrink:0; }
+.sidebar-item .count { margin-left:auto; font-size:11px; color: var(--text-secondary); }
+
+.content { flex:1; padding:24px; overflow-y:auto; }
+
+/* ── Section / Group Card ── */
+.section {
+  margin-bottom:32px; background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); overflow:hidden;
+}
+
+.section-hero {
+  position:relative; height:160px;
+  display:flex; align-items:center; justify-content:center; gap:16px;
+  cursor:pointer; user-select:none; overflow:hidden;
+  background-size: cover;
+  background-position: center;
+}
+.section-hero::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.15) 100%);
+}
+.section-hero .hero-emoji {
+  font-size:48px; position:relative; z-index:1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.section-hero .hero-text { position:relative; z-index:1; text-align:left; }
+.section-hero .hero-text .hero-title {
+  font-size:22px; font-weight:700; color: #fff; letter-spacing:-0.3px;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+}
+.section-hero .hero-text .hero-sub {
+  font-size:11px; color: rgba(255,255,255,0.85); margin-top:3px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+
+.section-header {
+  padding:10px 20px; display:flex; align-items:center; gap:10px;
+  cursor:pointer; user-select:none;
+  transition: background 0.15s;
+}
+.section-header:hover { background: #fafafa; }
+.section-header .s-info { flex:1; }
+.section-header .s-label { font-size:12px; color: var(--text-secondary); }
+.section-header .s-label strong { color: var(--text); font-size:13px; }
+.section-header .s-arrow {
+  font-size:12px; color: var(--text-secondary); transition:transform 0.25s;
+  width:24px; height:24px; display:flex; align-items:center; justify-content:center;
+  border-radius:50%; background: var(--bg);
+}
+.section.collapsed .s-arrow { transform:rotate(-90deg); }
+.section.collapsed .word-grid { display:none; }
+
+/* ── Word Grid ── */
+.word-grid {
+  display:grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap:10px;
+  padding:12px 16px 16px;
+}
+.word-card {
+  display:flex; gap:10px; padding:8px 10px; border-radius: var(--radius-sm);
+  background: var(--bg); position:relative; overflow:hidden;
+  transition: all 0.3s;
+}
+.word-card:hover { background: #ececf0; }
+.word-card.learned {
+  opacity: 0.2; pointer-events:none; filter:grayscale(0.5);
+}
+
+.word-card .card-thumb {
+  width:72px; height:48px; border-radius:7px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; font-weight:700; color: rgba(0,0,0,0.15);
+}
+.word-card .card-body { flex:1; min-width:0; }
+.word-card .card-en { font-size:15px; font-weight:600; }
+.word-card .card-zh { font-size:12px; color: var(--text-secondary); margin-top:1px; }
+.word-card .card-meta { display:flex; gap:6px; align-items:center; margin-top:3px; }
+.word-card .card-level {
+  font-size:10px; padding:1px 7px; border-radius:9px;
+  color:#fff; font-weight:500; white-space:nowrap;
+}
+.card-level.high { background: var(--high-color); }
+.card-level.mid { background: var(--mid-color); }
+
+.word-card .btn-learned {
+  position:absolute; top:6px; right:6px;
+  width:26px; height:26px; border-radius:50%; border:1.5px solid var(--border);
+  background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  font-size:13px; transition:all 0.2s; color: var(--text-secondary);
+  opacity:0; z-index:2;
+}
+.word-card:hover .btn-learned { opacity:1; }
+.word-card .btn-learned:hover {
+  border-color: var(--high-color); color: var(--high-color);
+  background: #e8f8ed;
+}
+.word-card .btn-learned.done {
+  opacity:1; border-color: var(--high-color); color: var(--high-color);
+  background: #e8f8ed;
+}
+
+.empty-state { text-align:center; padding:80px 20px; color: var(--text-secondary); }
+.empty-state .big-emoji { font-size:64px; margin-bottom:16px; }
+.empty-state h2 { font-size:22px; color: var(--text); margin-bottom:8px; }
+.empty-state p { font-size:15px; }
+
+@media (max-width:900px) {
+  .sidebar { display:none; }
+  .word-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .header .stats { display:none; }
+  .header .level-filter { display:none; }
+}
+@media (max-width:600px) {
+  .header { padding:0 12px; }
+  .header .logo { font-size:16px; }
+  .word-grid { grid-template-columns:1fr; padding:8px; }
+  .content { padding:12px; }
+  .section-hero { height:120px; }
+  .section-hero .hero-emoji { font-size:36px; }
+  .section-hero .hero-text .hero-title { font-size:18px; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e; --card-bg: #2c2c2e; --text: #f5f5f7; --text-secondary: #98989d;
+    --border: #3a3a3c; --accent-light: #1a2a40;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .header { background: rgba(44,44,46,0.72); }
+  .sidebar { background: #2c2c2e; }
+  .header .search-wrap input { background: #1c1c1e; color: var(--text); }
+  .word-card { background: #252527; }
+  .word-card:hover { background: #2d2d30; }
+  .section-header:hover { background: #252527; }
+  .section-hero::before { background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.35) 100%); }
+  .word-card .card-thumb { color: rgba(255,255,255,0.2); }
+  .header .btn-reset:hover { background: #3a3a3c; }
+  .word-card .btn-learned { background: #2c2c2e; }
+  .word-card .btn-learned.done { background: #1a3a20; }
+  .word-card .btn-learned:hover { background: #1a3a20; }
+  .section-header .s-arrow { background: #3a3a3c; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">IESO <span>词汇3500</span></div>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="搜索单词或中文释义…">
+    <span class="search-icon">🔍</span>
+  </div>
+  <div class="level-filter">
+    <button data-level="all" class="active">全部</button>
+    <button data-level="高频">高频</button>
+    <button data-level="中频">中频</button>
+  </div>
+  <div class="stats">
+    <div>已掌握 <strong id="learnedCount">0</strong></div>
+    <div>剩余 <strong id="remainCount">0</strong></div>
+  </div>
+  <button class="btn-reset" onclick="resetProgress()">重置</button>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-label"><span>学习进度</span><span id="progressPercent">0%</span></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+
+<div class="main-wrap">
+  <div class="sidebar" id="sidebar"></div>
+  <div class="content" id="content">
+    <div class="empty-state"><div class="big-emoji">🌈</div><h2>加载中…</h2></div>
+  </div>
+</div>
+
+<script>
+const GROUPS = [];
+
+let learnedSet = new Set();
+let activeLevel = 'all';
+let searchQuery = '';
+
+(function(){
+  try {
+    const raw = localStorage.getItem('ieso_vocab_3500_learned');
+    if (raw) learnedSet = new Set(JSON.parse(raw));
+  } catch(e) { learnedSet = new Set(); }
+})();
+
+function saveProgress() {
+  localStorage.setItem('ieso_vocab_3500_learned', JSON.stringify([...learnedSet]));
+}
+
+let totalWords = 0;
+GROUPS.forEach(g => totalWords += g.words.length);
+
+function getStats() {
+  const learned = GROUPS.reduce((sum, g) => sum + g.words.filter(w => learnedSet.has(w.en)).length, 0);
+  return { learned, remain: totalWords - learned, pct: totalWords > 0 ? Math.round(learned / totalWords * 100) : 0 };
+}
+
+function updateStats() {
+  const s = getStats();
+  document.getElementById('learnedCount').textContent = s.learned;
+  document.getElementById('remainCount').textContent = s.remain;
+  document.getElementById('progressPercent').textContent = s.pct + '%';
+  document.getElementById('progressFill').style.width = s.pct + '%';
+}
+
+function getFilteredGroups() {
+  const q = searchQuery.toLowerCase().trim();
+  return GROUPS.reduce((arr, g) => {
+    let words = g.words;
+    if (activeLevel !== 'all') words = words.filter(w => w.level === activeLevel);
+    if (q) words = words.filter(w => w.en.toLowerCase().includes(q) || w.zh.includes(q));
+    if (words.length > 0) arr.push({ ...g, words });
+    return arr;
+  }, []);
+}
+
+function renderAll() {
+  const fg = getFilteredGroups();
+  renderSidebar(fg);
+  renderContent(fg);
+  updateStats();
+}
+
+function renderSidebar(filteredGroups) {
+  document.getElementById('sidebar').innerHTML = '<h3>词根导图（' + filteredGroups.length + '）</h3>' +
+    filteredGroups.map(g => {
+      const id = 'g-' + encodeURIComponent(g.theme);
+      return '<div class="sidebar-item" data-target="' + id + '" onclick="scrollToGroup(\'' + id + '\')">' +
+        '<span class="emoji">' + g.emoji + '</span><span>' + esc(g.theme) + '</span>' +
+        '<span class="count">' + g.words.length + '</span></div>';
+    }).join('');
+}
+
+function scrollToGroup(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el.classList.contains('collapsed')) el.classList.remove('collapsed');
+  }
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-target="' + id + '"]')?.classList.add('active');
+}
+
+function renderContent(filteredGroups) {
+  const ct = document.getElementById('content');
+  if (filteredGroups.length === 0) {
+    ct.innerHTML = '<div class="empty-state"><div class="big-emoji">🔍</div><h2>没有匹配的单词</h2><p>试试其他搜索词或筛选条件</p></div>';
+    document.getElementById('sidebar').innerHTML = '<h3>词根导图（0）</h3>';
+    return;
+  }
+
+  ct.innerHTML = filteredGroups.map(g => {
+    const gid = 'g-' + encodeURIComponent(g.theme);
+    const imgName = g.theme.replace(/[^a-zA-Z0-9 -]/g, '_').replace(/ /g, '_');
+    return '<div class="section collapsed" id="' + gid + '">' +
+      '<div class="section-hero" style="background-image:url(img/' + encodeURIComponent(imgName) + '.jpg)" onclick="toggleSection(this.parentElement)">' +
+        '<div class="hero-emoji">' + g.emoji + '</div>' +
+        '<div class="hero-text">' +
+          '<div class="hero-title">' + esc(g.theme) + '</div>' +
+          '<div class="hero-sub">' + g.words.length + ' 词 · 词根组</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="section-header" onclick="toggleSection(this.parentElement)">' +
+        '<div class="s-info"><span class="s-label">词根 <strong>' + esc(g.theme) + '</strong> · 衍生 <strong>' + g.words.length + '</strong> 词</span></div>' +
+        '<span class="s-arrow">▼</span>' +
+      '</div>' +
+      '<div class="word-grid">' +
+        g.words.map(w => {
+          const isL = learnedSet.has(w.en);
+          const wid = 'w-' + encodeURIComponent(w.en);
+          const initials = w.en.charAt(0).toUpperCase();
+          const c1 = g.thumb_c1 || '#e8f0fe';
+          const c2 = g.thumb_c2 || '#f0e8ff';
+          return '<div class="word-card' + (isL ? ' learned' : '') + '" id="' + wid + '">' +
+            '<div class="card-thumb" style="background:linear-gradient(135deg,' + c1 + ',' + c2 + ')">' + initials + '</div>' +
+            '<div class="card-body">' +
+              '<div class="card-en">' + esc(w.en) + '</div>' +
+              '<div class="card-zh">' + esc(w.zh) + '</div>' +
+              '<div class="card-meta">' +
+                '<span class="card-level ' + (w.level === '高频' ? 'high' : 'mid') + '">' + w.level + '</span>' +
+                (w.root ? '<span style="font-size:10px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="' + escAttr(w.root) + '">' + esc(w.root) + '</span>' : '') +
+              '</div>' +
+            '</div>' +
+            '<button class="btn-learned' + (isL ? ' done' : '') + '" onclick="event.stopPropagation();toggleLearned(\'' + escAttr(w.en) + '\')" title="' + (isL ? '已掌握（点击恢复）' : '标记为已掌握') + '">' + (isL ? '✓' : '+') + '</button>' +
+          '</div>';
+        }).join('') +
+      '</div></div>';
+  }).join('');
+}
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function escAttr(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function toggleSection(section) {
+  section.classList.toggle('collapsed');
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-target="' + section.id + '"]')?.classList.add('active');
+}
+
+function toggleLearned(word) {
+  if (learnedSet.has(word)) learnedSet.delete(word);
+  else learnedSet.add(word);
+  saveProgress();
+
+  const card = document.getElementById('w-' + encodeURIComponent(word));
+  if (card) {
+    const isL = learnedSet.has(word);
+    card.classList.toggle('learned', isL);
+    const btn = card.querySelector('.btn-learned');
+    btn.classList.toggle('done', isL);
+    btn.innerHTML = isL ? '✓' : '+';
+    btn.title = isL ? '已掌握（点击恢复）' : '标记为已掌握';
+  }
+  updateStats();
+}
+
+function resetProgress() {
+  if (confirm('确定要重置所有学习进度吗？')) {
+    learnedSet.clear();
+    saveProgress();
+    renderAll();
+  }
+}
+
+document.getElementById('searchInput').addEventListener('input', function() {
+  searchQuery = this.value;
+  renderAll();
+});
+
+document.querySelectorAll('.level-filter button').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.level-filter button').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    activeLevel = this.dataset.level;
+    renderAll();
+  });
+});
+
+updateStats();
+renderAll();
+</script>
+</body>
+</html>
