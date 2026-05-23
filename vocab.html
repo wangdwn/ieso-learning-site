@@ -5,75 +5,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IESO 高中英语3500词 · 思维导图记忆</title>
 <style>
+/* Apple官网风格SVG思维导图样式 */
 :root {
-  --bg: #f5f5f7;
-  --card-bg: #ffffff;
-  --text: #1d1d1f;
+  --bg-color: #f5f5f7;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-bg-solid: #ffffff;
+  --text-primary: #1d1d1f;
   --text-secondary: #86868b;
-  --accent: #0071e3;
-  --accent-light: #e8f0fe;
-  --border: #e5e5ea;
-  --radius: 16px;
-  --radius-sm: 10px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --accent-blue: #0071e3;
+  --accent-glow: rgba(0, 113, 227, 0.3);
+  --border-light: #e5e5ea;
+  --border-dark: #3a3a3c;
+  --radius-lg: 32px;
+  --radius-md: 20px;
+  --radius-sm: 16px;
+  --shadow-soft: 0 20px 40px rgba(0,0,0,0.04);
+  --shadow-hover: 0 12px 24px var(--accent-glow);
   --header-h: 64px;
   --high-color: #34c759;
   --mid-color: #ff9500;
+  --root-gradient: linear-gradient(135deg, #1d1d1f, #434344);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height:1.5; -webkit-font-smoothing:antialiased; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg-color); color: var(--text-primary);
+  line-height:1.5; -webkit-font-smoothing:antialiased;
+  overflow-x: hidden;
+}
 
+/* Header - 保持原有样式 */
 .header {
   position: sticky; top:0; z-index:100; height: var(--header-h);
   background: rgba(255,255,255,0.72);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-light);
   display:flex; align-items:center; padding:0 24px; gap:16px;
 }
 .header .logo { font-size:20px; font-weight:700; letter-spacing:-0.3px; white-space:nowrap; }
-.header .logo span { color: var(--accent); }
+.header .logo span { color: var(--accent-blue); }
 .header .search-wrap { flex:1; max-width:480px; position:relative; }
 .header .search-wrap input {
-  width:100%; height:38px; border:1px solid var(--border); border-radius:20px;
-  background: var(--bg); padding:0 40px 0 16px; font-size:14px; outline:none;
+  width:100%; height:38px; border:1px solid var(--border-light); border-radius:20px;
+  background: var(--bg-color); padding:0 40px 0 16px; font-size:14px; outline:none;
   transition: all 0.2s;
 }
-.header .search-wrap input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,113,227,0.12); }
+.header .search-wrap input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0,113,227,0.12); }
 .header .search-wrap .search-icon { position:absolute; right:12px; top:50%; transform:translateY(-50%); color: var(--text-secondary); font-size:16px; pointer-events:none; }
 .header .stats { display:flex; gap:20px; font-size:13px; color: var(--text-secondary); white-space:nowrap; }
-.header .stats strong { color: var(--text); font-size:15px; }
+.header .stats strong { color: var(--text-primary); font-size:15px; }
 .header .btn-reset {
-  padding:6px 14px; border:1px solid var(--border); border-radius:18px;
+  padding:6px 14px; border:1px solid var(--border-light); border-radius:18px;
   background:transparent; font-size:12px; color: var(--text-secondary);
   cursor:pointer; transition:all 0.15s;
 }
-.header .btn-reset:hover { background: #f0f0f5; color: var(--text); }
+.header .btn-reset:hover { background: #f0f0f5; color: var(--text-primary); }
 .header .level-filter { display:flex; gap:4px; }
 .header .level-filter button {
-  padding:4px 12px; border:1px solid var(--border); border-radius:14px;
+  padding:4px 12px; border:1px solid var(--border-light); border-radius:14px;
   background:transparent; font-size:12px; cursor:pointer; transition:all 0.15s;
   color: var(--text-secondary);
 }
-.header .level-filter button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.header .level-filter button.active { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
 
-/* mobile sidebar toggle */
-.btn-sidebar { display:none; width:36px; height:36px; border:1px solid var(--border); border-radius:10px; background:transparent; font-size:18px; cursor:pointer; align-items:center; justify-content:center; color:var(--text-secondary); flex-shrink:0; }
+.btn-sidebar { display:none; width:36px; height:36px; border:1px solid var(--border-light); border-radius:10px; background:transparent; font-size:18px; cursor:pointer; align-items:center; justify-content:center; color:var(--text-secondary); flex-shrink:0; }
 .sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:90; }
 
-.progress-wrap { padding: 12px 24px; background: #fff; border-bottom:1px solid var(--border); }
+.progress-wrap { padding: 12px 24px; background: #fff; border-bottom:1px solid var(--border-light); }
 .progress-label { display:flex; justify-content:space-between; font-size:12px; color: var(--text-secondary); margin-bottom:6px; }
 .progress-bar { height:6px; background: #e5e5ea; border-radius:3px; overflow:hidden; }
 .progress-fill {
-  height:100%; background: linear-gradient(90deg, var(--accent), #5e9eff); border-radius:3px;
+  height:100%; background: linear-gradient(90deg, var(--accent-blue), #5e9eff); border-radius:3px;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .main-wrap { display:flex; min-height:calc(100vh - var(--header-h)); }
 .sidebar {
   position:sticky; top:var(--header-h); width:240px; height:calc(100vh - var(--header-h)); overflow-y:auto;
-  background:#fff; border-right:1px solid var(--border); padding:8px 0; flex-shrink:0;
+  background:#fff; border-right:1px solid var(--border-light); padding:8px 0; flex-shrink:0;
 }
 .sidebar h3 {
   font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;
@@ -82,22 +93,127 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
 .sidebar-item {
   display:flex; align-items:center; gap:8px;
   padding:7px 20px; font-size:13px; cursor:pointer; transition:all 0.12s;
-  border-left:3px solid transparent; color: var(--text);
+  border-left:3px solid transparent; color: var(--text-primary);
 }
-.sidebar-item:hover { background: var(--bg); }
-.sidebar-item.active { background: var(--accent-light); border-left-color: var(--accent); color: var(--accent); font-weight:600; }
+.sidebar-item:hover { background: var(--bg-color); }
+.sidebar-item.active { background: rgba(0,113,227,0.08); border-left-color: var(--accent-blue); color: var(--accent-blue); font-weight:600; }
 .sidebar-item .emoji { font-size:15px; flex-shrink:0; }
 .sidebar-item .count { margin-left:auto; font-size:11px; color: var(--text-secondary); }
 
 .content { flex:1; padding:24px; overflow-y:auto; }
 
-/* Skeleton loader */
+/* 思维导图容器 */
+.mindmap-container {
+  position: relative; width: 100%; background: var(--card-bg);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  margin-bottom: 32px;
+  min-height: 500px;
+}
+
+.mindmap-canvas {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 1;
+}
+
+.connection-line {
+  stroke: var(--border-light); stroke-width: 2; fill: none;
+  transition: stroke 0.4s, stroke-width 0.4s;
+}
+
+.connection-line.active {
+  stroke: var(--accent-blue); stroke-width: 3;
+  stroke-dasharray: 8 4; animation: flow 30s linear infinite;
+}
+
+@keyframes flow { to { stroke-dashoffset: -1000; } }
+
+/* 词根节点 */
+.root-node {
+  background: var(--root-gradient); color: white;
+  padding: 24px 40px; border-radius: var(--radius-md);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15); text-align: center;
+  position: relative; z-index: 2;
+  font-size: 20px; font-weight: 700;
+  min-width: 200px;
+}
+
+/* 单词节点 */
+.word-node {
+  background: var(--card-bg-solid); padding: 16px 24px; border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.05); width: 160px; text-align: center;
+  position: relative; z-index: 2;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.word-node:hover {
+  transform: scale(1.05) translateY(-2px);
+  border-color: var(--accent-blue);
+  box-shadow: var(--shadow-hover);
+}
+
+.word-node.learned {
+  opacity: 0.2; pointer-events:none; filter:grayscale(0.5);
+}
+
+.word-node .word-en {
+  font-size: 15px; font-weight: 600; margin-bottom: 4px;
+}
+
+.word-node .word-zh {
+  font-size: 12px; color: var(--text-secondary);
+}
+
+.word-node .word-level {
+  position: absolute; top: 8px; right: 8px;
+  width: 6px; height: 6px; border-radius: 50%;
+}
+
+.word-level.high { background: var(--high-color); }
+.word-level.mid { background: var(--mid-color); }
+
+/* 思维导图布局 */
+.mindmap-layout {
+  position: relative; width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.mindmap-center {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+
+.mindmap-orbit {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px dashed rgba(0,0,0,0.05);
+}
+
+/* 组标题 */
+.group-title {
+  font-size: 24px; font-weight: 700; margin-bottom: 24px;
+  color: var(--text-primary);
+  display: flex; align-items: center; gap: 12px;
+}
+
+.group-title .emoji { font-size: 28px; }
+
+/* 空状态 */
+.empty-state { text-align:center; padding:80px 20px; color: var(--text-secondary); }
+.empty-state .big-emoji { font-size:64px; margin-bottom:16px; }
+.empty-state h2 { font-size:22px; color: var(--text-primary); margin-bottom:8px; }
+.empty-state p { font-size:15px; }
+
+/* 骨架屏 */
 .skeleton-hero {
   height:160px; background:linear-gradient(90deg, #e5e5ea 25%, #efefef 50%, #e5e5ea 75%);
-  background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:var(--radius) var(--radius) 0 0;
+  background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:var(--radius-lg) var(--radius-lg) 0 0;
 }
 .skeleton-section {
-  margin-bottom:32px; background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow-sm); overflow:hidden;
+  margin-bottom:32px; background:var(--card-bg-solid); border-radius:var(--radius-lg); box-shadow:var(--shadow-soft); overflow:hidden;
 }
 .skeleton-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:10px; padding:12px 16px 16px; }
 .skeleton-card {
@@ -107,112 +223,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
 }
 @keyframes shimmer { 0% { background-position:200% 0; } 100% { background-position:-200% 0; } }
 
-/* Section */
-.section {
-  margin-bottom:32px; background: var(--card-bg); border-radius: var(--radius);
-  box-shadow: var(--shadow-sm); overflow:hidden;
-}
-
-.section-hero {
-  position:relative; height:160px;
-  display:flex; align-items:center; justify-content:center; gap:16px;
-  cursor:pointer; user-select:none; overflow:hidden;
-  background-size: cover; background-position: center;
-  background-color: #636366;
-}
-.section-hero::before {
-  content:''; position:absolute; inset:0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.15) 100%);
-}
-.section-hero .hero-emoji {
-  font-size:48px; position:relative; z-index:1;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
-  animation: float 3s ease-in-out infinite;
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-.section-hero .hero-text { position:relative; z-index:1; text-align:left; }
-.section-hero .hero-text .hero-title {
-  font-size:22px; font-weight:700; color: #fff; letter-spacing:-0.3px;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
-}
-.section-hero .hero-text .hero-sub {
-  font-size:11px; color: rgba(255,255,255,0.85); margin-top:3px;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.25);
-}
-
-.section-header {
-  padding:10px 20px; display:flex; align-items:center; gap:10px;
-  cursor:pointer; user-select:none;
-  transition: background 0.15s;
-}
-.section-header:hover { background: #fafafa; }
-.section-header .s-info { flex:1; }
-.section-header .s-label { font-size:12px; color: var(--text-secondary); }
-.section-header .s-label strong { color: var(--text); font-size:13px; }
-.section-header .s-arrow {
-  font-size:12px; color: var(--text-secondary); transition:transform 0.25s;
-  width:24px; height:24px; display:flex; align-items:center; justify-content:center;
-  border-radius:50%; background: var(--bg);
-}
-.section.collapsed .s-arrow { transform:rotate(-90deg); }
-.section.collapsed .word-grid { display:none; }
-
-/* Word Grid */
-.word-grid {
-  display:grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap:10px;
-  padding:12px 16px 16px;
-}
-.word-card {
-  display:flex; gap:10px; padding:8px 10px; border-radius: var(--radius-sm);
-  background: var(--bg); position:relative; overflow:hidden;
-  transition: all 0.3s;
-}
-.word-card:hover { background: #ececf0; }
-.word-card.learned {
-  opacity: 0.2; pointer-events:none; filter:grayscale(0.5);
-}
-
-.word-card .card-thumb {
-  width:72px; height:48px; border-radius:7px; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  font-size:22px; font-weight:700; color: rgba(0,0,0,0.15);
-}
-.word-card .card-body { flex:1; min-width:0; }
-.word-card .card-en { font-size:15px; font-weight:600; }
-.word-card .card-zh { font-size:12px; color: var(--text-secondary); margin-top:1px; }
-.word-card .card-meta { display:flex; gap:6px; align-items:center; margin-top:3px; }
-.word-card .card-level {
-  font-size:10px; padding:1px 7px; border-radius:9px;
-  color:#fff; font-weight:500; white-space:nowrap;
-}
-.card-level.high { background: var(--high-color); }
-.card-level.mid { background: var(--mid-color); }
-
-.word-card .btn-learned {
-  position:absolute; top:6px; right:6px;
-  width:26px; height:26px; border-radius:50%; border:1.5px solid var(--border);
-  background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  font-size:13px; transition:all 0.2s; color: var(--text-secondary);
-  opacity:0; z-index:2;
-}
-.word-card:hover .btn-learned { opacity:1; }
-.word-card .btn-learned:hover {
-  border-color: var(--high-color); color: var(--high-color);
-  background: #e8f8ed;
-}
-.word-card .btn-learned.done {
-  opacity:1; border-color: var(--high-color); color: var(--high-color);
-  background: #e8f8ed;
-}
-
-.empty-state { text-align:center; padding:80px 20px; color: var(--text-secondary); }
-.empty-state .big-emoji { font-size:64px; margin-bottom:16px; }
-.empty-state h2 { font-size:22px; color: var(--text); margin-bottom:8px; }
-.empty-state p { font-size:15px; }
-
+/* 响应式 */
 @media (max-width:900px) {
   .btn-sidebar { display:flex; }
   .sidebar {
@@ -222,44 +233,40 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
   }
   .sidebar.open { left:0; }
   .sidebar-overlay.open { display:block; }
-  .word-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
   .header .stats { display:none; }
   .header .level-filter { display:none; }
   .header { padding:0 12px; gap:8px; }
   .header .search-wrap { max-width:none; }
-  .skeleton-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .mindmap-container { min-height: 400px; border-radius: 24px; }
+  .root-node { padding: 20px 32px; font-size: 18px; }
+  .word-node { width: 140px; padding: 14px 20px; }
 }
+
 @media (max-width:600px) {
   .header { padding:0 12px; gap:8px; }
   .header .logo { font-size:16px; }
-  .word-grid { grid-template-columns:1fr; padding:8px; }
   .content { padding:12px; }
-  .section-hero { height:120px; }
-  .section-hero .hero-emoji { font-size:36px; }
-  .section-hero .hero-text .hero-title { font-size:18px; }
-  .skeleton-hero { height:120px; }
-  .skeleton-grid { grid-template-columns:1fr; padding:8px; }
+  .mindmap-container { min-height: 350px; border-radius: 20px; }
+  .root-node { padding: 16px 24px; font-size: 16px; min-width: 160px; }
+  .word-node { width: 120px; padding: 12px 16px; }
+  .word-node .word-en { font-size: 14px; }
+  .word-node .word-zh { font-size: 11px; }
 }
 
+/* 暗色模式 */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1c1c1e; --card-bg: #2c2c2e; --text: #f5f5f7; --text-secondary: #98989d;
-    --border: #3a3a3c; --accent-light: #1a2a40;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --bg-color: #1c1c1e; --card-bg: rgba(44,44,46,0.8); --card-bg-solid: #2c2c2e;
+    --text-primary: #f5f5f7; --text-secondary: #98989d; --border-light: #3a3a3c;
+    --shadow-soft: 0 20px 40px rgba(0,0,0,0.3);
+    --root-gradient: linear-gradient(135deg, #2c2c2e, #434344);
   }
   .header { background: rgba(44,44,46,0.72); }
   .sidebar { background: #2c2c2e; }
-  .header .search-wrap input { background: #1c1c1e; color: var(--text); }
-  .word-card { background: #252527; }
-  .word-card:hover { background: #2d2d30; }
-  .section-header:hover { background: #252527; }
-  .section-hero::before { background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.35) 100%); }
-  .word-card .card-thumb { color: rgba(255,255,255,0.2); }
+  .header .search-wrap input { background: #1c1c1e; color: var(--text-primary); }
+  .word-node { background: #252527; border-color: rgba(255,255,255,0.1); }
+  .word-node:hover { border-color: var(--accent-blue); }
   .header .btn-reset:hover { background: #3a3a3c; }
-  .word-card .btn-learned { background: #2c2c2e; }
-  .word-card .btn-learned.done { background: #1a3a20; }
-  .word-card .btn-learned:hover { background: #1a3a20; }
-  .section-header .s-arrow { background: #3a3a3c; }
   .skeleton-hero, .skeleton-card { background:linear-gradient(90deg, #3a3a3c 25%, #48484a 50%, #3a3a3c 75%); background-size:200% 100%; }
 }
 </style>
@@ -293,10 +300,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="main-wrap">
   <div class="sidebar" id="sidebar">
-    <h3>词根导图</h3>
+    <h3>词根网络</h3>
   </div>
   <div class="content" id="content">
-    <!-- Skeleton screen -->
     <div class="skeleton-section"><div class="skeleton-hero"></div></div>
     <div class="skeleton-section"><div class="skeleton-hero"></div></div>
     <div class="skeleton-section">
@@ -321,7 +327,6 @@ let activeLevel = 'all';
 let searchQuery = '';
 let totalWords = 0;
 
-// Theme emoji mapping — full 388 themes
 const themeEmoji = {
   'you':'👤','create':'✨','family':'👨‍👩‍👧‍👦','act':'🎬','part':'🧩','form':'📋','service':'🛎️','ball':'⚽','sea':'🌊',
   'be':'🔗','graph':'📊','air':'💨','circle':'⭕','reply':'💬','expect':'👀','man':'👨','report':'📡','question':'❓',
@@ -376,54 +381,29 @@ const themeEmoji = {
   'view':'👁️','violence':'💥','visit':'🚶','voice':'🗣️','vote':'🗳️','wait':'⏳','walk':'🚶','want':'🫴','water':'💧',
   'way':'🛣️','wear':'👔','weather':'🌤️','week':'📅','weight':'⚖️','well':'👍','wide':'↔️','will':'📜','win':'🏆',
   'wonder':'🤩','word':'📝','worth':'💰','young':'🌱','open':'🔓','waste':'🗑️','watch':'⌚','wave':'👋','whole':'💯',
-  'wood':'🪵',
-  // Additional 184 themes
-  'achieve':'🏅','add':'➕','admire':'😍','advantage':'📈','again':'🔁','age':'📆','agency':'🏢','agree':'🤝',
+  'wood':'🪵','achieve':'🏅','add':'➕','admire':'😍','advantage':'📈','again':'🔁','age':'📆','agency':'🏢','agree':'🤝',
   'all':'💯','any':'❓','architect':'📐','argue':'🗣️','arrive':'🛬','ask':'🙋','assess':'📋','attract':'🧲',
   'author':'✍️','avoid':'🙈','bag':'👜','beautiful':'💐','because':'↩️','bed':'🛏️','behave':'🙂','benefit':'🎁',
   'board':'📋','box':'📦','boy':'👦','budget':'💰','build':'🏗️','but':'↩️','can':'🥫','centre':'🎯','certain':'✅',
-  'chair':'🪑','character':'🎭','child':'👶','class':'🏫','clothes':'👗','commercial':'🏬','community':'🏘️',
-  'compare':'⚖️','compete':'🏁','concern':'😟','confidence':'💪','content':'📄','contribute':'🤝','convenient':'👍',
-  'convey':'📨','courage':'🦁','cover':'📘','curious':'🧐','dark':'🌑','dead':'💀','decide':'✅','defend':'🛡️',
-  'depend':'🔗','desire':'🔥','develop':'📈','dinner':'🍽️','dish':'🍛','distance':'📏','double':'✌️','down':'⬇️',
-  'during':'⏳','ear':'👂','easy':'😊','eat':'🍴','either':'↔️','electric':'⚡','employ':'💼','end':'🏁',
-  'enter':'🚪','equal':'🟰','ever':'♾️','every':'🔢','excited':'🎉','experience':'🧪','explain':'🗣️',
-  'face':'😶','fact':'📊','fail':'❌','fair':'🎡','fall':'🍂','famous':'⭐','fast':'⚡','favourite':'❤️',
-  'feel':'🤲','finish':'🏁','fire':'🔥','fit':'✅','flu':'🤒','for':'🎯','force':'💪','fortunate':'🍀',
-  'found':'🏗️','frequently':'🔄','friend':'👫','front':'🔝','general':'📋','gentleman':'🎩','geography':'🌍',
-  'go':'🏃','good':'👍','grade':'📊','ground':'🌍','habit':'🔄','hand':'✋','happy':'😊','hard':'💪',
-  'head':'🧠','health':'❤️','hear':'👂','help':'🆘','high':'⬆️','hit':'👊','hope':'🙏','house':'🏠',
-  'how':'❓','icecream':'🍦','ill':'🤒','imagine':'💭','initial':'🔤','instruction':'📖','interesting':'🤩',
-  'invent':'💡','involve':'🔄','issue':'📰','join':'🤝','joy':'😄','just':'✅','key':'🔑','kind':'💝',
-  'know':'🧠','lab':'🔬','land':'🌍','late':'⏰','laugh':'😄','law':'⚖️','lead':'🥇','learn':'📚',
-  'less':'➖','lift':'🆙','like':'❤️','line':'➖','live':'🏠','local':'📍','lock':'🔒','long':'📏',
-  'look':'👀','mail':'📧','main':'🔝','man':'👨','mark':'✅','mass':'📊','mean':'➡️','meet':'🤝',
-  'memory':'🧠','merely':'➖','middle':'🎯','might':'💪','mile':'🛣️','mind':'🧠','miss':'😢',
-  'model':'🧩','most':'🔝','motion':'🏃','move':'🚚','near':'📍','no':'🚫','number':'🔢',
-  'offer':'🤝','office':'🏢','oil':'🛢️','old':'👴','operate':'⚙️','option':'🔘','other':'🔄',
-  'over':'⬆️','paint':'🎨','pair':'👫','parent':'👨‍👩‍👧','pass':'✅','patient':'🤒','pay':'💳',
-  'pen':'🖊️','physics':'⚛️','pick':'👆','place':'📍','play':'🎮','please':'🙏','pocket':'👖',
-  'point':'📍','position':'📍','possible':'✅','post':'📮','pot':'🫖','praise':'👏','prepare':'🍳',
-  'present':'🎁','press':'📰','primary':'🥇','private':'🔒','produce':'🏭','protect':'🛡️','prove':'✅',
-  'punish':'⚖️','put':'📥','question':'❓','rain':'🌧️','range':'↔️','read':'📖','ready':'✅',
-  'real':'💯','receive':'📥','reduce':'📉','refer':'🔗','reflect':'🪞','regard':'👀','relationship':'💑',
-  'rely':'🤝','reply':'💬','report':'📊','responsible':'✅','rest':'😴','result':'📊','right':'👉',
-  'road':'🛣️','room':'🚪','sad':'😢','save':'💾','school':'🏫','sea':'🌊','secret':'🤫','see':'👀',
-  'sell':'💰','sense':'🧠','service':'🔧','set':'📐','shame':'😳','share':'🤝','shine':'✨',
-  'shirt':'👔','shop':'🛍️','short':'📏','should':'✅','shut':'🚪','sick':'🤒','side':'↔️',
-  'sign':'🖊️','simple':'😊','sing':'🎤','sit':'🪑','sleep':'😴','snow':'❄️','so':'👉',
-  'society':'👥','solve':'✅','some':'📦','speak':'🗣️','special':'⭐','spend':'💸','spirit':'✨',
-  'stable':'🏠','staff':'👥','stand':'🧍','state':'🏛️','stop':'🛑','store':'🏪','strange':'❓',
-  'strawberry':'🍓','strong':'💪','subject':'📋','succeed':'🏆','suggest':'💡','sun':'☀️','super':'🦸',
-  'sure':'✅','swim':'🏊','take':'✋','taste':'👅','technology':'💻','tell':'🗣️','term':'📝',
-  'terrible':'😱','test':'📝','text':'📄','the':'📍','then':'⏩','thing':'📦','think':'🤔',
-  'though':'🤷','time':'⏰','tired':'😫','tomato':'🍅','top':'🔝','town':'🏘️','true':'✅',
-  'turn':'🔄','type':'⌨️','under':'⬇️','understand':'💡','until':'⏳','up':'⬆️','use':'🔧',
-  'value':'💎','various':'🌈','victory':'🏆','video':'📹','view':'👁️','visit':'🏠','wait':'⏳',
-  'warm':'🔥','warn':'⚠️','watch':'⌚','way':'🛣️','wear':'👕','week':'📅','weigh':'⚖️',
-  'well':'👍','where':'📍','who':'❓','will':'📜','win':'🏆','wind':'💨','wing':'🪽','with':'🤝',
-  'wonderful':'🌟','work':'💼','worldwide':'🌐','worth':'💎','you':'👤','young':'🧒','yourself':'🪞',
-  '其他':'📦'
+  'chair':'🪑','character':'🎭','child':'👶','clothes':'👗','commercial':'🏬','community':'🏘️','compare':'⚖️',
+  'compete':'🏁','concern':'😟','confidence':'💪','content':'📄','contribute':'🤝','convenient':'👍','convey':'📨',
+  'courage':'🦁','curious':'🧐','dark':'🌑','dead':'💀','desire':'🔥','dinner':'🍽️','dish':'🍛','distance':'📏',
+  'double':'✌️','down':'⬇️','during':'⏳','ear':'👂','easy':'😊','eat':'🍴','either':'↔️','electric':'⚡','employ':'💼',
+  'enter':'🚪','ever':'♾️','every':'🔢','excited':'🎉','experience':'🧪','explain':'🗣️','fact':'📊','famous':'⭐',
+  'fast':'⚡','favourite':'❤️','fire':'🔥','flu':'🤒','for':'🎯','fortunate':'🍀','found':'🏗️','frequently':'🔄',
+  'front':'🔝','general':'📋','gentleman':'🎩','geography':'🌍','grade':'📊','ground':'🌍','habit':'🔄','hand':'✋',
+  'happy':'😊','house':'🏠','how':'❓','icecream':'🍦','ill':'🤒','initial':'🔤','instruction':'📖','interesting':'🤩',
+  'invent':'💡','involve':'🔄','issue':'📰','joy':'😄','just':'✅','lab':'🔬','land':'🌍','less':'➖','lift':'🆙',
+  'like':'❤️','lock':'🔒','mail':'📧','main':'🔝','mark':'✅','mass':'📊','meet':'🤝','merely':'➖','might':'💪',
+  'mile':'🛣️','mind':'🧠','most':'🔝','motion':'🏃','no':'🚫','oil':'🛢️','old':'👴','option':'🔘','over':'⬆️',
+  'pair':'👫','patient':'🤒','pen':'🖊️','physics':'⚛️','pick':'👆','pocket':'👖','position':'📍','post':'📮','pot':'🫖',
+  'praise':'👏','primary':'🥇','punish':'⚖️','read':'📖','ready':'✅','receive':'📥','reduce':'📉','relationship':'💑',
+  'rely':'🤝','rest':'😴','road':'🛣️','sad':'😢','shame':'😳','shine':'✨','shop':'🛍️','should':'✅','shut':'🚪',
+  'sick':'🤒','sing':'🎤','sit':'🪑','snow':'❄️','so':'👉','some':'📦','stable':'🏠','staff':'👥','strange':'❓',
+  'sun':'☀️','super':'🦸','swim':'🏊','taste':'👅','terrible':'😱','the':'📍','then':'⏩','thing':'📦','think':'🤔',
+  'though':'🤷','tired':'😫','town':'🏘️','under':'⬇️','until':'⏳','up':'⬆️','various':'🌈','victory':'🏆','video':'📹',
+  'warm':'🔥','warn':'⚠️','weigh':'⚖️','where':'📍','who':'❓','wind':'💨','wing':'🪽','with':'🤝','wonderful':'🌟',
+  'worldwide':'🌐','其他':'📦'
 };
 
 (async function loadGroups() {
@@ -497,7 +477,7 @@ function renderAll() {
 }
 
 function renderSidebar(filteredGroups) {
-  document.getElementById('sidebar').innerHTML = '<h3>词根导图（' + filteredGroups.length + '）</h3>' +
+  document.getElementById('sidebar').innerHTML = '<h3>词根网络（' + filteredGroups.length + '）</h3>' +
     filteredGroups.map(g => {
       const id = 'g-' + encodeURIComponent(g.theme);
       return '<div class="sidebar-item" data-target="' + id + '" onclick="scrollToGroup(\'' + id + '\')">' +
@@ -508,17 +488,14 @@ function renderSidebar(filteredGroups) {
 
 function scrollToGroup(id) {
   const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if (el.classList.contains('collapsed')) el.classList.remove('collapsed');
-  }
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
   document.querySelector('[data-target="' + id + '"]')?.classList.add('active');
   closeSidebar();
 }
 
 function setupScrollSpy() {
-  const sections = document.querySelectorAll('.section[id]');
+  const sections = document.querySelectorAll('.mindmap-container[id]');
   if (sections.length === 0) return;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -532,51 +509,217 @@ function setupScrollSpy() {
   sections.forEach(s => observer.observe(s));
 }
 
+/**
+ * SVG mindmap renderer
+ * Layout: center root node with words arranged in concentric rings
+ */
+function buildMindmapHTML(g, gid) {
+  const words = g.words;
+  const n = words.length;
+  const emoji = g.emoji || '📌';
+  
+  // Determine container height based on word count
+  // For small groups (n <= 6): 2 rows layout, smaller height
+  // For medium (7-20): multi-row orbital
+  // For large (20+): tall scrollable layout
+  
+  let minHeight;
+  if (n <= 6) minHeight = 400;
+  else if (n <= 12) minHeight = 520;
+  else if (n <= 24) minHeight = 700;
+  else minHeight = Math.max(800, Math.ceil(n / 8) * 200);
+  
+  // SVG paths container
+  const containerId = 'mc-' + encodeURIComponent(g.theme);
+  
+  return '<div class="mindmap-container" id="' + gid + '" style="min-height:' + minHeight + 'px;">' +
+    '<svg class="mindmap-canvas" id="' + containerId + '-svg"></svg>' +
+    '<div class="mindmap-layout" id="' + containerId + '" style="position:relative;width:100%;height:' + minHeight + 'px;">' +
+    '</div>' +
+    '</div>';
+}
+
+function positionMindmapNodes(g, containerId, svgId) {
+  const container = document.getElementById(containerId);
+  const svg = document.getElementById(svgId);
+  if (!container || !svg) return;
+  
+  const words = g.words;
+  const n = words.length;
+  const containerRect = container.parentElement.getBoundingClientRect();
+  const w = containerRect.width;
+  const h = containerRect.height;
+  
+  // SVG size
+  svg.setAttribute('width', w);
+  svg.setAttribute('height', h);
+  svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+  
+  // Clear
+  container.innerHTML = '';
+  svg.innerHTML = '';
+  
+  // Center point
+  const cx = w / 2;
+  const cy = h / 2;
+  
+  // Root node dimensions (approximate)
+  const rootW = 200;
+  const rootH = 80;
+  const nodeW = 160;
+  const nodeH = 80;
+  
+  // Add root node
+  const rootDiv = document.createElement('div');
+  rootDiv.className = 'root-node';
+  rootDiv.style.cssText = 'position:absolute;';
+  rootDiv.innerHTML = '<div style="font-size:32px;margin-bottom:4px;">' + g.emoji + '</div>' +
+    '<div>' + esc(g.theme) + '</div>' +
+    '<div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:2px;">' + n + ' 个派生词</div>';
+  
+  // Place root node
+  const rootLeft = cx - rootW / 2;
+  const rootTop = cy - rootH / 2;
+  rootDiv.style.left = rootLeft + 'px';
+  rootDiv.style.top = rootTop + 'px';
+  rootDiv.style.width = rootW + 'px';
+  container.appendChild(rootDiv);
+  
+  // Calculate node positions based on word count
+  const positions = [];
+  const margin = 20;
+  const usableWidth = w - 2 * margin - nodeW;
+  const usableHeight = h - 2 * margin - nodeH;
+  
+  // Root center coordinates
+  const rcx = rootLeft + rootW / 2;
+  const rcy = rootTop + rootH / 2;
+  
+  if (n <= 6) {
+    // Two rows: top and bottom
+    const rowY1 = margin;
+    const rowY2 = h - margin - nodeH;
+    const rowW = usableWidth;
+    const perRow = Math.ceil(n / 2);
+    const spacing = rowW / (perRow + 1);
+    
+    for (let i = 0; i < n; i++) {
+      const row = Math.floor(i / perRow);
+      const col = i % perRow;
+      const x = margin + spacing * (col + 1) - nodeW / 2;
+      const y = row === 0 ? rowY1 : rowY2;
+      positions.push({ x, y, row, col });
+    }
+  } else if (n <= 16) {
+    // Elliptical arrangement
+    const rx = Math.max(200, usableWidth / 2 - rootW / 2 - 40);
+    const ry = Math.max(150, usableHeight / 2 - rootH / 2 - 30);
+    
+    for (let i = 0; i < n; i++) {
+      const angle = (2 * Math.PI * i) / n - Math.PI / 2;
+      const x = cx + rx * Math.cos(angle) - nodeW / 2;
+      const y = cy + ry * Math.sin(angle) - nodeH / 2;
+      positions.push({ x: Math.max(margin, Math.min(w - margin - nodeW, x)), y: Math.max(margin, Math.min(h - margin - nodeH, y)) });
+    }
+  } else {
+    // Grid layout: multiple rows, columns
+    const cols = Math.max(3, Math.min(6, Math.ceil(Math.sqrt(n * w / h))));
+    const rows = Math.ceil(n / cols);
+    const cellW = usableWidth / cols;
+    const cellH = Math.min(120, usableHeight / rows);
+    
+    for (let i = 0; i < n; i++) {
+      const row = Math.floor(i / cols);
+      const col = i % cols;
+      const x = margin + cellW * col + (cellW - nodeW) / 2;
+      const y = margin + cellH * row + (cellH - nodeH) / 2;
+      positions.push({ x, y, row, col });
+    }
+  }
+  
+  // Create word nodes
+  const nodeElements = [];
+  for (let i = 0; i < n; i++) {
+    const w = words[i];
+    const pos = positions[i];
+    const isL = learnedSet.has(w.en);
+    
+    const nodeDiv = document.createElement('div');
+    nodeDiv.className = 'word-node' + (isL ? ' learned' : '');
+    nodeDiv.style.cssText = 'position:absolute;left:' + pos.x + 'px;top:' + pos.y + 'px;';
+    nodeDiv.setAttribute('data-word', w.en);
+    nodeDiv.setAttribute('data-index', i);
+    
+    nodeDiv.innerHTML = '<div class="word-en">' + esc(w.en) + '</div>' +
+      '<div class="word-zh">' + esc(w.zh) + '</div>' +
+      '<span class="word-level ' + (w.level === '高频' ? 'high' : 'mid') + '"></span>';
+    
+    nodeDiv.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleLearned(w.en);
+    });
+    
+    container.appendChild(nodeDiv);
+    nodeElements.push({ el: nodeDiv, x: pos.x + nodeW / 2, y: pos.y + nodeH / 2, word: w });
+  }
+  
+  // Draw SVG connections
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+  filter.setAttribute('id', 'glow-' + containerId);
+  filter.innerHTML = '<feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>';
+  defs.appendChild(filter);
+  svg.appendChild(defs);
+  
+  for (let i = 0; i < nodeElements.length; i++) {
+    const ne = nodeElements[i];
+    
+    // Create curved path from root center to word node center
+    const midX = (rcx + ne.x) / 2;
+    const midY = Math.min(rcy, ne.y) - 30;
+    
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const d = 'M' + rcx + ',' + rcy + ' Q' + midX + ',' + midY + ' ' + ne.x + ',' + ne.y;
+    path.setAttribute('d', d);
+    path.setAttribute('class', 'connection-line');
+    path.setAttribute('data-target', i);
+    svg.appendChild(path);
+    
+    // Hover handlers
+    ne.el.addEventListener('mouseenter', function() {
+      path.classList.add('active');
+      path.setAttribute('filter', 'url(#glow-' + containerId + ')');
+    });
+    ne.el.addEventListener('mouseleave', function() {
+      path.classList.remove('active');
+      path.removeAttribute('filter');
+    });
+  }
+}
+
 function renderContent(filteredGroups) {
   const ct = document.getElementById('content');
   if (filteredGroups.length === 0) {
     ct.innerHTML = '<div class="empty-state"><div class="big-emoji">🔍</div><h2>没有匹配的单词</h2><p>试试其他搜索词或筛选条件</p></div>';
-    document.getElementById('sidebar').innerHTML = '<h3>词根导图（0）</h3>';
+    document.getElementById('sidebar').innerHTML = '<h3>词根网络（0）</h3>';
     return;
   }
 
   ct.innerHTML = filteredGroups.map(g => {
     const gid = 'g-' + encodeURIComponent(g.theme);
-    const imgName = encodeURIComponent(g.theme);
-    return '<div class="section collapsed" id="' + gid + '">' +
-      '<div class="section-hero" style="background-image:url(img/' + imgName + '.jpg)" onclick="toggleSection(this.parentElement)">' +
-        '<div class="hero-emoji">' + g.emoji + '</div>' +
-        '<div class="hero-text">' +
-          '<div class="hero-title">' + esc(g.theme) + '</div>' +
-          '<div class="hero-sub">' + g.words.length + ' 词 · 词根组</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="section-header" onclick="toggleSection(this.parentElement)">' +
-        '<div class="s-info"><span class="s-label">词根 <strong>' + esc(g.theme) + '</strong> · 衍生 <strong>' + g.words.length + '</strong> 词</span></div>' +
-        '<span class="s-arrow">▼</span>' +
-      '</div>' +
-      '<div class="word-grid">' +
-        g.words.map(w => {
-          const isL = learnedSet.has(w.en);
-          const wid = 'w-' + encodeURIComponent(w.en);
-          const initials = w.en.charAt(0).toUpperCase();
-          const c1 = g.thumb_c1 || '#e8f0fe';
-          const c2 = g.thumb_c2 || '#f0e8ff';
-          return '<div class="word-card' + (isL ? ' learned' : '') + '" id="' + wid + '">' +
-            '<div class="card-thumb" style="background:linear-gradient(135deg,' + c1 + ',' + c2 + ')">' + initials + '</div>' +
-            '<div class="card-body">' +
-              '<div class="card-en">' + esc(w.en) + '</div>' +
-              '<div class="card-zh">' + esc(w.zh) + '</div>' +
-              '<div class="card-meta">' +
-                '<span class="card-level ' + (w.level === '高频' ? 'high' : 'mid') + '">' + w.level + '</span>' +
-                (w.root ? '<span style="font-size:10px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="' + escAttr(w.root) + '">' + esc(w.root) + '</span>' : '') +
-              '</div>' +
-            '</div>' +
-            '<button class="btn-learned' + (isL ? ' done' : '') + '" onclick="event.stopPropagation();toggleLearned(\'' + escAttr(w.en) + '\')" title="' + (isL ? '已掌握（点击恢复）' : '标记为已掌握') + '">' + (isL ? '✓' : '+') + '</button>' +
-          '</div>';
-        }).join('') +
-      '</div></div>';
+    return buildMindmapHTML(g, gid);
   }).join('');
+  
+  // Position nodes after DOM update
+  requestAnimationFrame(() => {
+    filteredGroups.forEach(g => {
+      const gid = 'g-' + encodeURIComponent(g.theme);
+      const containerId = 'mc-' + encodeURIComponent(g.theme);
+      const svgId = containerId + '-svg';
+      positionMindmapNodes(g, containerId, svgId);
+    });
+    setupScrollSpy();
+  });
 }
 
 function esc(s) {
@@ -589,26 +732,17 @@ function escAttr(s) {
   return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-function toggleSection(section) {
-  section.classList.toggle('collapsed');
-  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-  document.querySelector('[data-target="' + section.id + '"]')?.classList.add('active');
-}
-
 function toggleLearned(word) {
   if (learnedSet.has(word)) learnedSet.delete(word);
   else learnedSet.add(word);
   saveProgress();
-
-  const card = document.getElementById('w-' + encodeURIComponent(word));
-  if (card) {
+  
+  // Update all node elements for this word
+  document.querySelectorAll('.word-node[data-word="' + escAttr(word) + '"]').forEach(card => {
     const isL = learnedSet.has(word);
     card.classList.toggle('learned', isL);
-    const btn = card.querySelector('.btn-learned');
-    btn.classList.toggle('done', isL);
-    btn.innerHTML = isL ? '✓' : '+';
-    btn.title = isL ? '已掌握（点击恢复）' : '标记为已掌握';
-  }
+  });
+  
   updateStats();
 }
 
@@ -630,6 +764,13 @@ function closeSidebar() {
   document.getElementById('sidebarOverlay').classList.remove('open');
 }
 
+// Resize handler for SVG redraw
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => renderAll(), 200);
+});
+
 document.getElementById('searchInput').addEventListener('input', function() {
   searchQuery = this.value;
   renderAll();
@@ -642,6 +783,16 @@ document.querySelectorAll('.level-filter button').forEach(btn => {
     activeLevel = this.dataset.level;
     renderAll();
   });
+});
+
+// Keyboard shortcut: Escape to clear search
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.getElementById('searchInput').value = '';
+    searchQuery = '';
+    renderAll();
+    document.getElementById('searchInput').blur();
+  }
 });
 </script>
 </body>
