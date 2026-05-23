@@ -1097,8 +1097,16 @@ function getQuestions(category, count) {
 }
 
 function startQuiz(category) {
+  console.log('startQuiz called with category:', category);
   const count = category === 'all' ? 10 : (QUESTION_BANK[category] || []).length;
   const questions = getQuestions(category, count);
+
+  if (!questions || questions.length === 0) {
+    console.error('No questions available for category:', category);
+    return;
+  }
+
+  console.log('Starting quiz with', questions.length, 'questions');
 
   quizState = {
     questions,
@@ -1106,6 +1114,8 @@ function startQuiz(category) {
     score: 0, correct: 0, wrong: 0,
     timer: null, seconds: 0,
     answered: false, category,
+    isWrongReview: false,
+    isMockExam: false,
   };
 
   document.getElementById('quizSetup').style.display = 'none';
@@ -1249,12 +1259,21 @@ function backToMenu() {
 }
 
 function restartQuiz() {
+  console.log('restartQuiz called, quizState:', quizState);
+
+  // 清理之前的状态
+  if (quizState.timer) {
+    clearInterval(quizState.timer);
+  }
+
   if (quizState.isWrongReview) {
     reviewAllWrongQuestions();
   } else if (quizState.isMockExam) {
     startMockExam();
   } else {
-    startQuiz(quizState.category);
+    const category = quizState.category || 'all';
+    console.log('Restarting quiz with category:', category);
+    startQuiz(category);
   }
 }
 
