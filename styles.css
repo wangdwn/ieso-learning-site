@@ -2962,6 +2962,19 @@ body.menu-open { overflow: hidden; }
   }
 }
 
+/* ====== 脉冲动画 ====== */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+  }
+}
+
 /* ====== 夜间模式调整 ====== */
 [data-theme="dark"] .hero-bg-image {
   filter: brightness(0.7);
@@ -2981,4 +2994,9 @@ body.menu-open { overflow: hidden; }
 
 [data-theme="dark"] .textbook-card {
   background: var(--bg-card);
+}
+
+/* ====== 脉冲动画类 - 用于按钮触发的滚动反馈 ====== */
+.pulse-animation {
+  animation: pulse 0.6s ease-out !important;
 }

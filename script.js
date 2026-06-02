@@ -1,13 +1,20 @@
+console.log('🚀 IESO Learning Site script.js loaded');
+console.log('📍 Page ready state:', document.readyState);
+
 // ====== 页面数据（含难度等级） ======
 // 难度: beginner / intermediate / advanced
 const RESOURCES = [
   // ---- 🟢 入门级 ----
-  { title: '普通地质学 (中国地质大学·武汉)', type: '视频/课程', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/learn/CUG-1461114173' },
+  { title: '普通地质学 (中国地质大学·武汉)', type: '视频/课程', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1461114173' },
   { title: '地球科学概论 (武汉大学)', type: '视频/课程', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/WHU-1464100169' },
   { title: '地球科学概论 (中国地质大学·武汉)', type: '视频/课程', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1449341163' },
-  { title: '地质学基础 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/learn/CUG-1002833002' },
+  { title: '地质学基础 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1002833002' },
   { title: 'B站 地球科学入门视频合集', type: '视频', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E5%9C%B0%E7%90%83%E7%A7%91%E5%AD%A6%E5%85%A5%E9%97%A8' },
-  { title: 'High School Earth Science (Wikibooks)', type: '教材', category: '综合', diff: 'beginner', url: 'https://en.wikibooks.org/wiki/High_School_Earth_Science' },
+  { title: 'B站 地质学入门视频合集', type: '视频', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E5%9C%B0%E8%B4%A8%E5%AD%A6%E5%85%A5%E9%97%A8' },
+  { title: 'B站 气象学入门视频合集', type: '视频', category: '气象学', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E6%B0%94%E8%B1%A1%E5%AD%A6%E5%85%A5%E9%97%A8' },
+  { title: 'B站 天文与宇宙学入门视频合集', type: '视频', category: '天文学', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E5%A4%A9%E6%96%87%E5%AD%A6%E5%85%A5%E9%97%A8' },
+  { title: '国家地理 地球科学专题', type: '教材', category: '综合', diff: 'beginner', url: 'https://www.nationalgeographic.com/science/earth/' },
+  { title: 'Khan Academy 宇宙与天文学', type: '视频', category: '天文学', diff: 'beginner', url: 'https://www.khanacademy.org/science/cosmology-and-astronomy' },
 
   // ---- 🟡 进阶级 ----
   { title: 'MIT OCW 12.001 地质学导论', type: '视频', category: '地质学', diff: 'intermediate', url: 'https://ocw.mit.edu/courses/12-001-introduction-to-geology-fall-2013/' },
@@ -17,67 +24,35 @@ const RESOURCES = [
   { title: '气象学与气候学 (河南大学)', type: '视频/课程', category: '气象学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/HENU-1465598161' },
   { title: '构造地质学 (西北大学)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/NWU-1002844007' },
   { title: '综合地质学 (中国地质大学·北京)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/ZGDZDXBJ-1454050176' },
-  { title: '地球科学 Youtube 系列播放列表', type: '视频', category: '综合', diff: 'intermediate', url: 'https://www.youtube.com/watch?v=ELk00HqFjK4&list=PLNycEeeRg4mU3NDhxQQfOGPJzYWhbWdkE' },
+  { title: '结晶学及矿物学 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1001902005' },
+  { title: '古生物学：史前生命历程 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1473931174' },
+  { title: '岩石学 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/cug-1205966807' },
+  { title: '天文学导论 (中国科学技术大学)', type: '课程', category: '天文学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/ustc-1462062166' },
+  { title: '雷达气象 (南京大学)', type: '课程', category: '气象学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/NJU-1465378162' },
+  { title: 'MIT OCW 12.003 大气与海洋科学', type: '视频', category: '气象学', diff: 'intermediate', url: 'https://ocw.mit.edu/courses/12-003-atmosphere-ocean-and-climate-dynamics-fall-2008/' },
   { title: 'USESO Guide 教学讲义 (200+页)', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.useso.guide/home' },
-  { title: 'Study.com Earth Science 101', type: '课程', category: '综合', diff: 'intermediate', url: 'https://study.com/academy/course/earth-science-101-earth-science.html' },
-  { title: '普通地质学 (西安交通大学)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/spoc/course/XJTU-1472689171' },
-
-  // ---- 🔴 竞赛级 ----
-  { title: 'IESO 官方 Syllabus PDF', type: '教材', category: '综合', diff: 'advanced', url: 'http://www.ieso-info.org/wp-content/uploads/2012/11/IESO-official-Syllabus.pdf' },
-  { title: 'IESO 历年真题 (Google Drive)', type: '真题', category: '综合', diff: 'advanced', url: 'https://drive.google.com/drive/folders/0BzIJwhfagEzbMmxyWFBhVWpRWUU' },
-  { title: 'USESO 国家选拔考试真题', type: '真题', category: '综合', diff: 'advanced', url: 'https://www.useso.org/resources/preparation/' },
-  { title: '纽约州 Regents 地球科学试题', type: '真题', category: '综合', diff: 'advanced', url: 'https://www.nysedregents.org/earthscience/' },
-  { title: 'IESO 实践测试 (ESP) 真题', type: '真题', category: '实践', diff: 'advanced', url: 'https://www.geosocindia.org/index.php/ieso/Questions_From_Past_IESOs' },
-  { title: 'USESO Unofficial Guide PDF', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.useso.org/wp-content/uploads/2019/09/Unofficial-USESO-Guide.pdf' },
-  { title: '地球科学奥赛 Discord 社区', type: '社区', category: '综合', diff: 'advanced', url: 'https://discord.gg/37kbr2XD8h' },
-  { title: 'Crash Course 地球科学系列 (Youtube)', type: '视频', category: '综合', diff: 'beginner', url: 'https://www.youtube.com/playlist?list=PL8dPuuaLjXtPAJr3LGrVqEkHMvHzMYCr1' },
-  { title: 'Earth Science: Geology, Environment, and Universe (Glencoe)', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.mheducation.com/prek-12/program/earth-science-geology-environment-universe/MKTSP-02M5S01.html' },
+  { title: 'Earth Science (Glencoe)', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.mheducation.com/prek-12/program/earth-science-geology-environment-universe/MKTSP-02M5S01.html' },
   { title: 'NASA 地球观测站 (EO)', type: '教材', category: '综合', diff: 'intermediate', url: 'https://earthobservatory.nasa.gov/' },
   { title: 'NOAA 国家海洋和大气管理局教育门户', type: '教材', category: '气象学', diff: 'intermediate', url: 'https://www.noaa.gov/education' },
-  { title: '矿物学 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1002833007' },
-  { title: '古生物学 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1003475001' },
-  { title: '结晶学与矿物学 (南京大学)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/NJU-1001753025' },
-  { title: '海洋科学导论 (中国海洋大学)', type: '课程', category: '海洋学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/OUC-1205797807' },
-  { title: '天文学导论 (北京师范大学)', type: '课程', category: '天文学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/BNU-1467682173' },
-  { title: '大气科学概论 (兰州大学)', type: '课程', category: '气象学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/LZU-1205801802' },
-  { title: 'Khan Academy 宇宙与天文学', type: '视频', category: '天文学', diff: 'beginner', url: 'https://www.khanacademy.org/science/cosmology-and-astronomy' },
-  { title: 'ESS Earth Science (USC)', type: '视频', category: '综合', diff: 'intermediate', url: 'https://www.youtube.com/playlist?list=PLxTnhxrMdwQmpSs32imSC7ozth-ifyOAw' },
-  { title: 'Earth Science Regents Review', type: '视频', category: '综合', diff: 'intermediate', url: 'https://www.youtube.com/playlist?list=PLio8D8E1Ym4s5gC0BfAZ0ptHLEvHLAvls' },
-  { title: 'IGCP (国际地质对比计划) 学习资源', type: '教材', category: '地质学', diff: 'advanced', url: 'https://www.unesco.org/en/igcp' },
-
-  // ---- 🟢 入门级（新增）----
-  { title: '地球系统科学导论 (清华大学)', type: '课程', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://www.xuetangx.com/course/THU07061000307' },
-  { title: '行星科学导论 (南京大学)', type: '课程', category: '天文学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/NJU-1468154164' },
-  { title: '地理信息系统概论 (中山大学)', type: '课程', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/SYSU-1205956802' },
-  { title: 'B站 地质学入门完整课程', type: '视频', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.bilibili.com/video/BV1bx411j7pV' },
-  { title: 'B站 气象学基础课程', type: '视频', category: '气象学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.bilibili.com/video/BV1zs411Z7JK' },
-  { title: '国家地理 地球科学专题', type: '教材', category: '综合', diff: 'beginner', url: 'https://www.nationalgeographic.com/science/earth/' },
-
-  // ---- 🟡 进阶级（新增）----
-  { title: '岩石学 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1002608007' },
-  { title: '沉积学与层序地层学 (中国地质大学)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1206454804' },
-  { title: '大气物理与大气探测 (南京大学)', type: '课程', category: '气象学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/NJU-1001752018' },
-  { title: '海洋调查方法 (中国海洋大学)', type: '课程', category: '海洋学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/OUC-1206175821' },
-  { title: '物理海洋学 (中国海洋大学)', type: '课程', category: '海洋学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/OUC-1003712003' },
-  { title: '宇宙学导论 (中国科学技术大学)', type: '课程', category: '天文学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/USTC-1003571002' },
-  { title: '地球物理勘探概论 (中国地质大学)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1002832006' },
-  { title: 'MIT OCW 12.002 地球内部', type: '视频', category: '地质学', diff: 'intermediate', url: 'https://ocw.mit.edu/courses/12-002-contraints-in-earth-sciences-fall-2004/' },
-  { title: 'MIT OCW 12.003 大气与海洋科学', type: '视频', category: '气象学', diff: 'intermediate', url: 'https://ocw.mit.edu/courses/12-003-atmosphere-ocean-and-climate-dynamics-fall-2008/' },
-  { title: 'Stanford EESS 地球系统科学课程', type: '课程', category: '综合', diff: 'intermediate', url: 'https://earth.stanford.edu/eess' },
   { title: 'USGS 地质灾害学习资源', type: '教材', category: '地质学', diff: 'intermediate', url: 'https://www.usgs.gov/science/earth-hazards' },
   { title: 'WMO 世界气象组织教育资源', type: '教材', category: '气象学', diff: 'intermediate', url: 'https://public.wmo.int/en/resources' },
   { title: 'Scripps 海洋学研究所教育资源', type: '教材', category: '海洋学', diff: 'intermediate', url: 'https://scripps.ucsd.edu/education' },
+  { title: 'IGCP (国际地质对比计划) 学习资源', type: '教材', category: '地质学', diff: 'intermediate', url: 'https://www.unesco.org/en/igcp' },
 
-  // ---- 🔴 竞赛级（新增）----
+  // ---- 🔴 竞赛级 ----
+  { title: 'IESO 官方 Syllabus PDF', type: '教材', category: '综合', diff: 'advanced', url: 'http://www.ieso-info.org/wp-content/uploads/2012/11/IESO-official-Syllabus.pdf' },
+  { title: 'USESO 国家选拔考试真题', type: '真题', category: '综合', diff: 'advanced', url: 'https://www.useso.org/resources/preparation/' },
+  { title: 'USESO Unofficial Guide PDF', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.useso.org/wp-content/uploads/2019/09/Unofficial-USESO-Guide.pdf' },
+  { title: '纽约州 Regents 地球科学试题', type: '真题', category: '综合', diff: 'advanced', url: 'https://www.nysedregents.org/earthscience/' },
+  { title: 'IESO 实践测试 (ESP) 真题', type: '真题', category: '实践', diff: 'advanced', url: 'https://www.geosocindia.org/index.php/ieso/Questions_From_Past_IESOs' },
   { title: '中国地球科学奥林匹克竞赛官网', type: '社区', category: '综合', diff: 'advanced', tag: '🇨🇳', url: 'http://ceso.ssoc.org.cn/' },
   { title: '中国地质学会 学习资源', type: '教材', category: '地质学', diff: 'advanced', tag: '🇨🇳', url: 'https://www.geosociety.org.cn/' },
-  { title: 'IGY 国际地球物理年资料', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.nasa.gov/topics/earth/features/igy.html' },
   { title: 'AGU 美国地球物理联合会学习资源', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.agu.org/learn-about-agu' },
   { title: 'EGU 欧洲地球科学联盟教育资源', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.egu.eu/education/' },
   { title: 'Nature Geoscience 精选文章', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.nature.com/ngeo/' },
   { title: 'Science 地球科学专题', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.science.org/journals/science' },
   { title: 'Geology 地质学顶刊', type: '教材', category: '地质学', diff: 'advanced', url: 'https://pubs.geoscienceworld.org/gsa/geology' },
-  { title: 'Journal of Climate 气候学期刊', type: '教材', category: '气象学', diff: 'advanced', url: 'https://journals.ametsoc.org/view/journals/clim/33/1/jcli-d-19-0352.1.xml' },
+  { title: 'Journal of Climate 气候学期刊', type: '教材', category: '气象学', diff: 'advanced', url: 'https://journals.ametsoc.org/view/journals/clim/clim-overview.xml' },
   { title: 'Journal of Geophysical Research', type: '教材', category: '综合', diff: 'advanced', url: 'https://agupubs.onlinelibrary.wiley.com/journal/21562202' },
 ];
 
@@ -1094,8 +1069,16 @@ function getQuestions(category, count) {
 }
 
 function startQuiz(category) {
+  console.log('startQuiz called with category:', category);
   const count = category === 'all' ? 10 : (QUESTION_BANK[category] || []).length;
   const questions = getQuestions(category, count);
+
+  if (!questions || questions.length === 0) {
+    console.error('No questions available for category:', category);
+    return;
+  }
+
+  console.log('Starting quiz with', questions.length, 'questions');
 
   quizState = {
     questions,
@@ -1103,6 +1086,8 @@ function startQuiz(category) {
     score: 0, correct: 0, wrong: 0,
     timer: null, seconds: 0,
     answered: false, category,
+    isWrongReview: false,
+    isMockExam: false,
   };
 
   document.getElementById('quizSetup').style.display = 'none';
@@ -1246,12 +1231,21 @@ function backToMenu() {
 }
 
 function restartQuiz() {
+  console.log('restartQuiz called, quizState:', quizState);
+
+  // 清理之前的状态
+  if (quizState.timer) {
+    clearInterval(quizState.timer);
+  }
+
   if (quizState.isWrongReview) {
     reviewAllWrongQuestions();
   } else if (quizState.isMockExam) {
     startMockExam();
   } else {
-    startQuiz(quizState.category);
+    const category = quizState.category || 'all';
+    console.log('Restarting quiz with category:', category);
+    startQuiz(category);
   }
 }
 
@@ -2050,6 +2044,7 @@ const header = document.getElementById('header');
 let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
+  if (!header) return;
   const scrollY = window.scrollY;
   header.classList.toggle('scrolled', scrollY > 50);
 
@@ -2078,28 +2073,30 @@ window.addEventListener('scroll', () => {
 const menuToggle = document.getElementById('menuToggle');
 const nav = document.getElementById('nav');
 
-menuToggle.addEventListener('click', () => {
-  nav.classList.toggle('open');
-  document.body.classList.toggle('menu-open');
-});
-
-// 点击导航链接后关闭菜单
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    document.body.classList.remove('menu-open');
+if (menuToggle && nav) {
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    document.body.classList.toggle('menu-open');
   });
-});
 
-// 点击导航外部关闭菜单
-document.addEventListener('click', (e) => {
-  if (nav.classList.contains('open') &&
-      !nav.contains(e.target) &&
-      !menuToggle.contains(e.target)) {
-    nav.classList.remove('open');
-    document.body.classList.remove('menu-open');
-  }
-});
+  // 点击导航链接后关闭菜单
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      document.body.classList.remove('menu-open');
+    });
+  });
+
+  // 点击导航外部关闭菜单
+  document.addEventListener('click', (e) => {
+    if (nav.classList.contains('open') &&
+        !nav.contains(e.target) &&
+        !menuToggle.contains(e.target)) {
+      nav.classList.remove('open');
+      document.body.classList.remove('menu-open');
+    }
+  });
+}
 
 // ====== 滚动动画 ======
 const observer = new IntersectionObserver((entries) => {
@@ -2151,6 +2148,7 @@ const searchResults = document.getElementById('searchResults');
 // getDiffLabel is defined below in the resource filter section
 
 function performSearch() {
+  if (!searchInput || !searchResults) return;
   const query = searchInput.value.trim().toLowerCase();
   if (!query) {
     searchResults.innerHTML = '';
@@ -2180,10 +2178,14 @@ function performSearch() {
   `).join('');
 }
 
-searchBtn.addEventListener('click', performSearch);
-searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') performSearch();
-});
+if (searchBtn) {
+  searchBtn.addEventListener('click', performSearch);
+}
+if (searchInput) {
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') performSearch();
+  });
+}
 
 // ====== 资源分类筛选浏览 ======
 function applyResourceFilter() {
@@ -2196,8 +2198,13 @@ function getDiffLabel(diff) {
 }
 
 function renderFilteredResources() {
+  console.log('📚 renderFilteredResources() called');
   const container = document.getElementById('resourceBrowserResults');
-  if (!container) return;
+  if (!container) {
+    console.error('❌ Resource container NOT found!');
+    return;
+  }
+  console.log('✅ Resource container found, resources in RESOURCES:', RESOURCES.length);
 
   const typeEl = document.getElementById('resFilterType');
   const catEl = document.getElementById('resFilterCategory');
@@ -2426,34 +2433,41 @@ function openModal(type) {
         <h2 style="font-size:24px;font-weight:700;margin-bottom:20px;">📖 推荐教材</h2>
         <p style="color:var(--gray-600);margin-bottom:20px;">IESO 官方推荐及历届奖牌得主亲荐经典教材。</p>
         <div style="display:grid;gap:12px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;">
+          <a href="https://www.wwnorton.com/books/9780393882641" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
             <div>
               <span style="font-weight:600;">Earth: Portrait of a Planet</span>
               <p style="font-size:12px;color:var(--gray-400);">Marshak · 入门首选</p>
             </div>
-            <span style="color:var(--primary);font-size:13px;">🥇 推荐</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;">
+            <span style="color:var(--primary);font-size:13px;">🥇 前往 →</span>
+          </a>
+          <a href="https://www.macmillanlearning.com/college/us/product/Understanding-Earth/p/131905532X" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
             <div>
               <span style="font-weight:600;">Understanding Earth</span>
               <p style="font-size:12px;color:var(--gray-400);">Grotzinger & Jordan · 进阶</p>
             </div>
-            <span style="color:var(--primary);font-size:13px;">🥈 推荐</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;">
+            <span style="color:var(--primary);font-size:13px;">🥈 前往 →</span>
+          </a>
+          <a href="https://www.cengage.com/c/meteorology-today-11e-ahrens/9781337612571/" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
             <div>
               <span style="font-weight:600;">Meteorology Today</span>
               <p style="font-size:12px;color:var(--gray-400);">Ahrens · 气象学权威</p>
             </div>
-            <span style="color:var(--gray-400);font-size:13px;">🥉</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;">
+            <span style="color:var(--primary);font-size:13px;">🥉 前往 →</span>
+          </a>
+          <a href="https://book.douban.com/subject/25850729/" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
+            <div>
+              <span style="font-weight:600;">普通地质学（第三版）</span>
+              <p style="font-size:12px;color:var(--gray-400);">舒良树 · 中文入门首选</p>
+            </div>
+            <span style="color:var(--primary);font-size:13px;">📘 前往 →</span>
+          </a>
+          <a href="http://www.ieso-info.org/wp-content/uploads/2012/11/IESO-official-Syllabus.pdf" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
             <div>
               <span style="font-weight:600;">IESO 官方 Syllabus</span>
               <p style="font-size:12px;color:var(--gray-400);">官方考试大纲 PDF</p>
             </div>
-            <a href="http://www.ieso-info.org/wp-content/uploads/2012/11/IESO-official-Syllabus.pdf" target="_blank" style="color:var(--primary);font-size:13px;">下载</a>
-          </div>
+            <span style="color:var(--primary);font-size:13px;">📥 下载</span>
+          </a>
         </div>
         <p style="margin-top:16px;color:var(--gray-400);font-size:13px;">共 12+ 本核心教材 · 部分资源可免费获取</p>
       `;
@@ -2548,6 +2562,11 @@ function openModal(type) {
       content = '<p>功能开发中...</p>';
   }
 
+  if (!modalContent || !modalOverlay) {
+    console.error('Modal elements not found in openModal');
+    return;
+  }
+
   modalContent.innerHTML = content;
   modalOverlay.classList.add('show');
   document.body.style.overflow = 'hidden';
@@ -2578,13 +2597,17 @@ function openModal(type) {
 }
 
 function closeModal() {
-  modalOverlay.classList.remove('show');
+  if (modalOverlay) {
+    modalOverlay.classList.remove('show');
+  }
   document.body.style.overflow = '';
 }
 
-modalOverlay.addEventListener('click', (e) => {
-  if (e.target === modalOverlay) closeModal();
-});
+if (modalOverlay) {
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+}
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeModal();
@@ -2617,33 +2640,81 @@ function toggleDarkMode() {
 
 // ====== 页面初始化 ======
 document.addEventListener('DOMContentLoaded', function() {
-  // 渲染资源列表
-  if (typeof renderFilteredResources === 'function') {
-    renderFilteredResources();
+  console.log('Page DOMContentLoaded event fired');
+  
+  // 渲染资源列表 - 带容错
+  try {
+    if (typeof renderFilteredResources === 'function') {
+      renderFilteredResources();
+      console.log('Resources rendered successfully');
+    } else {
+      console.warn('renderFilteredResources function not available');
+    }
+  } catch (e) {
+    console.error('Error rendering resources:', e);
   }
 
   // 初始化社区帖子
-  if (typeof initCommunity === 'function') {
-    initCommunity();
+  try {
+    if (typeof initCommunity === 'function') {
+      initCommunity();
+    }
+  } catch (e) {
+    console.error('Error initializing community:', e);
   }
 
   // 初始化题库统计
-  if (typeof updateQuizStats === 'function') {
-    updateQuizStats();
-  }
-  if (typeof updateWrongReviewBtn === 'function') {
-    updateWrongReviewBtn();
+  try {
+    if (typeof updateQuizStats === 'function') {
+      updateQuizStats();
+    }
+    if (typeof updateWrongReviewBtn === 'function') {
+      updateWrongReviewBtn();
+    }
+  } catch (e) {
+    console.error('Error updating quiz stats:', e);
   }
 
   // 绑定教程卡片点击事件
-  initTutorialCards();
+  try {
+    initTutorialCards();
+  } catch (e) {
+    console.error('Error initializing tutorial cards:', e);
+  }
+
+  // 绑定教材卡片点击事件
+  try {
+    initTextbookCards();
+  } catch (e) {
+    console.error('Error initializing textbook cards:', e);
+  }
 
   // 绑定教程标签筛选
-  initTutorialTabs();
+  try {
+    initTutorialTabs();
+  } catch (e) {
+    console.error('Error initializing tutorial tabs:', e);
+  }
+  
+  // 额外的后备初始化，确保所有交互元素都能工作
+  setTimeout(function() {
+    console.log('Post-load initialization check...');
+    // 检查 scrollToTutorials 是否可用
+    if (typeof scrollToTutorials !== 'function') {
+      console.warn('scrollToTutorials is not defined');
+    }
+    // 重新尝试资源渲染
+    if (document.getElementById('resourceBrowserResults').innerHTML === '') {
+      console.warn('Resource browser is empty, retrying...');
+      if (typeof renderFilteredResources === 'function') {
+        renderFilteredResources();
+      }
+    }
+  }, 500);
 });
 
 // ====== 教程详情数据 ======
-const TUTORIALS = [
+var TUTORIALS = [
   {
     id: 'geo-1',
     title: '矿物与岩石基础',
@@ -2953,15 +3024,246 @@ const TUTORIALS = [
       <li><strong>实践测试</strong>：野外考察、实验室操作</li>
       <li><strong>备考计划</strong>：12-18个月系统复习方案</li>
     </ul>`
+  },
+  // ====== 新增教程数据 ======
+  {
+    id: 'met-6',
+    title: '气象卫星与遥感技术应用',
+    category: 'meteorology',
+    level: '进阶',
+    duration: '45分钟',
+    chapters: ['气象卫星发展史', '极轨卫星与静止卫星', '卫星云图类型', '红外与水汽通道', '云图判读技巧', '台风监测实例', '卫星数据应用'],
+    content: `<p>气象卫星是现代天气预报的重要工具：</p>
+    <ul>
+      <li><strong>卫星类型</strong>：极轨卫星（低分辨率、全球覆盖）与静止卫星（高频率、区域监测）</li>
+      <li><strong>云图判读</strong>：可见光、红外、水汽通道的不同应用</li>
+      <li><strong>实际应用</strong>：台风追踪、暴雨监测、气候研究</li>
+    </ul>`
+  },
+  {
+    id: 'oce-5',
+    title: '海底地形与洋壳构造',
+    category: 'oceanography',
+    level: '进阶',
+    duration: '50分钟',
+    chapters: ['海底探测技术', '大陆边缘地形', '大洋中脊系统', '深海平原与海山', '海沟与俯冲带', '洋壳组成与结构', '海底扩张证据', '热液喷口系统'],
+    content: `<p>探索神秘的海底世界：</p>
+    <ul>
+      <li><strong>海底地貌</strong>：大陆架、大陆坡、深海平原、海沟</li>
+      <li><strong>洋壳结构</strong>：层1（沉积层）、层2（玄武岩）、层3（辉长岩）</li>
+      <li><strong>特殊环境</strong>：热液喷口生物群落、冷泉系统</li>
+    </ul>`
+  },
+  {
+    id: 'ast-6',
+    title: '星座与天球坐标系',
+    category: 'astronomy',
+    level: '入门',
+    duration: '35分钟',
+    chapters: ['天球概念', '星座基础', '黄道十二宫', '赤道坐标系', '地平坐标系', '时角与星时'],
+    content: `<p>认识星空的第一步：</p>
+    <ul>
+      <li><strong>天球坐标</strong>：赤经、赤纬、时角的概念与应用</li>
+      <li><strong>主要星座</strong>：北斗七星、猎户座、天蝎座等辨识</li>
+      <li><strong>星空观测</strong>：不同季节可见的星座变化</li>
+    </ul>`
+  },
+  {
+    id: 'geo-6',
+    title: '地震学与地球内部结构',
+    category: 'geology',
+    level: '竞赛',
+    duration: '55分钟',
+    chapters: ['地震波基础', 'P波与S波特性', '地球内部圈层', '莫霍面与古登堡面', '地震定位原理', '震源机制解', '地震灾害评估', '海啸预警', 'IESO地震学真题', '综合案例分析'],
+    content: `<p>地震波是探测地球内部的"X射线"：</p>
+    <ul>
+      <li><strong>地震波</strong>：P波、S波、面波的传播特性差异</li>
+      <li><strong>地球圈层</strong>：地壳、地幔、外核、内核的发现证据</li>
+      <li><strong>震源机制</strong>：断层类型与地震危险性分析</li>
+    </ul>
+    <p>这是 IESO 考试的高频考点，需重点掌握。</p>`
+  },
+  {
+    id: 'com-4',
+    title: 'IESO 团队合作项目攻略',
+    category: 'all',
+    level: '竞赛',
+    duration: '90分钟',
+    chapters: ['IESO项目类型', '国际团队项目(MI)', '地球系统项目(ESP)', '团队协作技巧', '数据分析方法', '报告撰写规范', '演讲技巧', '往届真题解析'],
+    content: `<p>IESO 的独特之处在于团队协作项目：</p>
+    <ul>
+      <li><strong>MI项目</strong>：与不同国家选手组成国际团队，共同解决地球科学问题</li>
+      <li><strong>ESP项目</strong>：地球系统项目，综合运用多学科知识</li>
+      <li><strong>实用技巧</strong>：跨文化交流、时间分配、角色分工</li>
+    </ul>
+    <p>团队项目成绩占总分的重要部分，不可忽视！</p>`
+  },
+  {
+    id: 'geo-7',
+    title: '遥感技术在地质调查中的应用',
+    category: 'geology',
+    level: '进阶',
+    duration: '40分钟',
+    chapters: ['遥感原理基础', '多光谱与高光谱', '地质解译标志', '岩性识别', '构造解译', '矿物填图', '遥感找矿实例'],
+    content: `<p>遥感技术让地质调查更高效：</p>
+    <ul>
+      <li><strong>基本原理</strong>：不同岩性的光谱反射特征</li>
+      <li><strong>构造解译</strong>：断层、褶皱在遥感影像上的表现</li>
+      <li><strong>实际应用</strong>：矿产资源勘查、地质灾害监测</li>
+    </ul>`
   }
 ];
+
+// ====== 教材数据 ======
+const TEXTBOOKS = [
+  {
+    id: 'tb-1',
+    title: 'Earth: Portrait of a Planet',
+    author: 'Stephen Marshak',
+    rank: 'gold',
+    category: '综合',
+    level: '入门/进阶',
+    pages: '800+',
+    language: '英文',
+    url: 'https://www.wwnorton.com/books/9780393882641',
+    description: '全球高校地球科学入门首选教材，图文并茂，内容覆盖地质学、地球系统科学等核心领域。',
+    features: ['图文并茂，插图精美', '内容系统全面', '适合入门和进阶', 'USESO/IESO 选手推荐'],
+    chapters: ['地球与太阳系', '矿物', '岩石', '地质时间', '板块构造', '地震', '地貌', '气候系统', '地球资源']
+  },
+  {
+    id: 'tb-2',
+    title: 'Understanding Earth',
+    author: 'Grotzinger & Jordan',
+    rank: 'silver',
+    category: '综合',
+    level: '进阶',
+    pages: '700+',
+    language: '英文',
+    url: 'https://www.macmillanlearning.com/college/us/product/Understanding-Earth/p/131905532X',
+    description: '进阶经典教材，内容更深，适合系统化深入学习地球系统科学。',
+    features: ['理论深度适中', '案例丰富', '适合竞赛准备', '强调系统思维'],
+    chapters: ['地球系统', '固体地球', '地表过程', '大气与海洋', '地球历史', '资源与环境']
+  },
+  {
+    id: 'tb-3',
+    title: 'Meteorology Today',
+    author: 'C. Ahrens',
+    rank: 'bronze',
+    category: '气象学',
+    level: '入门/进阶',
+    pages: '600+',
+    language: '英文',
+    url: 'https://www.cengage.com/c/meteorology-today-11e-ahrens/9781337612571/',
+    description: '气象学权威教材，覆盖大气科学、气候系统的完整知识体系。',
+    features: ['气象学权威教材', '图表示范清晰', '天气预报实践', '气候变化专题'],
+    chapters: ['大气组成与结构', '辐射与能量', '大气环流', '天气系统', '气候与气候变化', '气象观测']
+  },
+  {
+    id: 'tb-4',
+    title: '普通地质学（第三版）',
+    author: '舒良树',
+    rank: '',
+    category: '地质学',
+    level: '入门',
+    pages: '400+',
+    language: '中文',
+    url: 'https://book.douban.com/subject/10729193/',
+    description: '国内地质学入门经典，中文版首选，适合建立知识框架。',
+    features: ['中文首选', '内容精炼', '适合入门', '国内高校通用'],
+    chapters: ['矿物', '岩石', '地质构造', '板块构造', '地质作用', '地质环境']
+  }
+];
+
+// 打开教材详情
+function openTextbookModal(textbookId) {
+  const textbook = TEXTBOOKS.find(t => t.id === textbookId);
+  if (!textbook) return;
+
+  const overlay = document.getElementById('modalOverlay');
+  const content = document.getElementById('modalContent');
+  if (!overlay || !content) return;
+
+  const rankEmoji = textbook.rank === 'gold' ? '🥇' : textbook.rank === 'silver' ? '🥈' : textbook.rank === 'bronze' ? '🥉' : '📘';
+
+  content.innerHTML = `
+    <div style="margin-bottom:20px;">
+      <div style="font-size:48px;margin-bottom:12px;">${rankEmoji}</div>
+      <h2 style="font-size:24px;font-weight:800;margin-bottom:8px;">${textbook.title}</h2>
+      <p style="color:var(--gray-600);font-size:16px;">作者：${textbook.author}</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
+      <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px;">
+        <div style="font-size:14px;color:var(--gray-400);">学科</div>
+        <div style="font-weight:600;">${textbook.category}</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px;">
+        <div style="font-size:14px;color:var(--gray-400);">难度</div>
+        <div style="font-weight:600;">${textbook.level}</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px;">
+        <div style="font-size:14px;color:var(--gray-400);">页数</div>
+        <div style="font-weight:600;">${textbook.pages}</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:var(--gray-50);border-radius:8px;">
+        <div style="font-size:14px;color:var(--gray-400);">语言</div>
+        <div style="font-weight:600;">${textbook.language}</div>
+      </div>
+    </div>
+
+    <div style="background:var(--gray-50);padding:20px;border-radius:12px;margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">📚 内容简介</h3>
+      <p style="line-height:1.7;">${textbook.description}</p>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">✨ 教材特点</h3>
+      <ul style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;list-style:none;padding:0;">
+        ${textbook.features.map(f => `<li style="padding:8px 12px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:6px;font-size:14px;">✓ ${f}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;">📑 主要章节</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        ${textbook.chapters.map((ch, i) => `<span style="padding:6px 12px;background:var(--primary);color:white;border-radius:20px;font-size:13px;">${i + 1}. ${ch}</span>`).join('')}
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;">
+      <a href="${textbook.url}" target="_blank" class="btn btn-primary" style="flex:1;justify-content:center;">
+        <i class="fas fa-external-link-alt"></i> 查看详情/购买
+      </a>
+      <button onclick="closeModal()" class="btn btn-outline" style="flex:1;justify-content:center;">关闭</button>
+    </div>
+  `;
+
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+// 初始化教材卡片点击
+function initTextbookCards() {
+  document.querySelectorAll('.textbook-card').forEach((card, index) => {
+    card.style.cursor = 'pointer';
+    const textbookIds = ['tb-1', 'tb-2', 'tb-3', 'tb-4'];
+    card.addEventListener('click', () => openTextbookModal(textbookIds[index]));
+  });
+}
 
 // 教程卡片点击初始化
 function initTutorialCards() {
   document.querySelectorAll('.tutorial-card').forEach(card => {
-    card.addEventListener('click', function() {
+    card.addEventListener('click', function(e) {
+      // 如果点击的是 "开始学习" 链接，onclick 已经处理，不重复触发
+      const link = e.target.closest('a');
+      if (link && link.classList.contains('tutorial-link')) {
+        return;
+      }
       const category = this.dataset.category;
-      const title = this.querySelector('h3').textContent;
+      const h3 = this.querySelector('h3');
+      if (!h3) return;
+      const title = h3.textContent;
       openTutorialModal(title, category);
     });
   });
@@ -2990,6 +3292,8 @@ function initTutorialTabs() {
 
 // 打开教程详情模态框
 function openTutorialModal(title, category) {
+  console.log('openTutorialModal called with:', title, category);
+
   // 查找匹配的教程
   let tutorial = TUTORIALS.find(t => t.title === title);
   if (!tutorial) {
@@ -2999,13 +3303,20 @@ function openTutorialModal(title, category) {
     tutorial = TUTORIALS[0];
   }
 
+  console.log('Found tutorial:', tutorial ? tutorial.title : 'none');
+
   const overlay = document.getElementById('modalOverlay');
   const content = document.getElementById('modalContent');
+
+  if (!overlay || !content) {
+    console.error('Modal elements not found!');
+    return;
+  }
 
   const levelClass = tutorial.level === '入门' ? 'level-beginner' :
                      tutorial.level === '进阶' ? 'level-intermediate' : 'level-advanced';
 
-  const catClass = `cat-${tutorial.category === 'all' ? 'comprehensive' : tutorial.category.slice(0, -2)}`;
+  const catClass = `cat-${tutorial.category === 'all' ? 'comprehensive' : tutorial.category}`;
 
   content.innerHTML = `
     <div style="margin-bottom:24px;">
@@ -3048,6 +3359,9 @@ function openTutorialModal(title, category) {
   overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
 }
+
+// 显式暴露到 window，确保 HTML onclick 可以访问
+window.openTutorialModal = openTutorialModal;
 
 function getCategoryName(cat) {
   const map = {
@@ -3356,16 +3670,139 @@ function updateQuizCounts() {
   if (allBtn) allBtn.textContent = Math.min(totalQuestions, 10) + ' 题';
 }
 
-// 页面加载时更新题数和错题本按钮
-setTimeout(() => {
-  updateQuizCounts();
-  updateWrongReviewBtn();
-
-  // 更新英雄区统计
-  const totalQuestions = Object.values(QUESTION_BANK).reduce((sum, arr) => sum + arr.length, 0);
-  const statEls = document.querySelectorAll('.stat-number');
-  if (statEls.length > 1) {
-    const resourcesStat = statEls[1];
-    if (resourcesStat) resourcesStat.dataset.target = totalQuestions;
+// ====== 快速导航函数 ======
+function scrollToTutorials() {
+  console.log('🚀 scrollToTutorials() invoked');
+  try {
+    const tutorialsSection = document.getElementById('tutorials');
+    if (tutorialsSection) {
+      console.log('✅ tutorials section found, scrolling...');
+      // 确保 tutorials 元素可见
+      tutorialsSection.style.display = 'block';
+      
+      // 使用多种方法确保平滑滚动
+      setTimeout(function() {
+        tutorialsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log('✅ scrollIntoView executed');
+      }, 50);
+      
+      // 添加脉冲动画反馈
+      setTimeout(function() {
+        if (tutorialsSection.classList) {
+          tutorialsSection.classList.add('pulse-animation');
+          setTimeout(() => {
+            tutorialsSection.classList.remove('pulse-animation');
+          }, 600);
+        }
+      }, 150);
+    } else {
+      console.warn('⚠️ tutorials section not found, using fallback');
+      // 备选方案：使用锚点跳转
+      window.location.hash = '#tutorials';
+      setTimeout(function() {
+        window.scrollBy(0, -80);
+      }, 200);
+    }
+  } catch (err) {
+    console.error('❌ scrollToTutorials error:', err);
+    // 最终备选方案
+    window.location.hash = '#tutorials';
   }
-}, 200);
+}
+
+// 绑定所有事件的全局函数
+function bindAllEvents() {
+  console.log('🔗 Binding all events...');
+  
+  // 1. 绑定"开始学习"按钮
+  const startBtn = document.getElementById('startLearningBtn');
+  if (startBtn) {
+    startBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('👆 Start learning button clicked');
+      scrollToTutorials();
+    });
+    console.log('✅ Start learning button bound');
+  } else {
+    console.error('❌ Start learning button NOT found');
+  }
+  
+  // 2. 绑定资源筛选器
+  const resourceFilters = [
+    document.getElementById('resFilterType'),
+    document.getElementById('resFilterCategory'),
+    document.getElementById('resFilterDifficulty'),
+    document.getElementById('resFilterSearch')
+  ];
+  
+  resourceFilters.forEach((filter, i) => {
+    if (filter) {
+      if (filter.id === 'resFilterSearch') {
+        filter.addEventListener('input', function() {
+          console.log('🔍 Resource search input:', this.value);
+          applyResourceFilter();
+        });
+      } else {
+        filter.addEventListener('change', function() {
+          console.log('🔍 Resource filter changed:', this.id, '=', this.value);
+          applyResourceFilter();
+        });
+      }
+    }
+  });
+  console.log('✅ Resource filters bound');
+}
+
+// 确保事件绑定函数可以在任何时机被调用
+window.bindAllEvents = bindAllEvents;
+
+// ====== 页面加载完成后的初始化 ======
+// 在所有其他代码执行完毕后，执行最终初始化
+
+// 第一步：在脚本加载完毕后立即尝试初始化
+function initializeResources() {
+  const resourceContainer = document.getElementById('resourceBrowserResults');
+  if (resourceContainer && typeof renderFilteredResources === 'function') {
+    // 只在容器为空时才渲染
+    if (resourceContainer.innerHTML.trim() === '') {
+      console.log('Rendering resources on initialization');
+      renderFilteredResources();
+    }
+  }
+}
+
+// 组合初始化函数
+function fullInitialize() {
+  console.log('🔄 Full initialization (resources + events)...');
+  initializeResources();
+  if (typeof bindAllEvents === 'function') {
+    bindAllEvents();
+  }
+}
+
+// 第二步：在 DOM 加载完成时重新检查
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('📄 DOMContentLoaded: Full resource and event check');
+  fullInitialize();
+});
+
+// 第三步：在所有资源加载完成时再检查一遍
+window.addEventListener('load', function() {
+  console.log('⏱️ window.load: Final check');
+  setTimeout(fullInitialize, 100);
+});
+
+// 第四步：立即尝试初始化（以防脚本在页面加载后引入）
+if (document.readyState !== 'loading') {
+  console.log('📌 Document already loaded, initializing...');
+  fullInitialize();
+}
+
+// 第五步：作为最后的保险，在页面完全加载后检查
+setTimeout(function() {
+  console.log('🎯 Final safety initialization check');
+  fullInitialize();
+}, 1500);
+
+console.log('🎉 IESO Learning Site script.js fully loaded and initialized');

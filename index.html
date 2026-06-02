@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>IESO 地球科学奥林匹克学习平台 — IESO学苑</title>
+  <!-- deployed from OpenClaw 2026-06-01 -->
+    <title>IESO 地球科学奥林匹克学习平台 — IESO学苑</title>
   <meta name="description" content="IESO地球科学奥林匹克竞赛备考学习平台，提供学习资源、题库练习、模拟考试和社区交流。覆盖地质学、气象学、海洋学、天文学四个科目。">
   <meta name="keywords" content="IESO,地球科学奥林匹克,地学奥赛,地质学,气象学,海洋学,天文学,竞赛备考">
   <meta name="author" content="IESO学苑">
@@ -66,9 +67,9 @@
         从地质学到天文学，从理论到实践。系统化的教程、专业的题库、活跃的社区，助你征服 IESO。
       </p>
       <div class="hero-actions-apple">
-        <a href="#tutorials" class="btn-apple btn-primary-apple">
+        <button id="startLearningBtn" class="btn-apple btn-primary-apple">
           <i class="fas fa-play-circle"></i> 开始学习
-        </a>
+        </button>
         <a href="#quiz" class="btn-apple btn-secondary-apple">
           <i class="fas fa-bolt"></i> 立即刷题
         </a>
@@ -193,7 +194,7 @@
             <p>掌握常见矿物的物理性质鉴定方法，学会区分火成岩、沉积岩和变质岩。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 8 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('矿物与岩石基础', 'geology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -212,7 +213,7 @@
             <p>深入理解板块运动机制，掌握三种板块边界的特征与地质现象。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 12 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('板块构造理论', 'geology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -231,7 +232,7 @@
             <p>学习地质年代表，理解相对年代与绝对年代的测定方法。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 6 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('地质年代与地层学', 'geology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -251,7 +252,7 @@
             <p>理解三圈环流的形成机制，掌握季风、锋面、气旋等天气系统。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 10 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('大气环流与气候系统', 'meteorology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -270,7 +271,7 @@
             <p>学会阅读地面天气图和高空图，识别高压、低压、锋面系统。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 7 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('天气图判读与分析', 'meteorology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -289,7 +290,7 @@
             <p>深入分析台风/飓风的形成机制、结构特征和路径预报。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 8 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('热带气旋与极端天气', 'meteorology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -309,7 +310,7 @@
             <p>理解表层洋流与深层温盐环流，掌握 ENSO 现象及其气候影响。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 9 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('海洋环流与温盐输送', 'oceanography')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -328,7 +329,7 @@
             <p>学习潮汐的形成原理、潮汐类型，以及海浪的传播与变形。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 6 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('潮汐与海洋波动', 'oceanography')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -348,7 +349,7 @@
             <p>系统了解太阳系八大行星特征、小行星带、彗星与流星体。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 10 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('太阳系概论', 'astronomy')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -367,7 +368,7 @@
             <p>理解恒星的生命周期，学会分析赫罗图上的恒星分布。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 8 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('恒星演化与H-R图', 'astronomy')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -386,7 +387,7 @@
             <p>了解宇宙的起源与演化，掌握哈勃定律和宇宙微波背景辐射。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 7 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('宇宙学基础与大爆炸理论', 'astronomy')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -406,7 +407,7 @@
             <p>从系统论视角理解地球各圈层的相互作用与能量循环。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 15 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('地球系统科学导论', 'all')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -426,7 +427,7 @@
             <p>学习褶皱、断层的识别方法，掌握地质图的阅读技巧。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 10 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('构造地质学与地质图判读', 'geology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -445,7 +446,7 @@
             <p>了解重要化石门类，掌握标准化石在地层划分中的应用。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 6 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('古生物学与标准化石', 'geology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -465,7 +466,7 @@
             <p>理解全球气候带分布、气候变化的原因与影响。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 8 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('气候学与气候变化', 'meteorology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -484,7 +485,7 @@
             <p>学习气象仪器的使用方法，掌握气象数据的分析技巧。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 7 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('气象观测与数据处理', 'meteorology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -504,7 +505,7 @@
             <p>了解海水的化学组成，理解碳循环等生物地球化学过程。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 8 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('海洋化学与生物地球化学循环', 'oceanography')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -523,7 +524,7 @@
             <p>认识海洋主要生态系统，了解海洋生物多样性与保护。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 6 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('海洋生态系统导论', 'oceanography')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -543,7 +544,7 @@
             <p>理解日食月食的形成原理、类型及其观测方法。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 5 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('日食与月食现象', 'astronomy')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -562,7 +563,7 @@
             <p>学习凌星法、径向速度法等系外行星探测技术。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 7 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('系外行星探测方法', 'astronomy')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -582,7 +583,7 @@
             <p>掌握野外地质观察、样品采集、数据记录等实践技能。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 12 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('IESO 野外考察技能培训', 'all')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -601,7 +602,127 @@
             <p>学习理论笔试和实践测试的答题技巧，提高考试成绩。</p>
             <div class="tutorial-footer">
               <span><i class="fas fa-book"></i> 8 章节</span>
-              <a href="#resources" class="tutorial-link" onclick="filterResourcesByCategory(this)">开始学习 →</a>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('IESO 考试技巧与策略', 'all')">开始学习 →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 新增教程 - 气象学 -->
+        <article class="tutorial-card" data-category="meteorology">
+          <div class="tutorial-image">
+            <img src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031?w=500&q=80" alt="气象卫星" loading="lazy">
+            <div class="tutorial-duration"><i class="fas fa-clock"></i> 45分钟</div>
+          </div>
+          <div class="tutorial-body">
+            <div class="tutorial-meta">
+              <span class="tutorial-cat cat-meteorology">气象学</span>
+              <span class="tutorial-level level-intermediate">进阶</span>
+            </div>
+            <h3>气象卫星与遥感技术应用</h3>
+            <p>学习气象卫星的工作原理，掌握卫星云图的判读与天气分析。</p>
+            <div class="tutorial-footer">
+              <span><i class="fas fa-book"></i> 7 章节</span>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('气象卫星与遥感技术应用', 'meteorology')">开始学习 →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 新增教程 - 海洋学 -->
+        <article class="tutorial-card" data-category="oceanography">
+          <div class="tutorial-image">
+            <img src="https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=500&q=80" alt="海底地形" loading="lazy">
+            <div class="tutorial-duration"><i class="fas fa-clock"></i> 50分钟</div>
+          </div>
+          <div class="tutorial-body">
+            <div class="tutorial-meta">
+              <span class="tutorial-cat cat-oceanography">海洋学</span>
+              <span class="tutorial-level level-intermediate">进阶</span>
+            </div>
+            <h3>海底地形与洋壳构造</h3>
+            <p>探索洋中脊、海沟、海山等海底地貌特征，理解洋壳的形成与演化。</p>
+            <div class="tutorial-footer">
+              <span><i class="fas fa-book"></i> 8 章节</span>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('海底地形与洋壳构造', 'oceanography')">开始学习 →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 新增教程 - 天文学 -->
+        <article class="tutorial-card" data-category="astronomy">
+          <div class="tutorial-image">
+            <img src="https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=500&q=80" alt="星座观测" loading="lazy">
+            <div class="tutorial-duration"><i class="fas fa-clock"></i> 35分钟</div>
+          </div>
+          <div class="tutorial-body">
+            <div class="tutorial-meta">
+              <span class="tutorial-cat cat-astronomy">天文学</span>
+              <span class="tutorial-level level-beginner">入门</span>
+            </div>
+            <h3>星座与天球坐标系</h3>
+            <p>认识主要星座，学习赤经赤纬、时角等天球坐标系统。</p>
+            <div class="tutorial-footer">
+              <span><i class="fas fa-book"></i> 6 章节</span>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('星座与天球坐标系', 'astronomy')">开始学习 →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 新增教程 - 地质学 -->
+        <article class="tutorial-card" data-category="geology">
+          <div class="tutorial-image">
+            <img src="https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=500&q=80" alt="地震学" loading="lazy">
+            <div class="tutorial-duration"><i class="fas fa-clock"></i> 55分钟</div>
+          </div>
+          <div class="tutorial-body">
+            <div class="tutorial-meta">
+              <span class="tutorial-cat cat-geology">地质学</span>
+              <span class="tutorial-level level-advanced">竞赛</span>
+            </div>
+            <h3>地震学与地球内部结构</h3>
+            <p>通过地震波探测地球内部圈层结构，理解震源机制与地震灾害评估。</p>
+            <div class="tutorial-footer">
+              <span><i class="fas fa-book"></i> 10 章节</span>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('地震学与地球内部结构', 'geology')">开始学习 →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 新增教程 - 综合实践 -->
+        <article class="tutorial-card" data-category="all">
+          <div class="tutorial-image">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&q=80" alt="团队合作" loading="lazy">
+            <div class="tutorial-duration"><i class="fas fa-clock"></i> 90分钟</div>
+          </div>
+          <div class="tutorial-body">
+            <div class="tutorial-meta">
+              <span class="tutorial-cat cat-comprehensive">实践</span>
+              <span class="tutorial-level level-advanced">竞赛</span>
+            </div>
+            <h3>IESO 团队合作项目攻略</h3>
+            <p>深入解析国际团队协作项目（MI）与地球系统项目（ESP），提升团队协作能力。</p>
+            <div class="tutorial-footer">
+              <span><i class="fas fa-book"></i> 8 章节</span>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('IESO 团队合作项目攻略', 'all')">开始学习 →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 新增教程 - 地质学遥感 -->
+        <article class="tutorial-card" data-category="geology">
+          <div class="tutorial-image">
+            <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=500&q=80" alt="遥感地质" loading="lazy">
+            <div class="tutorial-duration"><i class="fas fa-clock"></i> 40分钟</div>
+          </div>
+          <div class="tutorial-body">
+            <div class="tutorial-meta">
+              <span class="tutorial-cat cat-geology">地质学</span>
+              <span class="tutorial-level level-intermediate">进阶</span>
+            </div>
+            <h3>遥感技术在地质调查中的应用</h3>
+            <p>学习遥感影像解译方法，掌握地质构造和岩性识别的遥感技术。</p>
+            <div class="tutorial-footer">
+              <span><i class="fas fa-book"></i> 7 章节</span>
+              <a href="javascript:void(0)" class="tutorial-link" onclick="openTutorialModal('遥感技术在地质调查中的应用', 'geology')">开始学习 →</a>
             </div>
           </div>
         </article>
@@ -698,30 +819,30 @@
       <div class="textbooks-section">
         <h3 class="textbooks-title">📖 权威推荐教材</h3>
         <div class="textbooks-grid">
-          <div class="textbook-card">
+          <a href="https://www.wwnorton.com/books/9780393882641" target="_blank" class="textbook-card" style="text-decoration:none;color:inherit;">
             <div class="textbook-rank gold">🥇</div>
             <h4>Earth: Portrait of a Planet</h4>
             <p class="textbook-author">Stephen Marshak</p>
             <p class="textbook-desc">全球高校地球科学入门首选，图文并茂，USESO 和 IESO 选手一致推荐。</p>
-          </div>
-          <div class="textbook-card">
+          </a>
+          <a href="https://www.macmillanlearning.com/college/us/product/Understanding-Earth/p/131905532X" target="_blank" class="textbook-card" style="text-decoration:none;color:inherit;">
             <div class="textbook-rank silver">🥈</div>
             <h4>Understanding Earth</h4>
             <p class="textbook-author">Grotzinger & Jordan</p>
             <p class="textbook-desc">进阶经典教材，内容更深，适合系统化深入学习地球系统科学。</p>
-          </div>
-          <div class="textbook-card">
+          </a>
+          <a href="https://www.cengage.com/c/meteorology-today-11e-ahrens/9781337612571/" target="_blank" class="textbook-card" style="text-decoration:none;color:inherit;">
             <div class="textbook-rank bronze">🥉</div>
             <h4>Meteorology Today</h4>
             <p class="textbook-author">C. Ahrens</p>
             <p class="textbook-desc">气象学权威教材，覆盖大气科学、气候系统的完整知识体系。</p>
-          </div>
-          <div class="textbook-card">
+          </a>
+          <a href="https://book.douban.com/subject/25850729/" target="_blank" class="textbook-card" style="text-decoration:none;color:inherit;">
             <div class="textbook-rank">📘</div>
             <h4>普通地质学（第三版）</h4>
             <p class="textbook-author">舒良树</p>
             <p class="textbook-desc">国内地质学入门经典，中文版首选，适合建立知识框架。</p>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -938,11 +1059,32 @@
           <a href="#">🌌 天文学</a>
         </div>
         <div class="footer-links">
-          <h4>外部链接</h4>
-          <a href="https://www.ieso-info.org" target="_blank">IESO 官网</a>
-          <a href="https://www.useso.org" target="_blank">USESO 官网</a>
-          <a href="https://www.useso.guide" target="_blank">USESO Guide</a>
-          <a href="http://ceso.ssoc.org.cn" target="_blank">中国地学奥赛</a>
+          <h4>竞赛官方</h4>
+          <a href="https://www.ieso-info.org" target="_blank">🌐 IESO 官网</a>
+          <a href="https://www.useso.org" target="_blank">🇺🇸 USESO 官网</a>
+          <a href="http://ceso.ssoc.org.cn" target="_blank">🇨🇳 中国地学奥赛</a>
+          <a href="https://www.ieso-info.org/questions-from-past-iesos" target="_blank">📝 IESO 历年真题</a>
+        </div>
+        <div class="footer-links">
+          <h4>民间精品</h4>
+          <a href="https://ieso.info" target="_blank">⭐ 地科奥赛信息平台</a>
+          <a href="https://www.useso.guide" target="_blank">📚 USESO Guide</a>
+          <a href="https://discord.gg/37kbr2XD8h" target="_blank">💬 Discord 社区</a>
+        </div>
+        <div class="footer-links">
+          <h4>学习资源</h4>
+          <a href="https://www.icourse163.org" target="_blank">🎓 中国大学MOOC</a>
+          <a href="https://ocw.mit.edu/courses/earth-atmospheric-and-planetary-sciences" target="_blank">🏛️ MIT 公开课</a>
+          <a href="https://www.khanacademy.org/science/cosmology-and-astronomy" target="_blank">📺 Khan Academy</a>
+          <a href="https://earthobservatory.nasa.gov" target="_blank">🛰️ NASA 地球观测站</a>
+          <a href="https://www.noaa.gov/education" target="_blank">☁️ NOAA 教育资源</a>
+        </div>
+        <div class="footer-links">
+          <h4>学术组织</h4>
+          <a href="https://www.agu.org" target="_blank">🌍 AGU 美国地球物理联合会</a>
+          <a href="https://www.egu.eu" target="_blank">🇪🇺 EGU 欧洲地科联</a>
+          <a href="https://www.geosociety.org.cn" target="_blank">⛰️ 中国地质学会</a>
+          <a href="https://www.cms1924.org" target="_blank">🌤️ 中国气象学会</a>
         </div>
         <div class="footer-links">
           <h4>关于我们</h4>
@@ -974,5 +1116,23 @@
   </div>
 
   <script src="script.js"></script>
-</body>
+
+  <!-- 在所有脚本加载后立即绑定事件 -->
+  <script>
+  // 确保脚本加载完成后绑定事件
+  if (typeof bindAllEvents === 'function') {
+    bindAllEvents();
+    console.log('✅ Events bound from inline script');
+  } else {
+    console.warn('⚠️ bindAllEvents not available yet, will retry...');
+    setTimeout(function() {
+      if (typeof bindAllEvents === 'function') {
+        bindAllEvents();
+        console.log('✅ Events bound after delay');
+      }
+    }, 100);
+  }
+  </script>
+
+  </body>
 </html>
