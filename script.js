@@ -3533,7 +3533,7 @@ document.addEventListener('click', (e) => {
 })();
 
 // ====== 控制台欢迎 ======
-console.log('%c🍓 IESO 学习平台 v2.0', 'font-size:24px; font-weight:bold; color:#4F46E5;');
+console.log('%c🍓 IESO 学习平台 v2.3 · 内容更新 2026-09-04', 'font-size:24px; font-weight:bold; color:#4F46E5;');
 console.log('%c由草莓派制作 🥧', 'font-size:14px; color:#64748B;');
 
 // ====== 错题本功能 ======
