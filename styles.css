@@ -2114,6 +2114,215 @@ body.menu-open { overflow: hidden; }
   font-size: 18px;
 }
 
+/* ====== 官方信息与大纲 ====== */
+.official-section {
+  padding: 100px 0;
+  background: var(--bg-section);
+}
+
+.last-updated {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.last-updated time {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.official-disclaimer {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 18px 20px;
+  margin: 0 auto 36px;
+  max-width: 920px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary);
+  border-radius: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+.official-disclaimer i {
+  color: var(--primary);
+  font-size: 20px;
+  margin-top: 3px;
+}
+
+.official-disclaimer a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.official-disclaimer code {
+  font-size: 13px;
+  background: rgba(79, 70, 229, 0.08);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
+.official-facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.official-fact {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.official-fact h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.official-fact h3 i {
+  color: var(--primary);
+  margin-right: 8px;
+}
+
+.official-fact p,
+.official-fact li {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.official-fact ul {
+  padding-left: 18px;
+  margin: 0 0 8px;
+}
+
+.official-fact a {
+  color: var(--primary);
+}
+
+.cite {
+  font-size: 13px !important;
+  color: var(--gray-400) !important;
+  margin-top: 12px;
+}
+
+.official-subtitle {
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+  margin: 16px 0 12px;
+  color: var(--text-primary);
+}
+
+.official-lead {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 28px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.syllabus-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.syllabus-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.syllabus-card h4 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.syllabus-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.syllabus-cite {
+  text-align: center;
+  margin: 18px 0 40px;
+}
+
+.official-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.official-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.official-link small {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.official-link:hover {
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.resource-legal-note {
+  max-width: 860px;
+  margin: -12px auto 28px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.rbi-note,
+.rbi-source {
+  font-size: 12px;
+  color: var(--gray-400);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.rbi-source {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .official-facts,
+  .syllabus-grid {
+    grid-template-columns: 1fr;
+  }
+  .official-section {
+    padding: 60px 0;
+  }
+}
+
 /* ====== 资源板块 ====== */
 .resources-section {
   padding: 100px 0;
