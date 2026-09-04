@@ -1,0 +1,31 @@
+name: Restore stubbed files from master
+
+on:
+  push:
+    branches: [cursor/shijing-home-link-c745]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: cursor/shijing-home-link-c745
+      - name: Restore index.html and styles.css from master
+        run: |
+          set -euo pipefail
+          git fetch origin master
+          git checkout origin/master -- index.html styles.css
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --cached --quiet; then
+            echo "Nothing to restore"
+            exit 0
+          fi
+          git commit -m "chore: restore homepage files from master"
+          git push origin cursor/shijing-home-link-c745
