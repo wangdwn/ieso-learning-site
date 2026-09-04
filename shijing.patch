@@ -1,0 +1,135 @@
+diff --git a/index.html b/index.html
+index af13722..8445156 100644
+--- a/index.html
++++ b/index.html
+@@ -14,6 +14,17 @@
+   <meta name="theme-color" content="#4F46E5">
+   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+   <link rel="stylesheet" href="styles.css">
++  <style>
++    .shijing-promo { padding: 40px 0 8px; background: var(--bg-body, #F8FAFC); }
++    .shijing-promo-card { display:flex; align-items:center; gap:20px; padding:22px 28px; background:var(--bg-card,#fff); border:1px solid var(--border-color,#E2E8F0); border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.08); text-decoration:none; color:inherit; }
++    .shijing-promo-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.1); }
++    .shijing-promo-tag { flex-shrink:0; display:inline-block; padding:4px 12px; border-radius:999px; background:rgba(140,47,47,.1); color:#8c2f2f; font-size:12px; font-weight:700; letter-spacing:.08em; }
++    .shijing-promo-copy { flex:1; min-width:0; }
++    .shijing-promo-copy h2 { font-size:20px; font-weight:800; margin-bottom:4px; }
++    .shijing-promo-copy p { font-size:14px; color:var(--text-secondary,#64748B); }
++    .shijing-promo-go { flex-shrink:0; font-weight:700; color:var(--primary,#4F46E5); }
++    @media (max-width:680px) { .shijing-promo-card { flex-wrap:wrap; padding:18px 20px; } .shijing-promo-go { width:100%; } }
++  </style>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+@@ -39,6 +50,7 @@
+           <li><a href="#resources" class="nav-link">资源</a></li>
+           <li><a href="#quiz" class="nav-link">题库</a></li>
+           <li><a href="#community" class="nav-link">社区</a></li>
++          <li><a href="shijing.html" class="nav-link">诗经·风雅颂穿越指南</a></li>
+           <li><a href="javascript:void(0)" class="nav-link" onclick="openUserProfile()" title="我的主页"><i class="fas fa-user-circle"></i></a></li>
+           <li><a href="javascript:void(0)" class="nav-link theme-toggle-btn" onclick="toggleDarkMode()" title="切换夜间模式" id="themeToggle"><i class="fas fa-moon"></i></a></li>
+         </ul>
+@@ -104,6 +116,20 @@
+     </div>
+   </section>
+ 
++  <!-- ====== 诗经拓展阅读 ====== -->
++  <section class="shijing-promo" id="shijing" aria-labelledby="shijing-promo-title">
++    <div class="container">
++      <a href="shijing.html" class="shijing-promo-card">
++        <span class="shijing-promo-tag">拓展阅读</span>
++        <div class="shijing-promo-copy">
++          <h2 id="shijing-promo-title">诗经·风雅颂穿越指南</h2>
++          <p>风、雅、颂三层通道 · 十首代表作 · 市井生活穿越手册</p>
++        </div>
++        <span class="shijing-promo-go">打开指南 →</span>
++      </a>
++    </div>
++  </section>
++
+   <!-- ====== 四大学科展示区 - 苹果风格 ====== -->
+   <section class="subjects-showcase" id="subjects">
+     <div class="container">
+@@ -1165,6 +1191,7 @@
+           <a href="#quiz">题库</a>
+           <a href="#community">社区</a>
+           <a href="#roadmap">路线图</a>
++          <a href="shijing.html">诗经·风雅颂穿越指南</a>
+         </div>
+         <div class="footer-links">
+           <h4>学科分类</h4>
+diff --git a/styles.css b/styles.css
+index 0541765..2d8820b 100644
+--- a/styles.css
++++ b/styles.css
+@@ -1763,6 +1763,71 @@ body.menu-open { overflow: hidden; }
+   margin: 0 auto;
+ }
+ 
++/* ====== 诗经拓展阅读 ====== */
++.shijing-promo {
++  padding: 40px 0 8px;
++  background: var(--bg-body);
++}
++.shijing-promo-card {
++  display: flex;
++  align-items: center;
++  gap: 20px;
++  padding: 22px 28px;
++  background: var(--bg-card);
++  border: 1px solid var(--border-color);
++  border-radius: var(--radius);
++  box-shadow: var(--shadow-sm);
++  text-decoration: none;
++  color: inherit;
++  transition: var(--transition);
++}
++.shijing-promo-card:hover {
++  box-shadow: var(--shadow-md);
++  border-color: var(--primary-light);
++  transform: translateY(-2px);
++}
++.shijing-promo-tag {
++  flex-shrink: 0;
++  display: inline-block;
++  padding: 4px 12px;
++  border-radius: 999px;
++  background: rgba(140, 47, 47, 0.1);
++  color: #8c2f2f;
++  font-size: 12px;
++  font-weight: 700;
++  letter-spacing: 0.08em;
++}
++[data-theme="dark"] .shijing-promo-tag {
++  background: rgba(248, 180, 180, 0.15);
++  color: #f8b4b4;
++}
++.shijing-promo-copy {
++  flex: 1;
++  min-width: 0;
++}
++.shijing-promo-copy h2 {
++  font-size: 20px;
++  font-weight: 800;
++  color: var(--text-primary);
++  margin-bottom: 4px;
++}
++.shijing-promo-copy p {
++  font-size: 14px;
++  color: var(--text-secondary);
++}
++.shijing-promo-go {
++  flex-shrink: 0;
++  font-weight: 700;
++  color: var(--primary);
++}
++@media (max-width: 680px) {
++  .shijing-promo-card {
++    flex-wrap: wrap;
++    padding: 18px 20px;
++  }
++  .shijing-promo-go { width: 100%; }
++}
++
+ /* ====== 四大学科展示区 ====== */
+ .subjects-showcase {
+   padding: 100px 0;
