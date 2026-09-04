@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <!-- deployed from OpenClaw 2026-06-01 -->
+  <!-- content refresh 2026-09-04 -->
     <title>IESO 地球科学奥林匹克学习平台 — IESO学苑</title>
-  <meta name="description" content="IESO地球科学奥林匹克竞赛备考学习平台，提供学习资源、题库练习、模拟考试和社区交流。覆盖地质学、气象学、海洋学、天文学四个科目。">
+  <meta name="description" content="非官方 IESO 备考学习站：整理 IGEO 官方信息、大纲要点与开放教育资源。覆盖地质学、气象学、海洋学、天文学。内容更新于 2026-09-04。">
   <meta name="keywords" content="IESO,地球科学奥林匹克,地学奥赛,地质学,气象学,海洋学,天文学,竞赛备考">
   <meta name="author" content="IESO学苑">
   <meta property="og:title" content="IESO学苑 — 地球科学奥林匹克学习平台">
@@ -34,6 +34,7 @@
       <nav class="nav" id="nav">
         <ul class="nav-list">
           <li><a href="#hero" class="nav-link active">首页</a></li>
+          <li><a href="#official" class="nav-link">官方</a></li>
           <li><a href="#tutorials" class="nav-link">教程</a></li>
           <li><a href="#resources" class="nav-link">资源</a></li>
           <li><a href="#quiz" class="nav-link">题库</a></li>
@@ -57,7 +58,7 @@
     <div class="hero-overlay"></div>
     <div class="hero-content-apple">
       <span class="hero-badge-apple">
-        <i class="fas fa-award"></i> 国际地球科学奥林匹克竞赛官方学习平台
+        <i class="fas fa-award"></i> 非官方备考学习站 · 资源均注明公开出处
       </span>
       <h1 class="hero-title-apple">
         探索地球的奥秘<br>
@@ -78,22 +79,22 @@
         <div class="stat-card-apple">
           <div class="stat-icon"><i class="fas fa-globe"></i></div>
           <div class="stat-info">
-            <span class="stat-num" data-target="50">0</span>
-            <span class="stat-label">参赛国家</span>
+            <span class="stat-num" data-target="41">0</span>
+            <span class="stat-label">2026 参赛国家</span>
           </div>
         </div>
         <div class="stat-card-apple">
           <div class="stat-icon"><i class="fas fa-book-open"></i></div>
           <div class="stat-info">
-            <span class="stat-num" data-target="300">0</span>
-            <span class="stat-label">学习资源</span>
+            <span class="stat-num" id="resourceCountStat" data-target="68">0</span>
+            <span class="stat-label">公开学习资源</span>
           </div>
         </div>
         <div class="stat-card-apple">
           <div class="stat-icon"><i class="fas fa-users"></i></div>
           <div class="stat-info">
-            <span class="stat-num" data-target="1200">0</span>
-            <span class="stat-label">社区成员</span>
+            <span class="stat-num" data-target="4">0</span>
+            <span class="stat-label">大纲核心领域</span>
           </div>
         </div>
       </div>
@@ -155,6 +156,106 @@
             <a href="#tutorials" class="subject-link">深入学习 →</a>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 官方信息与大纲要点 ====== -->
+  <section class="section official-section" id="official">
+    <div class="container">
+      <div class="section-header-apple">
+        <span class="section-tag-apple">OFFICIAL</span>
+        <h2 class="section-title-lg">官方信息与大纲要点</h2>
+        <p class="section-desc-lg">转述 IGEO 公开章程与大纲，并链向官方页面。本站不托管受版权保护的试卷 PDF。</p>
+        <p class="last-updated">内容更新：<time datetime="2026-09-04">2026年9月4日</time></p>
+      </div>
+
+      <div class="official-disclaimer" role="note">
+        <i class="fas fa-info-circle"></i>
+        <div>
+          <strong>本站为独立整理的非官方备考站</strong>，与 IGEO、IESO 组委会及各国选拔机构无隶属关系。
+          章程仍提及的 <code>www.ieso-info.org</code> 域名目前已被无关站点占用，<strong>请勿将其当作 IESO 官网</strong>。
+          现行公开材料以
+          <a href="https://www.igeoscied.org/activities/ieso/" target="_blank" rel="noopener noreferrer">IGEO · IESO</a>
+          页面为准。
+        </div>
+      </div>
+
+      <div class="official-facts">
+        <article class="official-fact">
+          <h3><i class="fas fa-landmark"></i> 主办与定位</h3>
+          <p>国际地球科学奥林匹克竞赛（IESO）是 <strong>国际地球科学教育组织（IGEO）</strong> 的年度活动，面向中学生（一般不超过 19 岁），旨在提高地球科学兴趣、教学交流与国际合作。</p>
+          <p class="cite">出处：<a href="https://www.igeoscied.org/activities/ieso/" target="_blank" rel="noopener noreferrer">IGEO IESO 介绍</a>；<a href="https://www.igeoscied.org/wp-content/uploads/2025/03/STATUTES-OF-THE-INTERNATIONAL-EARTH-SCIENCE-OLYMPIAD-V.5-PUBL-MAR-10-2025.pdf" target="_blank" rel="noopener noreferrer">IESO 章程第 5 版</a>（2025-03-10 公布）</p>
+        </article>
+        <article class="official-fact">
+          <h3><i class="fas fa-clipboard-list"></i> 考试形式</h3>
+          <p>章程要求试题对应官方大纲，采用<strong>地球系统科学</strong>视角，考查观察、分析与系统思维，而非死记硬背；笔试与实践（实验/野外）应保持平衡。往届还设有国际团队调查、地球系统项目等协作环节。</p>
+          <p class="cite">出处：<a href="https://www.igeoscied.org/wp-content/uploads/2025/03/STATUTES-OF-THE-INTERNATIONAL-EARTH-SCIENCE-OLYMPIAD-V.5-PUBL-MAR-10-2025.pdf" target="_blank" rel="noopener noreferrer">IESO Statutes v5</a></p>
+        </article>
+        <article class="official-fact">
+          <h3><i class="fas fa-map-marked-alt"></i> 近年赛事</h3>
+          <ul>
+            <li><strong>第 18 届（2025）</strong>：中国山东济宁。主办方站点：<a href="https://ieso2025.cn/" target="_blank" rel="noopener noreferrer">ieso2025.cn</a></li>
+            <li><strong>第 19 届（2026）</strong>：意大利都灵，2026 年 8 月 20–27 日，都灵大学科学校区。主办方站点：<a href="https://www.ieso2026-to.com/" target="_blank" rel="noopener noreferrer">ieso2026-to.com</a></li>
+          </ul>
+          <p class="cite">出处：各届主办方官网；欧洲地质学家联合会活动页亦记载都灵赛程。</p>
+        </article>
+        <article class="official-fact">
+          <h3><i class="fas fa-flag"></i> 中国与美国选拔</h3>
+          <p>中国赛区选拔为全国中学生地球科学奥林匹克竞赛（CESO），由中国地震学会、中国地球物理学会主办，信息发布于 <a href="https://ceso.ssoc.org.cn/" target="_blank" rel="noopener noreferrer">ceso.ssoc.org.cn</a>。美国方向可参考 <a href="https://www.useso.org/" target="_blank" rel="noopener noreferrer">USESO</a> 公开备考页。</p>
+          <p class="cite">出处：<a href="https://ceso.ssoc.org.cn/" target="_blank" rel="noopener noreferrer">CESO 官网</a>；<a href="https://www.useso.org/resources/preparation/" target="_blank" rel="noopener noreferrer">USESO Preparation</a></p>
+        </article>
+      </div>
+
+      <h3 class="official-subtitle">大纲四大领域（要点转述）</h3>
+      <p class="official-lead">IESO 大纲把地球科学视为相互联系的系统，而不是彼此割裂的分科。下列要点转述自 IGEO 公布的官方大纲页面与 PDF，备考请阅读原文。</p>
+      <div class="syllabus-grid">
+        <article class="syllabus-card">
+          <h4>1. 岩石圈与地球系统</h4>
+          <p>物质在岩石圈、水圈、大气圈、生物圈之间循环（如岩石循环）；内能与太阳能共同驱动；板块运动、地震与火山是物质—能量迁移的表现。技能包括识别常见火成/变质/沉积岩与矿物、野外构造与化石、洋盆剖面与地球内部剖面。</p>
+        </article>
+        <article class="syllabus-card">
+          <h4>2. 水圈与地球系统</h4>
+          <p>水质与水量受岩石组成、地质构造、土壤入渗与大气过程制约；海洋化学与海底地貌是与岩石圈相互作用的产物；海啸、飓风等灾害体现多圈层耦合。要求能把水圈放进地球系统中理解，并讨论人类活动对水资源的影响。</p>
+        </article>
+        <article class="syllabus-card">
+          <h4>3. 大气圈与地球系统</h4>
+          <p>太阳辐射加热各圈层的速率不同，从而形成大气与海洋环流；原始大气与火山气体、生命演化密切相关；大气成分在长时间尺度上由海洋、生物圈与岩石圈共同调节。技能侧重识别地球化学循环中的相互作用，并提出基于系统理解的环境问题思路。</p>
+        </article>
+        <article class="syllabus-card">
+          <h4>4. 行星系统与地球系统</h4>
+          <p>地球系统是太阳系的子系统；比较行星学有助于理解地球的能量平衡（太阳辐射、邻近天体引力、内部热源）。技能包括比较行星数据、识别地球与太阳系其他成员的物质—能量联系。</p>
+        </article>
+      </div>
+      <p class="cite syllabus-cite">出处：<a href="https://www.igeoscied.org/activities/ieso-2/syllabus/" target="_blank" rel="noopener noreferrer">IGEO · IESO Syllabus</a> ·
+        <a href="https://www.igeoscied.org/wp-content/uploads/2022/11/IESO-official-Syllabus.pdf" target="_blank" rel="noopener noreferrer">IESO-official-Syllabus.pdf</a>（IGEO 公开文件，2022-11 上传）</p>
+
+      <h3 class="official-subtitle">官方入口</h3>
+      <div class="official-links">
+        <a class="official-link" href="https://www.igeoscied.org/activities/ieso/" target="_blank" rel="noopener noreferrer">
+          <span>IGEO · IESO 主页</span><small>竞赛介绍</small>
+        </a>
+        <a class="official-link" href="https://www.igeoscied.org/activities/ieso-2/syllabus/" target="_blank" rel="noopener noreferrer">
+          <span>官方大纲</span><small>四大领域原文</small>
+        </a>
+        <a class="official-link" href="https://www.igeoscied.org/activities/ieso-2/past-ieso-exams/" target="_blank" rel="noopener noreferrer">
+          <span>往届试题页</span><small>IGEO 官方发布</small>
+        </a>
+        <a class="official-link" href="https://www.igeoscied.org/wp-content/uploads/2025/03/STATUTES-OF-THE-INTERNATIONAL-EARTH-SCIENCE-OLYMPIAD-V.5-PUBL-MAR-10-2025.pdf" target="_blank" rel="noopener noreferrer">
+          <span>IESO 章程 v5</span><small>2025-03-10</small>
+        </a>
+        <a class="official-link" href="https://ieso2025.cn/" target="_blank" rel="noopener noreferrer">
+          <span>IESO 2025 济宁</span><small>上届主办方</small>
+        </a>
+        <a class="official-link" href="https://www.ieso2026-to.com/" target="_blank" rel="noopener noreferrer">
+          <span>IESO 2026 都灵</span><small>本届主办方</small>
+        </a>
+        <a class="official-link" href="https://ceso.ssoc.org.cn/" target="_blank" rel="noopener noreferrer">
+          <span>中国 CESO</span><small>国家选拔信息</small>
+        </a>
+        <a class="official-link" href="https://www.useso.org/" target="_blank" rel="noopener noreferrer">
+          <span>USESO</span><small>美国选拔与备考</small>
+        </a>
       </div>
     </div>
   </section>
@@ -780,18 +881,25 @@
       <div class="section-header-apple">
         <span class="section-tag-apple">RESOURCES</span>
         <h2 class="section-title-lg">学习资源库</h2>
-        <p class="section-desc-lg">精选全球优质资源，一站式获取</p>
+        <p class="section-desc-lg">只收录可核验的公开页面：官方信息、开放教材与教育门户。每条注明出处。</p>
+        <p class="last-updated">内容更新：<time datetime="2026-09-04">2026年9月4日</time></p>
       </div>
+
+      <p class="resource-legal-note">本站<strong>不托管、不转载</strong>受版权保护的 IESO 试卷 PDF。历年试题请前往 IGEO「Past IESO Exams」官方页面下载。教材卡片指向出版社或开放教材站点，而非盗版扫描件。</p>
 
       <!-- 资源分类筛选 -->
       <div class="resource-filters">
         <select id="resFilterType" onchange="applyResourceFilter()">
           <option value="all">全部类型</option>
+          <option value="官网">官网</option>
+          <option value="大纲">大纲</option>
+          <option value="真题">真题</option>
+          <option value="开放教材">开放教材</option>
           <option value="视频/课程">视频/课程</option>
           <option value="视频">视频</option>
           <option value="课程">课程</option>
           <option value="教材">教材</option>
-          <option value="真题">真题</option>
+          <option value="教育门户">教育门户</option>
         </select>
         <select id="resFilterCategory" onchange="applyResourceFilter()">
           <option value="all">全部科目</option>
@@ -819,29 +927,35 @@
       <div class="textbooks-section">
         <h3 class="textbooks-title">📖 权威推荐教材</h3>
         <div class="textbooks-grid">
-          <a href="https://www.wwnorton.com/books/9780393882641" target="_blank" class="textbook-card" style="text-decoration:none;color:inherit;">
+          <a href="https://www.wwnorton.com/books/9780393882641" target="_blank" rel="noopener noreferrer" class="textbook-card" style="text-decoration:none;color:inherit;">
             <div class="textbook-rank gold">🥇</div>
             <h4>Earth: Portrait of a Planet</h4>
             <p class="textbook-author">Stephen Marshak</p>
             <p class="textbook-desc">全球高校地球科学入门首选，图文并茂，USESO 和 IESO 选手一致推荐。</p>
           </a>
-          <a href="https://www.macmillanlearning.com/college/us/product/Understanding-Earth/p/131905532X" target="_blank" class="textbook-card" style="text-decoration:none;color:inherit;">
+          <a href="https://www.macmillanlearning.com/college/us/product/Understanding-Earth/p/131905532X" target="_blank" rel="noopener noreferrer" class="textbook-card" style="text-decoration:none;color:inherit;">
             <div class="textbook-rank silver">🥈</div>
             <h4>Understanding Earth</h4>
             <p class="textbook-author">Grotzinger & Jordan</p>
             <p class="textbook-desc">进阶经典教材，内容更深，适合系统化深入学习地球系统科学。</p>
           </a>
-          <a href="https://www.cengage.com/c/meteorology-today-11e-ahrens/9781337612571/" target="_blank" class="textbook-card" style="text-decoration:none;color:inherit;">
+          <a href="https://www.cengage.com/c/meteorology-today-11e-ahrens/9781337612571/" target="_blank" rel="noopener noreferrer" class="textbook-card" style="text-decoration:none;color:inherit;">
             <div class="textbook-rank bronze">🥉</div>
             <h4>Meteorology Today</h4>
             <p class="textbook-author">C. Ahrens</p>
             <p class="textbook-desc">气象学权威教材，覆盖大气科学、气候系统的完整知识体系。</p>
           </a>
-          <a href="https://book.douban.com/subject/25850729/" target="_blank" class="textbook-card" style="text-decoration:none;color:inherit;">
+          <a href="https://book.douban.com/subject/25850729/" target="_blank" rel="noopener noreferrer" class="textbook-card" style="text-decoration:none;color:inherit;">
             <div class="textbook-rank">📘</div>
             <h4>普通地质学（第三版）</h4>
             <p class="textbook-author">舒良树</p>
-            <p class="textbook-desc">国内地质学入门经典，中文版首选，适合建立知识框架。</p>
+            <p class="textbook-desc">国内地质学入门经典，中文版首选，适合建立知识框架。卡片链向豆瓣书目页，便于核对版本。</p>
+          </a>
+          <a href="https://www.igeoscied.org/download/exploring-geoscience-across-the-globe-english-original-version/" target="_blank" rel="noopener noreferrer" class="textbook-card" style="text-decoration:none;color:inherit;">
+            <div class="textbook-rank">📗</div>
+            <h4>Exploring Geoscience</h4>
+            <p class="textbook-author">IGEO 开放教材</p>
+            <p class="textbook-desc">IGEO 公开提供的地球科学教材（英文原版），可从官方页面免费下载，适合建立系统框架。</p>
           </a>
         </div>
       </div>
@@ -1037,7 +1151,7 @@
           <h3>IESO学苑</h3>
           <p>致力于为全球地球科学爱好者提供最优质的 IESO 备考资源和学习社区。</p>
           <div class="social-links">
-            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://github.com/wangdwn/ieso-learning-site" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
             <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
             <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
             <a href="#" title="微信"><i class="fab fa-weixin"></i></a>
@@ -1045,6 +1159,7 @@
         </div>
         <div class="footer-links">
           <h4>快速导航</h4>
+          <a href="#official">官方信息</a>
           <a href="#tutorials">教程</a>
           <a href="#resources">资源</a>
           <a href="#quiz">题库</a>
@@ -1060,24 +1175,26 @@
         </div>
         <div class="footer-links">
           <h4>竞赛官方</h4>
-          <a href="https://www.ieso-info.org" target="_blank">🌐 IESO 官网</a>
-          <a href="https://www.useso.org" target="_blank">🇺🇸 USESO 官网</a>
-          <a href="http://ceso.ssoc.org.cn" target="_blank">🇨🇳 中国地学奥赛</a>
-          <a href="https://www.ieso-info.org/questions-from-past-iesos" target="_blank">📝 IESO 历年真题</a>
+          <a href="https://www.igeoscied.org/activities/ieso/" target="_blank" rel="noopener noreferrer">🌐 IGEO · IESO</a>
+          <a href="https://www.igeoscied.org/activities/ieso-2/syllabus/" target="_blank" rel="noopener noreferrer">📑 IESO 官方大纲</a>
+          <a href="https://www.igeoscied.org/activities/ieso-2/past-ieso-exams/" target="_blank" rel="noopener noreferrer">📝 IGEO 往届试题</a>
+          <a href="https://www.ieso2026-to.com/" target="_blank" rel="noopener noreferrer">🇮🇹 IESO 2026 都灵</a>
+          <a href="https://ceso.ssoc.org.cn/" target="_blank" rel="noopener noreferrer">🇨🇳 中国 CESO</a>
+          <a href="https://www.useso.org" target="_blank" rel="noopener noreferrer">🇺🇸 USESO</a>
         </div>
         <div class="footer-links">
           <h4>民间精品</h4>
-          <a href="https://ieso.info" target="_blank">⭐ 地科奥赛信息平台</a>
-          <a href="https://www.useso.guide" target="_blank">📚 USESO Guide</a>
-          <a href="https://discord.gg/37kbr2XD8h" target="_blank">💬 Discord 社区</a>
+          <a href="https://ieso.info" target="_blank" rel="noopener noreferrer">⭐ ieso.info 信息站</a>
+          <a href="https://www.useso.guide" target="_blank" rel="noopener noreferrer">📚 USESO Guide</a>
+          <a href="https://discord.gg/37kbr2XD8h" target="_blank" rel="noopener noreferrer">💬 Discord 社区</a>
         </div>
         <div class="footer-links">
           <h4>学习资源</h4>
-          <a href="https://www.icourse163.org" target="_blank">🎓 中国大学MOOC</a>
-          <a href="https://ocw.mit.edu/courses/earth-atmospheric-and-planetary-sciences" target="_blank">🏛️ MIT 公开课</a>
-          <a href="https://www.khanacademy.org/science/cosmology-and-astronomy" target="_blank">📺 Khan Academy</a>
-          <a href="https://earthobservatory.nasa.gov" target="_blank">🛰️ NASA 地球观测站</a>
-          <a href="https://www.noaa.gov/education" target="_blank">☁️ NOAA 教育资源</a>
+          <a href="https://www.icourse163.org" target="_blank" rel="noopener noreferrer">🎓 中国大学MOOC</a>
+          <a href="https://ocw.mit.edu/courses/earth-atmospheric-and-planetary-sciences" target="_blank" rel="noopener noreferrer">🏛️ MIT 公开课</a>
+          <a href="https://www.khanacademy.org/science/cosmology-and-astronomy" target="_blank" rel="noopener noreferrer">📺 Khan Academy</a>
+          <a href="https://science.nasa.gov/earth/earth-observatory/" target="_blank" rel="noopener noreferrer">🛰️ NASA Earth Observatory</a>
+          <a href="https://www.noaa.gov/education" target="_blank" rel="noopener noreferrer">☁️ NOAA 教育门户</a>
         </div>
         <div class="footer-links">
           <h4>学术组织</h4>
@@ -1095,7 +1212,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 IESO学苑 · 草莓派制作 🍓 · 仅供学习交流使用</p>
+        <p>&copy; 2026 IESO学苑 · 草莓派制作 🍓 · 非官方备考站 · 仅供学习交流</p>
+        <p class="last-updated">内容更新：<time datetime="2026-09-04">2026年9月4日</time> · 真题请从 IGEO 官方页获取</p>
       </div>
     </div>
   </footer>

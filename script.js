@@ -3,57 +3,87 @@ console.log('📍 Page ready state:', document.readyState);
 
 // ====== 页面数据（含难度等级） ======
 // 难度: beginner / intermediate / advanced
+// 内容更新日期：只链向可核验的公开页面，不托管受版权保护的试卷 PDF
+const CONTENT_LAST_UPDATED = '2026-09-04';
+
 const RESOURCES = [
-  // ---- 🟢 入门级 ----
-  { title: '普通地质学 (中国地质大学·武汉)', type: '视频/课程', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1461114173' },
-  { title: '地球科学概论 (武汉大学)', type: '视频/课程', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/WHU-1464100169' },
-  { title: '地球科学概论 (中国地质大学·武汉)', type: '视频/课程', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1449341163' },
-  { title: '地质学基础 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1002833002' },
-  { title: 'B站 地球科学入门视频合集', type: '视频', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E5%9C%B0%E7%90%83%E7%A7%91%E5%AD%A6%E5%85%A5%E9%97%A8' },
-  { title: 'B站 地质学入门视频合集', type: '视频', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E5%9C%B0%E8%B4%A8%E5%AD%A6%E5%85%A5%E9%97%A8' },
-  { title: 'B站 气象学入门视频合集', type: '视频', category: '气象学', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E6%B0%94%E8%B1%A1%E5%AD%A6%E5%85%A5%E9%97%A8' },
-  { title: 'B站 天文与宇宙学入门视频合集', type: '视频', category: '天文学', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E5%A4%A9%E6%96%87%E5%AD%A6%E5%85%A5%E9%97%A8' },
-  { title: '国家地理 地球科学专题', type: '教材', category: '综合', diff: 'beginner', url: 'https://www.nationalgeographic.com/science/earth/' },
-  { title: 'Khan Academy 宇宙与天文学', type: '视频', category: '天文学', diff: 'beginner', url: 'https://www.khanacademy.org/science/cosmology-and-astronomy' },
+  // ---- 官方 / 大纲 / 真题入口 ----
+  { title: 'IGEO · IESO 竞赛介绍', type: '官网', category: '综合', diff: 'beginner', url: 'https://www.igeoscied.org/activities/ieso/', source: 'IGEO', note: 'IESO 主办组织官方介绍页。' },
+  { title: 'IESO 官方大纲（网页版）', type: '大纲', category: '综合', diff: 'advanced', url: 'https://www.igeoscied.org/activities/ieso-2/syllabus/', source: 'IGEO', note: '四大领域：岩石圈、水圈、大气圈、行星系统。' },
+  { title: 'IESO 官方大纲 PDF', type: '大纲', category: '综合', diff: 'advanced', url: 'https://www.igeoscied.org/wp-content/uploads/2022/11/IESO-official-Syllabus.pdf', source: 'IGEO（2022-11 上传）', note: '官方公开 PDF，请从 IGEO 站点下载。' },
+  { title: 'IESO 章程第 5 版 PDF', type: '官网', category: '综合', diff: 'advanced', url: 'https://www.igeoscied.org/wp-content/uploads/2025/03/STATUTES-OF-THE-INTERNATIONAL-EARTH-SCIENCE-OLYMPIAD-V.5-PUBL-MAR-10-2025.pdf', source: 'IGEO（2025-03-10）', note: '规定笔试/实践、地球系统科学取向与试题公开原则。' },
+  { title: 'IGEO 往届 IESO 试题页', type: '真题', category: '综合', diff: 'advanced', url: 'https://www.igeoscied.org/activities/ieso-2/past-ieso-exams/', source: 'IGEO', note: '含 2007–2025 官方发布的笔试与实践材料。本站不镜像 PDF。' },
+  { title: 'IESO 2025 济宁主办方网站', type: '官网', category: '综合', diff: 'beginner', url: 'https://ieso2025.cn/', source: 'IESO 2025 组委会', note: '第 18 届主办方公开站点。' },
+  { title: 'IESO 2026 都灵主办方网站', type: '官网', category: '综合', diff: 'beginner', url: 'https://www.ieso2026-to.com/', source: 'IESO 2026 组委会', note: '第 19 届（2026-08-20 至 27，都灵大学）。' },
+  { title: '中国地球科学奥林匹克竞赛（CESO）', type: '官网', category: '综合', diff: 'advanced', tag: '🇨🇳', url: 'https://ceso.ssoc.org.cn/', source: 'CESO 官网', note: '中国地震学会、中国地球物理学会主办的国家选拔信息。' },
+  { title: 'USESO 官网', type: '官网', category: '综合', diff: 'advanced', url: 'https://www.useso.org/', source: 'USESO', note: '美国地球科学奥林匹克公开站点。' },
+  { title: 'USESO 备考与公开材料', type: '真题', category: '综合', diff: 'advanced', url: 'https://www.useso.org/resources/preparation/', source: 'USESO', note: '官方备考页，含其公开的练习与说明。' },
+  { title: 'USESO Unofficial Guide（官方站点托管）', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.useso.org/wp-content/uploads/2019/09/Unofficial-USESO-Guide.pdf', source: 'USESO.org', note: '由 USESO 站点公开发布的非官方指南 PDF。' },
+  { title: '纽约州 Regents 地球科学公开试题', type: '真题', category: '综合', diff: 'intermediate', url: 'https://www.nysedregents.org/earthscience/', source: 'NYSED', note: '美国州级公开考试，题型可作基础训练，并非 IESO 真题。' },
 
-  // ---- 🟡 进阶级 ----
-  { title: 'MIT OCW 12.001 地质学导论', type: '视频', category: '地质学', diff: 'intermediate', url: 'https://ocw.mit.edu/courses/12-001-introduction-to-geology-fall-2013/' },
-  { title: 'Earth: Portrait of a Planet (Marshak)', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.wwnorton.com/books/9780393882641' },
-  { title: 'Understanding Earth (Grotzinger & Jordan)', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.macmillanlearning.com/college/us/product/Understanding-Earth/p/131905532X' },
-  { title: 'Meteorology Today (Ahrens)', type: '教材', category: '气象学', diff: 'intermediate', url: 'https://www.cengage.com/c/meteorology-today-11e-ahrens/9781337612571/' },
-  { title: '气象学与气候学 (河南大学)', type: '视频/课程', category: '气象学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/HENU-1465598161' },
-  { title: '构造地质学 (西北大学)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/NWU-1002844007' },
-  { title: '综合地质学 (中国地质大学·北京)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/ZGDZDXBJ-1454050176' },
-  { title: '结晶学及矿物学 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1001902005' },
-  { title: '古生物学：史前生命历程 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1473931174' },
-  { title: '岩石学 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/cug-1205966807' },
-  { title: '天文学导论 (中国科学技术大学)', type: '课程', category: '天文学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/ustc-1462062166' },
-  { title: '雷达气象 (南京大学)', type: '课程', category: '气象学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/NJU-1465378162' },
-  { title: 'MIT OCW 12.003 大气与海洋科学', type: '视频', category: '气象学', diff: 'intermediate', url: 'https://ocw.mit.edu/courses/12-003-atmosphere-ocean-and-climate-dynamics-fall-2008/' },
-  { title: 'USESO Guide 教学讲义 (200+页)', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.useso.guide/home' },
-  { title: 'Earth Science (Glencoe)', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.mheducation.com/prek-12/program/earth-science-geology-environment-universe/MKTSP-02M5S01.html' },
-  { title: 'NASA 地球观测站 (EO)', type: '教材', category: '综合', diff: 'intermediate', url: 'https://earthobservatory.nasa.gov/' },
-  { title: 'NOAA 国家海洋和大气管理局教育门户', type: '教材', category: '气象学', diff: 'intermediate', url: 'https://www.noaa.gov/education' },
-  { title: 'USGS 地质灾害学习资源', type: '教材', category: '地质学', diff: 'intermediate', url: 'https://www.usgs.gov/science/earth-hazards' },
-  { title: 'WMO 世界气象组织教育资源', type: '教材', category: '气象学', diff: 'intermediate', url: 'https://public.wmo.int/en/resources' },
-  { title: 'Scripps 海洋学研究所教育资源', type: '教材', category: '海洋学', diff: 'intermediate', url: 'https://scripps.ucsd.edu/education' },
-  { title: 'IGCP (国际地质对比计划) 学习资源', type: '教材', category: '地质学', diff: 'intermediate', url: 'https://www.unesco.org/en/igcp' },
+  // ---- 🟢 入门：开放课程与科普 ----
+  { title: '普通地质学 (中国地质大学·武汉)', type: '视频/课程', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1461114173', source: '中国大学 MOOC', note: '国家精品在线开放课程页面。' },
+  { title: '地球科学概论 (武汉大学)', type: '视频/课程', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/WHU-1464100169', source: '中国大学 MOOC' },
+  { title: '地球科学概论 (中国地质大学·武汉)', type: '视频/课程', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1449341163', source: '中国大学 MOOC' },
+  { title: '地质学基础 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1002833002', source: '中国大学 MOOC' },
+  { title: 'B站 地球科学入门检索', type: '视频', category: '综合', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E5%9C%B0%E7%90%83%E7%A7%91%E5%AD%A6%E5%85%A5%E9%97%A8', source: '哔哩哔哩搜索', note: '检索入口，具体视频版权归上传者。' },
+  { title: 'B站 地质学入门检索', type: '视频', category: '地质学', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E5%9C%B0%E8%B4%A8%E5%AD%A6%E5%85%A5%E9%97%A8', source: '哔哩哔哩搜索' },
+  { title: 'B站 气象学入门检索', type: '视频', category: '气象学', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E6%B0%94%E8%B1%A1%E5%AD%A6%E5%85%A5%E9%97%A8', source: '哔哩哔哩搜索' },
+  { title: 'B站 天文学入门检索', type: '视频', category: '天文学', diff: 'beginner', tag: '🇨🇳', url: 'https://search.bilibili.com/all?keyword=%E5%A4%A9%E6%96%87%E5%AD%A6%E5%85%A5%E9%97%A8', source: '哔哩哔哩搜索' },
+  { title: 'Khan Academy 宇宙与天文学', type: '视频', category: '天文学', diff: 'beginner', url: 'https://www.khanacademy.org/science/cosmology-and-astronomy', source: 'Khan Academy', note: '免费开放课程。' },
+  { title: 'NASA Climate Kids / Earth', type: '教育门户', category: '综合', diff: 'beginner', url: 'https://science.nasa.gov/kids/earth/', source: 'NASA', note: '气候与地球科普，现托管于 science.nasa.gov。' },
+  { title: 'NASA 太阳系探索', type: '教育门户', category: '天文学', diff: 'beginner', url: 'https://science.nasa.gov/solar-system/', source: 'NASA' },
+  { title: 'NOAA JetStream 大气与天气课堂', type: '教育门户', category: '气象学', diff: 'beginner', url: 'https://www.noaa.gov/jetstream', source: 'NOAA' },
+  { title: '地球学习点子 Earth Learning Idea', type: '教育门户', category: '地质学', diff: 'beginner', url: 'https://www.earthlearningidea.com/', source: 'Earth Learning Idea / IGEO 相关教学活动', note: '低成本动手实验工作单，IGEO 常作教学资源推荐。' },
+  { title: '英国地质调查局：发现地质学', type: '教育门户', category: '地质学', diff: 'beginner', url: 'https://www.bgs.ac.uk/discovering-geology/', source: 'BGS' },
+  { title: 'GLOBE Program 全球观测学习', type: '教育门户', category: '综合', diff: 'beginner', url: 'https://www.globe.gov/', source: 'GLOBE / NASA 等合作' },
 
-  // ---- 🔴 竞赛级 ----
-  { title: 'IESO 官方 Syllabus PDF', type: '教材', category: '综合', diff: 'advanced', url: 'http://www.ieso-info.org/wp-content/uploads/2012/11/IESO-official-Syllabus.pdf' },
-  { title: 'USESO 国家选拔考试真题', type: '真题', category: '综合', diff: 'advanced', url: 'https://www.useso.org/resources/preparation/' },
-  { title: 'USESO Unofficial Guide PDF', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.useso.org/wp-content/uploads/2019/09/Unofficial-USESO-Guide.pdf' },
-  { title: '纽约州 Regents 地球科学试题', type: '真题', category: '综合', diff: 'advanced', url: 'https://www.nysedregents.org/earthscience/' },
-  { title: 'IESO 实践测试 (ESP) 真题', type: '真题', category: '实践', diff: 'advanced', url: 'https://www.geosocindia.org/index.php/ieso/Questions_From_Past_IESOs' },
-  { title: '中国地球科学奥林匹克竞赛官网', type: '社区', category: '综合', diff: 'advanced', tag: '🇨🇳', url: 'http://ceso.ssoc.org.cn/' },
-  { title: '中国地质学会 学习资源', type: '教材', category: '地质学', diff: 'advanced', tag: '🇨🇳', url: 'https://www.geosociety.org.cn/' },
-  { title: 'AGU 美国地球物理联合会学习资源', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.agu.org/learn-about-agu' },
-  { title: 'EGU 欧洲地球科学联盟教育资源', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.egu.eu/education/' },
-  { title: 'Nature Geoscience 精选文章', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.nature.com/ngeo/' },
-  { title: 'Science 地球科学专题', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.science.org/journals/science' },
-  { title: 'Geology 地质学顶刊', type: '教材', category: '地质学', diff: 'advanced', url: 'https://pubs.geoscienceworld.org/gsa/geology' },
-  { title: 'Journal of Climate 气候学期刊', type: '教材', category: '气象学', diff: 'advanced', url: 'https://journals.ametsoc.org/view/journals/clim/clim-overview.xml' },
-  { title: 'Journal of Geophysical Research', type: '教材', category: '综合', diff: 'advanced', url: 'https://agupubs.onlinelibrary.wiley.com/journal/21562202' },
+  // ---- 开放教材 ----
+  { title: 'Exploring Geoscience across the globe', type: '开放教材', category: '综合', diff: 'intermediate', url: 'https://www.igeoscied.org/download/exploring-geoscience-across-the-globe-english-original-version/', source: 'IGEO', note: 'IGEO 公开提供的地球科学教材（英文原版）。' },
+  { title: 'OpenGeology · Textbook of Geology', type: '开放教材', category: '地质学', diff: 'intermediate', url: 'https://opengeology.org/textbook/', source: 'OpenGeology', note: '开放许可的大学地质学教材。' },
+  { title: 'Physical Geology 开放教材目录', type: '开放教材', category: '地质学', diff: 'intermediate', url: 'https://open.umn.edu/opentextbooks/textbooks/physical-geology', source: 'Open Textbook Library' },
+  { title: 'OpenStax Astronomy 2e', type: '开放教材', category: '天文学', diff: 'beginner', url: 'https://openstax.org/details/books/astronomy-2e', source: 'OpenStax', note: '开放许可天文学教材。' },
+
+  // ---- 🟡 进阶课程与机构门户 ----
+  { title: 'MIT OCW 12.001 地质学导论', type: '视频', category: '地质学', diff: 'intermediate', url: 'https://ocw.mit.edu/courses/12-001-introduction-to-geology-fall-2013/', source: 'MIT OpenCourseWare' },
+  { title: 'MIT OCW 12.003 大气、海洋与气候动力学', type: '视频', category: '气象学', diff: 'intermediate', url: 'https://ocw.mit.edu/courses/12-003-atmosphere-ocean-and-climate-dynamics-fall-2008/', source: 'MIT OpenCourseWare' },
+  { title: '气象学与气候学 (河南大学)', type: '视频/课程', category: '气象学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/HENU-1465598161', source: '中国大学 MOOC' },
+  { title: '构造地质学 (西北大学)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/NWU-1002844007', source: '中国大学 MOOC' },
+  { title: '综合地质学 (中国地质大学·北京)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/ZGDZDXBJ-1454050176', source: '中国大学 MOOC' },
+  { title: '结晶学及矿物学 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1001902005', source: '中国大学 MOOC' },
+  { title: '古生物学：史前生命历程 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/CUG-1473931174', source: '中国大学 MOOC' },
+  { title: '岩石学 (中国地质大学·武汉)', type: '课程', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/cug-1205966807', source: '中国大学 MOOC' },
+  { title: '天文学导论 (中国科学技术大学)', type: '课程', category: '天文学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/ustc-1462062166', source: '中国大学 MOOC' },
+  { title: '雷达气象 (南京大学)', type: '课程', category: '气象学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.icourse163.org/course/NJU-1465378162', source: '中国大学 MOOC' },
+  { title: 'USESO Guide（民间讲义站点）', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.useso.guide/home', source: 'useso.guide', note: '民间备考讲义，非正式大纲。' },
+  { title: 'Earth: Portrait of a Planet（出版社页）', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.wwnorton.com/books/9780393882641', source: 'W. W. Norton', note: '仅链向出版社书目，不提供盗版全文。' },
+  { title: 'Understanding Earth（出版社页）', type: '教材', category: '综合', diff: 'intermediate', url: 'https://www.macmillanlearning.com/college/us/product/Understanding-Earth/p/131905532X', source: 'Macmillan Learning', note: '仅链向出版社书目。' },
+  { title: 'Meteorology Today（出版社页）', type: '教材', category: '气象学', diff: 'intermediate', url: 'https://www.cengage.com/c/meteorology-today-11e-ahrens/9781337612571/', source: 'Cengage', note: '仅链向出版社书目。' },
+  { title: 'NASA Earth Observatory', type: '教育门户', category: '综合', diff: 'intermediate', url: 'https://science.nasa.gov/earth/earth-observatory/', source: 'NASA' },
+  { title: 'NASA Earthdata Learn', type: '教育门户', category: '综合', diff: 'intermediate', url: 'https://www.earthdata.nasa.gov/learn', source: 'NASA Earthdata' },
+  { title: 'NOAA 教育门户', type: '教育门户', category: '气象学', diff: 'intermediate', url: 'https://www.noaa.gov/education', source: 'NOAA' },
+  { title: 'NOAA 海洋与海岸教育资源', type: '教育门户', category: '海洋学', diff: 'intermediate', url: 'https://www.noaa.gov/education/resource-collections/ocean-coasts', source: 'NOAA' },
+  { title: 'USGS 教育与科学门户', type: '教育门户', category: '地质学', diff: 'intermediate', url: 'https://www.usgs.gov/educational-resources', source: 'USGS', note: '美国地质调查局公开教育资源。' },
+  { title: 'IRIS / EarthScope 课堂地震学', type: '教育门户', category: '地质学', diff: 'intermediate', url: 'https://www.iris.edu/hq/inclass', source: 'IRIS' },
+  { title: 'EarthScope 教育', type: '教育门户', category: '地质学', diff: 'intermediate', url: 'https://www.earthscope.org/education/', source: 'EarthScope Consortium' },
+  { title: 'UCAR COMET MetEd', type: '课程', category: '气象学', diff: 'intermediate', url: 'https://www.meted.ucar.edu/', source: 'UCAR / COMET', note: '气象与地球系统在线模块，需免费注册。' },
+  { title: 'WMO 教育培训计划', type: '教育门户', category: '气象学', diff: 'intermediate', url: 'https://wmo.int/activities/education-and-training-programme', source: 'WMO' },
+  { title: 'Scripps 海洋学教育', type: '教育门户', category: '海洋学', diff: 'intermediate', url: 'https://scripps.ucsd.edu/education', source: 'Scripps Institution of Oceanography' },
+  { title: 'UNESCO 国际地球科学与地质公园计划', type: '教育门户', category: '地质学', diff: 'intermediate', url: 'https://www.unesco.org/en/iggp', source: 'UNESCO IGGP', note: '含国际地球科学计划（原 IGCP）与世界地质公园。' },
+  { title: '哥白尼气候监测服务', type: '教育门户', category: '气象学', diff: 'intermediate', url: 'https://climate.copernicus.eu/', source: 'C3S / ECMWF' },
+  { title: '中国气象局', type: '教育门户', category: '气象学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.cma.gov.cn/', source: '中国气象局' },
+  { title: '中国天气网', type: '教育门户', category: '气象学', diff: 'beginner', tag: '🇨🇳', url: 'https://www.weather.com.cn/', source: '中国天气网' },
+  { title: '中国地质调查局', type: '教育门户', category: '地质学', diff: 'intermediate', tag: '🇨🇳', url: 'https://www.cgs.gov.cn/', source: '中国地质调查局' },
+
+  // ---- 🔴 竞赛级机构与期刊主页（非盗版全文）----
+  { title: '中国地质学会', type: '官网', category: '地质学', diff: 'advanced', tag: '🇨🇳', url: 'https://www.geosociety.org.cn/', source: '中国地质学会' },
+  { title: 'EGU 教育资源', type: '教育门户', category: '综合', diff: 'advanced', url: 'https://www.egu.eu/education/', source: 'European Geosciences Union' },
+  { title: 'AGU 美国地球物理联合会', type: '官网', category: '综合', diff: 'advanced', url: 'https://www.agu.org/', source: 'AGU' },
+  { title: 'Nature Geoscience 期刊主页', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.nature.com/ngeo/', source: 'Springer Nature', note: '期刊主页，文章访问权限以出版方为准。' },
+  { title: 'Science 期刊主页', type: '教材', category: '综合', diff: 'advanced', url: 'https://www.science.org/journals/science', source: 'AAAS' },
+  { title: 'Geology 期刊主页', type: '教材', category: '地质学', diff: 'advanced', url: 'https://pubs.geoscienceworld.org/gsa/geology', source: 'GSA / GeoScienceWorld' },
+  { title: 'Journal of Climate 期刊主页', type: '教材', category: '气象学', diff: 'advanced', url: 'https://journals.ametsoc.org/view/journals/clim/clim-overview.xml', source: 'AMS' },
+  { title: 'Journal of Geophysical Research', type: '教材', category: '综合', diff: 'advanced', url: 'https://agupubs.onlinelibrary.wiley.com/journal/21562202', source: 'AGU / Wiley' },
 ];
 
 const REGISTERED_USERS = [];
@@ -2051,12 +2081,12 @@ window.addEventListener('scroll', () => {
   // 根据滚动位置高亮导航链接 + 更新面包屑
   const sections = [
     { id: 'hero', name: '首页' },
+    { id: 'official', name: '官方信息' },
+    { id: 'tutorials', name: '教程' },
     { id: 'resources', name: '学习资源' },
     { id: 'roadmap', name: '学习路线' },
-    { id: 'competition', name: '竞赛信息' },
     { id: 'quiz', name: '题库练习' },
     { id: 'community', name: '社区交流' },
-    { id: 'search-section', name: '搜索资源' },
   ];
   let current = sections[0];
   sections.forEach(s => {
@@ -2121,7 +2151,11 @@ const statsObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.5 });
 
-document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el));
+const resourceCountStat = document.getElementById('resourceCountStat');
+if (resourceCountStat) {
+  resourceCountStat.dataset.target = String(RESOURCES.length);
+}
+document.querySelectorAll('.stat-num, .stat-number').forEach(el => statsObserver.observe(el));
 
 function animateNumber(el, target) {
   const duration = 2000;
@@ -2159,6 +2193,7 @@ function performSearch() {
     item.title.toLowerCase().includes(query) ||
     item.category.toLowerCase().includes(query) ||
     item.type.toLowerCase().includes(query) ||
+    (item.source && item.source.toLowerCase().includes(query)) ||
     (item.diff && item.diff.includes(query))
   );
 
@@ -2173,7 +2208,7 @@ function performSearch() {
         <h4>${item.tag || ''} ${item.title}</h4>
         <span style="font-size:12px;font-weight:600;">${getDiffLabel(item.diff)}</span>
       </div>
-      <p><span style="color:var(--primary);font-weight:600;">[${item.type}]</span> ${item.category} · <a href="${item.url}" target="_blank" style="color:var(--primary);">查看详情</a></p>
+      <p><span style="color:var(--primary);font-weight:600;">[${item.type}]</span> ${item.category}${item.source ? ' · 出处：' + item.source : ''} · <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="color:var(--primary);">查看详情</a></p>
     </div>
   `).join('');
 }
@@ -2234,7 +2269,9 @@ function renderFilteredResources() {
       r.title.toLowerCase().includes(filters.search) ||
       r.category.toLowerCase().includes(filters.search) ||
       r.type.toLowerCase().includes(filters.search) ||
-      (r.tag || '').toLowerCase().includes(filters.search)
+      (r.tag || '').toLowerCase().includes(filters.search) ||
+      (r.source || '').toLowerCase().includes(filters.search) ||
+      (r.note || '').toLowerCase().includes(filters.search)
     );
   }
 
@@ -2256,9 +2293,11 @@ function renderFilteredResources() {
           <span class="rbi-type">${r.type}</span>
           <span class="rbi-cat">${r.category}</span>
           ${r.url !== '#'
-            ? `<a href="${r.url}" target="_blank" class="rbi-link">查看详情 →</a>`
+            ? `<a href="${r.url}" target="_blank" rel="noopener noreferrer" class="rbi-link">查看详情 →</a>`
             : '<span style="color:var(--gray-400);font-size:12px;">🔗 链接待补充</span>'}
         </div>
+        ${r.source ? `<div class="rbi-source">出处：${r.source}</div>` : ''}
+        ${r.note ? `<p class="rbi-note">${r.note}</p>` : ''}
       </div>
     `;
   }).join('');
@@ -2416,9 +2455,9 @@ function openModal(type) {
         <h4 style="font-size:15px;font-weight:700;color:#DC2626;margin-bottom:10px;">🔴 竞赛级</h4>
         <div style="display:grid;gap:10px;">
           <div style="padding:14px;background:var(--gray-50);border-radius:8px;border-left:3px solid #EF4444;">
-            <h4 style="font-weight:600;">IESO 官方 Syllabus</h4>
-            <p style="font-size:13px;color:var(--gray-600);">考试大纲 · 必备</p>
-            <a href="http://www.ieso-info.org/wp-content/uploads/2012/11/IESO-official-Syllabus.pdf" target="_blank" style="color:var(--primary);font-size:13px;">下载 →</a>
+            <h4 style="font-weight:600;">IESO 官方 Syllabus（IGEO）</h4>
+            <p style="font-size:13px;color:var(--gray-600);">考试大纲原文 · 请从 IGEO 官方页阅读/下载</p>
+            <a href="https://www.igeoscied.org/activities/ieso-2/syllabus/" target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-size:13px;">查看大纲 →</a>
           </div>
           <div style="padding:14px;background:var(--gray-50);border-radius:8px;border-left:3px solid #EF4444;">
             <h4 style="font-weight:600;">USESO 官方备考指南</h4>
@@ -2461,12 +2500,19 @@ function openModal(type) {
             </div>
             <span style="color:var(--primary);font-size:13px;">📘 前往 →</span>
           </a>
-          <a href="http://www.ieso-info.org/wp-content/uploads/2012/11/IESO-official-Syllabus.pdf" target="_blank" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
+          <a href="https://www.igeoscied.org/wp-content/uploads/2022/11/IESO-official-Syllabus.pdf" target="_blank" rel="noopener noreferrer" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
             <div>
               <span style="font-weight:600;">IESO 官方 Syllabus</span>
-              <p style="font-size:12px;color:var(--gray-400);">官方考试大纲 PDF</p>
+              <p style="font-size:12px;color:var(--gray-400);">IGEO 公开大纲 PDF（2022-11）</p>
             </div>
-            <span style="color:var(--primary);font-size:13px;">📥 下载</span>
+            <span style="color:var(--primary);font-size:13px;">📥 官方下载</span>
+          </a>
+          <a href="https://www.igeoscied.org/download/exploring-geoscience-across-the-globe-english-original-version/" target="_blank" rel="noopener noreferrer" style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--gray-50);border-radius:8px;text-decoration:none;color:inherit;">
+            <div>
+              <span style="font-weight:600;">Exploring Geoscience</span>
+              <p style="font-size:12px;color:var(--gray-400);">IGEO 开放教材</p>
+            </div>
+            <span style="color:var(--primary);font-size:13px;">📗 前往 →</span>
           </a>
         </div>
         <p style="margin-top:16px;color:var(--gray-400);font-size:13px;">共 12+ 本核心教材 · 部分资源可免费获取</p>
@@ -2478,9 +2524,9 @@ function openModal(type) {
         <p style="color:var(--gray-600);margin-bottom:20px;">2000+ 题目来自历年真题和权威模拟，覆盖 IESO 全部考点。</p>
         <div style="display:grid;gap:12px;">
           <div style="padding:14px;background:var(--gray-50);border-radius:8px;">
-            <h4 style="font-weight:600;">📥 IESO 历年真题 (Google Drive)</h4>
-            <p style="font-size:13px;color:var(--gray-600);margin-bottom:6px;">2007-2025 年全部笔试 + 实践试题 + 参考答案</p>
-            <a href="https://drive.google.com/drive/folders/0BzIJwhfagEzbMmxyWFBhVWpRWUU" target="_blank" style="color:var(--primary);font-size:13px;">访问题库 →</a>
+            <h4 style="font-weight:600;">📥 IESO 历年真题（IGEO 官方页）</h4>
+            <p style="font-size:13px;color:var(--gray-600);margin-bottom:6px;">请从 IGEO Past IESO Exams 页面获取官方发布的笔试与实践材料。本站不托管试卷 PDF。</p>
+            <a href="https://www.igeoscied.org/activities/ieso-2/past-ieso-exams/" target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-size:13px;">打开官方试题页 →</a>
           </div>
           <div style="padding:14px;background:var(--gray-50);border-radius:8px;">
             <h4 style="font-weight:600;">📝 纽约州 Regents 地球科学试题</h4>
@@ -3171,6 +3217,20 @@ const TEXTBOOKS = [
     description: '国内地质学入门经典，中文版首选，适合建立知识框架。',
     features: ['中文首选', '内容精炼', '适合入门', '国内高校通用'],
     chapters: ['矿物', '岩石', '地质构造', '板块构造', '地质作用', '地质环境']
+  },
+  {
+    id: 'tb-5',
+    title: 'Exploring Geoscience across the globe',
+    author: 'IGEO',
+    rank: '',
+    category: '综合',
+    level: '入门/进阶',
+    pages: '开放教材',
+    language: '英文',
+    url: 'https://www.igeoscied.org/download/exploring-geoscience-across-the-globe-english-original-version/',
+    description: 'IGEO 公开提供的地球科学教材（英文原版），可从官方页面免费下载。',
+    features: ['IGEO 官方开放教材', '免费下载', '覆盖地球系统科学', '适合建立框架'],
+    chapters: ['地球系统', '岩石圈', '水圈', '大气圈', '行星系统']
   }
 ];
 
@@ -3473,7 +3533,7 @@ document.addEventListener('click', (e) => {
 })();
 
 // ====== 控制台欢迎 ======
-console.log('%c🍓 IESO 学习平台 v2.0', 'font-size:24px; font-weight:bold; color:#4F46E5;');
+console.log('%c🍓 IESO 学习平台 v2.3 · 内容更新 2026-09-04', 'font-size:24px; font-weight:bold; color:#4F46E5;');
 console.log('%c由草莓派制作 🥧', 'font-size:14px; color:#64748B;');
 
 // ====== 错题本功能 ======
