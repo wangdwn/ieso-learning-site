@@ -125,6 +125,27 @@ body.menu-open { overflow: hidden; }
   color: var(--primary);
   background: rgba(79,70,229,0.08);
 }
+.nav-link-shijing {
+  color: #8c2f2f;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.nav-link-shijing:hover, .nav-link-shijing.active {
+  color: #8c2f2f;
+  background: rgba(140,47,47,0.1);
+}
+[data-theme="dark"] .nav-link-shijing {
+  color: #e8c48a;
+}
+[data-theme="dark"] .nav-link-shijing:hover,
+[data-theme="dark"] .nav-link-shijing.active {
+  color: #e8c48a;
+  background: rgba(232,196,138,0.12);
+}
+@media (max-width: 1100px) and (min-width: 769px) {
+  .nav-link { padding: 8px 10px; font-size: 13px; }
+  .nav-list { gap: 2px; }
+}
 @media (max-width: 768px) {
   .nav-link:active { background: rgba(79,70,229,0.15); }
 }
@@ -1819,6 +1840,15 @@ body.menu-open { overflow: hidden; }
   flex-shrink: 0;
   font-weight: 700;
   color: var(--primary);
+}
+.btn-shijing-apple {
+  background: linear-gradient(135deg, #8c2f2f, #a8543f);
+  color: #fff8ec;
+  box-shadow: 0 4px 20px rgba(140, 47, 47, 0.4);
+}
+.btn-shijing-apple:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(140, 47, 47, 0.5);
 }
 @media (max-width: 680px) {
   .shijing-promo-card {
