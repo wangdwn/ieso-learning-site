@@ -11,8 +11,23 @@
   <meta property="og:title" content="IESO学苑 — 地球科学奥林匹克学习平台">
   <meta property="og:description" content="IESO备考学习平台，资源、题库、社区一站式服务">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#4F46E5">
+  <meta name="theme-color" content="#4F46E5" id="metaThemeColor">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+  <!-- 首屏前同步主题，避免夜间模式 FOUC / 黑白闪屏；不跟系统自动切换以免冲突 -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('ieso_theme');
+        if (t === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.style.colorScheme = 'dark';
+        } else if (t === 'light') {
+          document.documentElement.style.colorScheme = 'light';
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80">
   <link rel="stylesheet" href="styles.css">
   <style>
     .shijing-promo { padding: 40px 0 8px; background: var(--bg-body, #F8FAFC); }
@@ -1259,7 +1274,7 @@
   <!-- ====== 键盘快捷键提示 ====== -->
   <div class="kbd-hint" id="kbdHint">
     <div class="kbd-hint-row"><kbd>Esc</kbd> 关闭弹窗</div>
-    <div class="kbd-hint-row"><kbd>t</kbd><kbd>T</kbd> 切换夜间模式</div>
+    <div class="kbd-hint-row"><kbd>Alt</kbd><kbd>T</kbd> 切换夜间模式</div>
     <div class="kbd-hint-row"><kbd>?</kbd> 显示/隐藏快捷键</div>
   </div>
 

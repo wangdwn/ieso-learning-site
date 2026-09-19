@@ -2660,27 +2660,35 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ====== 夜间模式 ======
-function toggleDarkMode() {
+function applyTheme(theme) {
   const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  if (isDark) {
-    html.removeAttribute('data-theme');
-    localStorage.setItem('ieso_theme', 'light');
-    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
-  } else {
+  const btn = document.getElementById('themeToggle');
+  const meta = document.getElementById('metaThemeColor');
+  if (theme === 'dark') {
     html.setAttribute('data-theme', 'dark');
+    html.style.colorScheme = 'dark';
     localStorage.setItem('ieso_theme', 'dark');
-    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+    if (btn) btn.innerHTML = '<i class="fas fa-sun"></i>';
+    if (meta) meta.setAttribute('content', '#0F172A');
+  } else {
+    html.removeAttribute('data-theme');
+    html.style.colorScheme = 'light';
+    localStorage.setItem('ieso_theme', 'light');
+    if (btn) btn.innerHTML = '<i class="fas fa-moon"></i>';
+    if (meta) meta.setAttribute('content', '#4F46E5');
   }
 }
 
-// 初始化夜间模式
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  applyTheme(isDark ? 'light' : 'dark');
+}
+
+// 初始化夜间模式（首屏已在 <head> 同步 data-theme，这里只同步按钮与 meta）
 (function initTheme() {
   const saved = localStorage.getItem('ieso_theme');
-  if (saved === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    const btn = document.getElementById('themeToggle');
-    if (btn) btn.innerHTML = '<i class="fas fa-sun"></i>';
+  if (saved === 'dark' || saved === 'light') {
+    applyTheme(saved);
   }
 })();
 
@@ -3449,9 +3457,10 @@ function getCategoryName(cat) {
 // ====== 键盘快捷键 ======
 let kbdHintVisible = false;
 document.addEventListener('keydown', (e) => {
-  // T - 切换夜间模式
-  if (e.key === 't' || e.key === 'T') {
-    if (!e.ctrlKey && !e.metaKey && !e.target.matches('input, textarea')) {
+  // Alt+T - 切换夜间模式（避免误触单键 T 导致整页主题闪切）
+  if ((e.key === 't' || e.key === 'T') && e.altKey && !e.ctrlKey && !e.metaKey) {
+    if (!e.target.matches('input, textarea, [contenteditable="true"]')) {
+      e.preventDefault();
       toggleDarkMode();
     }
   }

@@ -62,7 +62,12 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+  background-color: var(--bg-body, #F8FAFC);
+}
+html[data-theme="dark"] { color-scheme: dark; }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -73,6 +78,8 @@ body {
   -webkit-tap-highlight-color: transparent;
   /* 防止移动端 overscroll 导致的白色背景露出 */
   overscroll-behavior: none;
+  /* 避免主题切换时整页背景插值闪黑 */
+  transition: none;
 }
 
 /* 禁止移动菜单打开时主页面滚动 */
@@ -94,7 +101,8 @@ body.menu-open { overflow: hidden; }
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-color);
-  transition: var(--transition);
+  /* 只过渡阴影，避免主题切换时背景色插值闪黑 */
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 [data-theme="dark"] .header {
   --header-bg: rgba(15,23,42,0.85);
@@ -626,13 +634,12 @@ body.menu-open { overflow: hidden; }
 /* ====== 模态框 ====== */
 .modal-overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.55);
+  /* 去掉 blur，减少弹层打开时整屏重绘/合成闪烁 */
   z-index: 2000;
   align-items: center; justify-content: center;
-  animation: fadeIn 0.2s ease;
 }
-.modal-overlay.show { display: flex; }
+.modal-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 .modal {
   background: var(--bg-card);
@@ -1550,13 +1557,20 @@ body.menu-open { overflow: hidden; }
 .hero-bg-image {
   position: absolute;
   inset: 0;
-  background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80') center/cover no-repeat;
-  transform: scale(1.1);
-  animation: heroZoom 20s ease-in-out infinite alternate;
+  /* 图片未加载前用同色占位，避免整屏先黑再跳图 */
+  background-color: #1a2744;
+  background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: scale(1.05);
+  /* 仅用 transform，避免与 filter 叠用触发部分 GPU 合成器黑闪 */
+  animation: heroZoom 28s ease-in-out infinite alternate;
+  backface-visibility: hidden;
 }
 
 @keyframes heroZoom {
-  0% { transform: scale(1.1); }
+  0% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
@@ -1565,9 +1579,19 @@ body.menu-open { overflow: hidden; }
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(15, 23, 42, 0.7) 0%,
-    rgba(15, 23, 42, 0.5) 50%,
-    rgba(15, 23, 42, 0.85) 100%
+    rgba(15, 23, 42, 0.55) 0%,
+    rgba(15, 23, 42, 0.4) 50%,
+    rgba(15, 23, 42, 0.7) 100%
+  );
+  /* 不用 backdrop-filter，减少全屏层合成压力 */
+  pointer-events: none;
+}
+[data-theme="dark"] .hero-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.75) 0%,
+    rgba(15, 23, 42, 0.6) 50%,
+    rgba(15, 23, 42, 0.88) 100%
   );
 }
 
@@ -3280,9 +3304,8 @@ body.menu-open { overflow: hidden; }
 }
 
 /* ====== 夜间模式调整 ====== */
-[data-theme="dark"] .hero-bg-image {
-  filter: brightness(0.7);
-}
+/* 已改为加深 .hero-overlay，不再对全屏背景图使用 filter:brightness
+   （filter + 持续 transform 动画在部分 NVIDIA/浏览器组合下会偶发黑屏闪一下） */
 
 [data-theme="dark"] .subject-card-apple .subject-content {
   background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
