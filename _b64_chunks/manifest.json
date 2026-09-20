@@ -1,0 +1,14 @@
+{
+  "shijing.html": {
+    "parts": 12,
+    "sha256": "3230b46e0d14eaf933b28ef0719728051bf82a2460a27b25bab4262c5442572d",
+    "raw_bytes": 85151,
+    "b64_len": 113536
+  },
+  "index.html": {
+    "parts": 10,
+    "sha256": "35deb6bd07cc6650bc462084cb5effa3368f4118957898d8eb0167d9b7c50f3e",
+    "raw_bytes": 71245,
+    "b64_len": 94996
+  }
+}
