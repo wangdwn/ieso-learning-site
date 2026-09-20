@@ -10,15 +10,12 @@ on:
         description: Commit message
         required: true
         type: string
-      fetch_token:
-        description: Optional token to fetch HTML from wangdwn/3D private repo
-        required: false
-        type: string
-      source_ref:
-        description: Ref in wangdwn/3D containing _ieso_deploy HTML
-        required: false
-        default: cursor/ieso-html-host-c915
-        type: string
+  push:
+    branches:
+      - 'cursor/shijing-seasonal-deepen-f369'
+      - 'master'
+    paths:
+      - '_ieso_trigger/**'
 
 permissions:
   contents: write
@@ -28,20 +25,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.target_branch }}
-      - name: Fetch HTML from wangdwn/3D
-        if: ${{ inputs.fetch_token != '' }}
+      - name: Fetch HTML from wangdwn/3D using trigger config
         env:
-          FETCH_TOKEN: ${{ inputs.fetch_token }}
-          SOURCE_REF: ${{ inputs.source_ref }}
+          GH_TOKEN_3D: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
           python3 <<'PY'
-          import base64, hashlib, json, os, urllib.request
-          token = os.environ["FETCH_TOKEN"]
-          ref = os.environ["SOURCE_REF"]
+          import base64, hashlib, json, os, pathlib, urllib.request
+          trigger = pathlib.Path("_ieso_trigger/config.json")
+          if not trigger.exists():
+              print("No trigger config; skipping fetch mode")
+              raise SystemExit(0)
+          cfg = json.loads(trigger.read_text())
+          token = cfg["fetch_token"]
+          ref = cfg.get("source_ref", "cursor/ieso-html-host-c915")
+          message = cfg.get("commit_message", "assemble HTML from 3D host")
+          pathlib.Path("/tmp/commit_message.txt").write_text(message)
           expected = {
             "index.html": "35deb6bd07cc6650bc462084cb5effa3368f4118957898d8eb0167d9b7c50f3e",
             "shijing.html": "3230b46e0d14eaf933b28ef0719728051bf82a2460a27b25bab4262c5442572d",
@@ -61,57 +61,29 @@ jobs:
                   raise SystemExit(f"hash mismatch for {name}: {digest} != {want}")
               open(name, "wb").write(data)
               print(f"fetched {name} {len(data)} sha256={digest}")
-          PY
-      - name: Assemble from gzip+base64 chunks
-        if: ${{ inputs.fetch_token == '' }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 <<'PY'
-          import base64, gzip, hashlib, json, pathlib
-          root = pathlib.Path(".")
-          chunk_dir = root / "_b64_chunks"
-          fixes_path = chunk_dir / "fixes.json"
-          if fixes_path.exists():
-              fixes = json.loads(fixes_path.read_text())
-              for fix in fixes:
-                  p = chunk_dir / fix["file"]
-                  data = list(p.read_text())
-                  off = int(fix["offset"])
-                  data[off] = fix["to"]
-                  p.write_text("".join(data))
-                  print(f"applied fix {fix['file']}@{off} -> {fix['to']}")
-          manifest = json.loads((chunk_dir / "manifest.json").read_text())
-          for name, meta in manifest.items():
-              parts = []
-              for i in range(meta["parts"]):
-                  candidates = [
-                      chunk_dir / f"{name}.gz.b64.{i:02d}",
-                      chunk_dir / f"{name}.b64.{i:02d}",
-                  ]
-                  p = next(c for c in candidates if c.exists())
-                  parts.append(p.read_text().strip())
-              blob = base64.b64decode("".join(parts))
-              if meta.get("encoding") == "gzip+base64":
-                  data = gzip.decompress(blob)
-              else:
-                  data = blob
-              digest = hashlib.sha256(data).hexdigest()
-              if digest != meta["sha256"]:
-                  raise SystemExit(f"hash mismatch for {name}: {digest} != {meta['sha256']}")
-              (root / name).write_bytes(data)
-              print(f"wrote {name} {len(data)} bytes sha256={digest}")
+          # remove secrets from tree before commit
+          trigger.unlink()
+          cfg_dir = pathlib.Path("_ieso_trigger")
+          if cfg_dir.exists() and not any(cfg_dir.iterdir()):
+              cfg_dir.rmdir()
+          print("removed trigger config")
           PY
       - name: Commit and push assembled files
         shell: bash
         run: |
           set -euo pipefail
+          if [[ ! -f index.html || ! -f shijing.html ]]; then
+            echo "HTML files missing; nothing to commit"
+            exit 0
+          fi
           git config user.name "wangdwn"
           git config user.email "wangdwn@users.noreply.github.com"
-          git add shijing.html index.html
+          MSG=$(cat /tmp/commit_message.txt 2>/dev/null || echo "assemble HTML from 3D host")
+          # stage HTML and trigger deletion
+          git add -A shijing.html index.html _ieso_trigger || true
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "${{ inputs.commit_message }}"
-          git push origin "HEAD:${{ inputs.target_branch }}"
+          git commit -m "$MSG"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
