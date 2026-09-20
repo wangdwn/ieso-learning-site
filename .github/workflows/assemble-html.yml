@@ -21,21 +21,29 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.target_branch }}
-      - name: Assemble from base64 chunks
+      - name: Assemble from gzip+base64 chunks
         shell: bash
         run: |
           set -euo pipefail
           python3 <<'PY'
-          import base64, hashlib, json, pathlib
+          import base64, gzip, hashlib, json, pathlib
           root = pathlib.Path(".")
           chunk_dir = root / "_b64_chunks"
           manifest = json.loads((chunk_dir / "manifest.json").read_text())
           for name, meta in manifest.items():
               parts = []
               for i in range(meta["parts"]):
-                  p = chunk_dir / f"{name}.b64.{i:02d}"
+                  candidates = [
+                      chunk_dir / f"{name}.gz.b64.{i:02d}",
+                      chunk_dir / f"{name}.b64.{i:02d}",
+                  ]
+                  p = next(c for c in candidates if c.exists())
                   parts.append(p.read_text().strip())
-              data = base64.b64decode("".join(parts))
+              blob = base64.b64decode("".join(parts))
+              if meta.get("encoding") == "gzip+base64":
+                  data = gzip.decompress(blob)
+              else:
+                  data = blob
               digest = hashlib.sha256(data).hexdigest()
               if digest != meta["sha256"]:
                   raise SystemExit(f"hash mismatch for {name}: {digest} != {meta['sha256']}")
