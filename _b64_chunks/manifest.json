@@ -6,7 +6,7 @@
     "encoding": "gzip+base64"
   },
   "index.html": {
-    "parts": 8,
+    "parts": 4,
     "sha256": "35deb6bd07cc6650bc462084cb5effa3368f4118957898d8eb0167d9b7c50f3e",
     "raw_bytes": 71245,
     "encoding": "gzip+base64"
