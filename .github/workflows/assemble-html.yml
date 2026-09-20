@@ -10,6 +10,11 @@ on:
         description: Commit message
         required: true
         type: string
+      source_mode:
+        description: "chunks (default) or fetch_from_3d"
+        required: false
+        default: chunks
+        type: string
 
 permissions:
   contents: write
@@ -22,6 +27,7 @@ jobs:
         with:
           ref: ${{ inputs.target_branch }}
       - name: Assemble from gzip+base64 chunks
+        if: ${{ inputs.source_mode != 'fetch_from_3d' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -29,6 +35,17 @@ jobs:
           import base64, gzip, hashlib, json, pathlib
           root = pathlib.Path(".")
           chunk_dir = root / "_b64_chunks"
+          # Apply optional surgical fixes for MCP transcription errors
+          fixes_path = chunk_dir / "fixes.json"
+          if fixes_path.exists():
+              fixes = json.loads(fixes_path.read_text())
+              for fix in fixes:
+                  p = chunk_dir / fix["file"]
+                  data = list(p.read_text())
+                  off = int(fix["offset"])
+                  data[off] = fix["to"]
+                  p.write_text("".join(data))
+                  print(f"applied fix {fix['file']}@{off} -> {fix['to']}")
           manifest = json.loads((chunk_dir / "manifest.json").read_text())
           for name, meta in manifest.items():
               parts = []
