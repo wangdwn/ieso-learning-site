@@ -169,6 +169,52 @@
   .note h3{color:var(--cinnabar);margin-bottom:10px;letter-spacing:.1em;}
   .note p,.note li{font-size:.97rem;color:#4a4234;}
   .note ul{padding-left:22px;}
+
+  /* 季节导航 */
+  .season-nav{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+    margin-top:20px;
+  }
+  .season-nav a{
+    display:block;text-align:center;text-decoration:none;
+    padding:14px 10px;border-radius:10px;
+    border:1px solid var(--line);background:#fffaf0;
+    color:var(--cinnabar);letter-spacing:.2em;font-size:.95rem;
+    transition:background .2s,transform .2s;
+  }
+  .season-nav a:hover{background:var(--paper-dark);transform:translateY(-2px);}
+  .season-nav .sn{display:block;font-size:.75rem;color:var(--gold);letter-spacing:.15em;margin-top:4px;}
+  @media(max-width:640px){.season-nav{grid-template-columns:1fr 1fr;}}
+  .season-banner{
+    margin-top:40px;padding:18px 22px;border-radius:10px;
+    border-left:5px solid var(--cinnabar);
+    background:linear-gradient(90deg,var(--paper-dark),#fffaf0);
+  }
+  .season-banner h3{
+    color:var(--cinnabar);letter-spacing:.25em;font-size:1.15rem;margin-bottom:6px;
+  }
+  .season-banner p{color:#5a5242;font-size:.95rem;}
+  .poem-card .season-tag{
+    font-size:.75rem;letter-spacing:.12em;
+    background:rgba(140,47,47,.08);color:var(--cinnabar);
+    padding:2px 10px;border-radius:4px;
+  }
+  .story{
+    margin-top:14px;padding:14px 16px;
+    background:#faf6ec;border:1px solid var(--line);border-radius:8px;
+    font-size:.93rem;color:#4a4234;line-height:1.9;
+  }
+  .story .s-label{
+    display:block;font-size:.78rem;color:var(--gold);
+    letter-spacing:.22em;margin-bottom:8px;
+  }
+  .toc-mini{
+    margin-top:16px;display:flex;flex-wrap:wrap;gap:8px 14px;
+    font-size:.9rem;
+  }
+  .toc-mini a{color:var(--cinnabar);text-decoration:none;border-bottom:1px dotted var(--line);}
+  .toc-mini a:hover{border-bottom-color:var(--cinnabar);}
+
   footer{
     margin-top:70px;
     text-align:center;
@@ -186,7 +232,7 @@
   <p class="home-link"><a href="index.html">← 返回 IESO学苑</a></p>
   <h1>诗 经</h1>
   <p class="sub">风雅颂 · 市井生活穿越指南</p>
-  <span class="seal">从诗经看两千五百年前的烟火人间</span>
+  <span class="seal">十首手册 · 四季十二首 · 程译注故事</span>
 </header>
 
 <div class="wrap">
@@ -217,7 +263,7 @@
 
   <section>
     <h2 class="section-title">十首代表作 · 穿越手册</h2>
-    <p style="color:#6b5f4d;font-size:.95rem;">以下十首按"穿越体验"精选：风七、雅二、颂一。每首附完整原文（生僻字注音）、时代背景、现代地理位置与人口历史背景。</p>
+    <p style="color:#6b5f4d;font-size:.95rem;">以下十首按"穿越体验"精选：风七、雅二、颂一。每首附完整原文（生僻字注音）、时代背景、现代地理位置与人口历史背景；并据程俊英《诗经译注》与《毛诗序》《左传》等典籍补「故事」一栏。其下另辟「四季十二首」。</p>
 
     <!-- 1 关雎 -->
     <div class="poem-card">
@@ -243,6 +289,9 @@
         <div class="t-line">长短不齐的荇菜，左边右边挑。文静美丽的好姑娘，敲钟击鼓迎娶她。</div>
       </div>
       <div class="exp"><b>穿越体验：</b>诗经的开篇、门面。体验"心动"这种情感最初的模样——两千五百年前，爱情的话语和今天没什么两样。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英指出：此诗以雎鸠起兴——雎鸠雌雄情意专一，古人借此写君子求淑女。《毛诗序》说它美后妃之德，孔子则曰「《关雎》乐而不淫，哀而不伤」（《论语·八佾》）。故事性在「辗转反侧」四字：求而不得的夜不能寐，比任何礼教说教都更像真人。荇菜可食可祭，采荇的动作层层推进，从「流之」「采之」到「芼之」，追求也从焦虑变成琴瑟钟鼓——一场完整的从心动到迎娶的小剧场。
+      </div>
     </div>
 
     <!-- 2 芣苢 -->
@@ -265,6 +314,9 @@
         <div class="t-line">车前子呀采呀采，撩起衣襟兜起来。车前子呀采呀采，衣襟扎紧兜满载。</div>
       </div>
       <div class="exp"><b>穿越体验：</b>妇女采车前子（野菜兼草药）的劳动歌谣，节奏轻快到能听见脚步。芣苢是古代"劳动BGM"，体验古人的清晨日常。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英注：芣苢即车前草，古人相信多子，故妇女喜采。全诗几乎无形容词，只有「采、有、掇、捋、袺、襭」六个动词递进——从随手采、到成把有、到拾取、到捋籽、到兜进衣襟、到扎紧衣角满载而归。方玉润《诗经原始》叹：「读者试平心静气涵咏此诗，恍听田家妇女，三三五五，于平原绣野、风和日丽中，群歌互答，余音袅袅。」这不是宫廷雅乐，是田野合唱的现场录音。
+      </div>
     </div>
 
     <!-- 3 静女 -->
@@ -287,6 +339,9 @@
         <div class="t-line">从野外采来茅草芽送我，确实美得出奇。不是茅草本身美，是美人所赠才珍贵。</div>
       </div>
       <div class="exp"><b>穿越体验：</b>城角约会——姑娘故意藏起来，让小伙子"搔首踟蹰"干着急。两千五百年前的约会细节，可爱得不像古人。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英译「爱而不见」为「故意躲着不露面」——关键不在害羞，而在逗弄。彤管旧说不一：一说赤管笔（女史记事），一说红色管状草；程氏取「红色管乐器或红草」意，强调礼物本身朴素。「匪女之为美，美人之贻」是点睛：茅芽（荑）不值钱，因是美人所赠才「洵美且异」。城隅约会、藏猫猫、送小礼物——卫地民歌把恋爱写成了短篇小说。
+      </div>
     </div>
 
     <!-- 4 氓 -->
@@ -327,6 +382,9 @@
         <div class="t-line">原想和你白头到老，到老反倒让我生怨。淇水再宽也有岸，沼泽再大也有边。少年时光多快乐，说说笑笑两无猜。当初誓言多诚恳，没想到你会变心。既然变心不再念旧，那就算了吧！</div>
       </div>
       <div class="exp"><b>穿越体验：</b>从"抱布贸丝"的恋爱到"信誓旦旦，不思其反"的决裂——市井婚姻的完整实录，两千五百年前的情感剧天花板。女性第一人称的清醒控诉，今天读来依然扎心。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英按：此为弃妇诗。开头「氓之蚩蚩，抱布贸丝」——男子以贸易为名上门求婚，戏剧冲突立刻立住。桑叶「沃若」到「黄而陨」，是容颜与婚姻由盛而衰的隐喻；「于嗟鸠兮，无食桑葚」是女主角对后来者的劝诫，也是对自己的忏悔。淇水贯穿全诗：送别涉淇、归途「渐车帷裳」、末章「淇则有岸」——水有岸，情无边，她终于用「亦已焉哉」亲手切断。比《孔雀东南飞》早一千年，已是完整的悲剧弧线。
+      </div>
     </div>
 
     <!-- 5 溱洧 -->
@@ -351,6 +409,9 @@
         <div class="t-line">溱水长，洧水清，水流清澈见底。男男女女，人多挤满岸。姑娘说“去看看？”小伙说“已去过。再去看看吧！洧水那边，确实宽广又热闹。”男男女女在一起，互相调笑，临别赠支芍药花。</div>
       </div>
       <div class="exp"><b>穿越体验：</b>上巳节（三月初三）河边春游，男女互赠芍药——古代大型社交现场。注意那句"女曰观乎？士曰既且"：姑娘主动搭话，小伙说"去过了"，姑娘说"再去一次嘛"——两千五百年前的搭讪实录。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        《韩诗》与《毛传》皆言郑国三月上巳，士女于溱洧两水旁「招魂续魄，拂除不祥」。程俊英强调：赠勺药不是随意浪漫，勺药谐音「约」，有结约、留别之意——春游散场时互赠，等于互留联系方式。对话体「女曰观乎？士曰既且」极少见于《雅》《颂》，是国风最鲜活的口语剧场；郑风因此被孔子时代的人骂「郑声淫」，也因此成了市井青春的活化石。
+      </div>
     </div>
 
     <!-- 6 君子于役 -->
@@ -377,6 +438,9 @@
         <div class="t-line">鸡儿上架了，天已黄昏，羊牛也从山坡归圈。丈夫服役在外，但愿他不受饥渴！</div>
       </div>
       <div class="exp"><b>穿越体验：</b>"鸡栖于埘，日之夕矣，羊牛下来"——黄昏时分，鸡上架、牛羊下山，人还没回来。最日常也最动人的思念，炊烟意象的源头。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英指出：王风多作于平王东迁之后，王室衰微、徭役繁重，故「不知其期」。诗不用一句「我爱你」，只用鸡回窝、牛羊下山的日常反衬人未归——王国维《人间词话》所谓「以景结情」的远祖。末句从「如之何勿思」落到「苟无饥渴」：思念收敛成一句祈愿，比哭喊更像真实的农妇口吻。此后「日之夕矣」成了中国文学黄昏思人的原型场景。
+      </div>
     </div>
 
     <!-- 7 七月 -->
@@ -409,6 +473,9 @@
         <div class="t-line">十二月凿冰咚咚响，正月藏进冰窖。二月取冰祭祖，献上羔羊和韭菜。九月下霜，十月清扫场院。摆上两壶酒，杀掉羔羊。登上公堂，举起犀角杯：万寿无疆！</div>
       </div>
       <div class="exp"><b>穿越体验：</b>《诗经》里最长、最像"过日子"的诗——一年四季：种地、织布、采桑、打猎、修屋、藏冰、过年喝酒。农夫的全年日志，读它等于看了一整部古装纪录片。最后一句"万寿无疆"，就是年终聚餐举杯的祝词。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英据《毛序》：周公陈王业，以教成王——实则是豳地农奴一年劳作的实录。「七月流火」的「火」是大火星（心宿二），黄昏南中后偏西，标志暑退将寒；「蟋蟀入我床下」把昆虫搬家写成物候钟。女心伤悲「殆及公子同归」，程氏释为采桑女担心被贵族公子强娶——田园底下藏着阶级裂缝。年末「跻彼公堂，称彼兕觥」，农夫进公堂敬酒，礼乐与剥削同框：这是周人「过日子」最完整的纪录片。
+      </div>
     </div>
 
     <!-- 8 鹿鸣 -->
@@ -435,6 +502,9 @@
         <div class="t-line">鹿儿呦呦鸣叫，吃着野地的芩草。我有尊贵的宾客，弹瑟又弹琴。弹瑟又弹琴，和乐尽兴又融洽。我有美酒，让宾客们心欢畅。</div>
       </div>
       <div class="exp"><b>穿越体验：</b>贵族宴饮、迎宾的乐歌——古代"团建"现场。"呦呦鹿鸣，食野之苹"，是周代最高规格的待客之道，后来成了科举宴（鹿鸣宴）的名字，一直用到清代。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        《小雅》首篇。程俊英注：鹿得苹草则呼朋共食，故以呦呦起兴写宴饮求贤。《仪礼·乡饮酒》《燕礼》皆歌《鹿鸣》；至唐宋科举，乡试放榜后州县宴请新举人，仍名「鹿鸣宴」，笙瑟承筐之礼穿越两千年。诗中「示我周行」——嘉宾不仅喝酒，还为主人指点正道——周人把宴席当成政治联盟的仪式，不是单纯应酬。
+      </div>
     </div>
 
     <!-- 9 采薇 -->
@@ -469,6 +539,9 @@
         <div class="t-line">当初我离家出征，杨柳依依。如今我归来，大雪纷纷。道路泥泞走得慢，又渴又饥。我心里伤悲，没有人知道我的哀痛！</div>
       </div>
       <div class="exp"><b>穿越体验：</b>"昔我往矣，杨柳依依；今我来思，雨雪霏霏"——中国诗歌史上最著名的四句之一。戍边老兵归途的苍凉，战争与乡愁的顶级表达，后世"折柳送别"的源头。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英采《毛序》「遣戍役」说，并指出薇菜从「作止」「柔止」到「刚止」，是戍期以物候计年的时间轴。《左传》《史记》屡记猃狁（犬戎）侵扰西北；诗中「一月三捷」写战事频仍，末章突然收束为归途雨雪——刘勰《文心雕龙》称「依依／霏霏」之对（依依/霏霏）为「物色尽而情有余」。折柳送别的文化基因，即从此「杨柳依依」生出；冬雪归人的画面，也是下文「四季十二首·冬」的情感母题。
+      </div>
     </div>
 
     <!-- 10 丰年 -->
@@ -488,6 +561,9 @@
         <div class="t-line">用来合祭百礼，福气普降无边际。</div>
       </div>
       <div class="exp"><b>穿越体验：</b>丰收后的祭祀：黍稻满仓（"万亿及秭"），酿酒敬祖，祈求"降福"。体验一个农耕文明如何庆祝收成、感谢祖先——中国"年"的底层逻辑。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        周颂短制，一句一礼。程俊英注：「秭」为数名，十亿曰兆，十兆曰京，十京曰垓，十垓曰秭——极言仓廪之满。「烝畀祖妣」男女祖先并祭，合「百礼」而求「降福孔皆」。这是王朝用丰收向祖先汇报政绩的仪式脚本；中国人过年祭祖、喝春酒的底层逻辑，在这首不足五十字的乐歌里已经写完。
+      </div>
     </div>
 
     <!-- 番外 -->
@@ -509,19 +585,366 @@
         <div class="t-line">求求你仲子，别翻我家的园墙，别折断我家的檀树。哪里是舍不得树？是怕别人的闲话。仲子你让人想念，可别人的闲话，也可怕呀。</div>
       </div>
       <div class="exp"><b>穿越体验：</b>姑娘劝情人"别翻墙进来，怕父母、怕哥哥、怕邻居闲话"——嘴上说怕，心里全是"仲可怀也"。古代版"恋爱中的人"，既甜蜜又社死。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英按：仲子是男子排行第二的称呼。三章递进——里墙、围墙、园墙；杞、桑、檀；父母、诸兄、人之多言——禁忌圈越扩越大，而「仲可怀也」三次不变。《毛序》责其「刺庄公」，现代学者多视为少女口吻的情诗：嘴上拒绝，心上接纳。郑国都市商业发达、礼防相对松，才有这种「翻墙」剧情；「人言可畏」四字，从此成了汉语里的成语。
+      </div>
     </div>
   </section>
+
+
+  <section id="seasons">
+    <h2 class="section-title">四季十二首 · 春夏秋冬</h2>
+    <p class="lead">
+      在十首代表作之外，再按物候各选三首，合成「四季十二首」。选篇兼顾程俊英《诗经译注》题解与《毛诗序》《左传》《仪礼》等古典记载，每首补一段有故事性的背景——不是考据堆砌，而是让季节里的人重新走动起来。
+    </p>
+    <div class="season-nav">
+      <a href="#season-spring">春<span class="sn">桃夭 · 摽有梅 · 野有死麕</span></a>
+      <a href="#season-summer">夏<span class="sn">葛覃 · 伯兮 · 采葛</span></a>
+      <a href="#season-autumn">秋<span class="sn">蒹葭 · 蟋蟀 · 东山</span></a>
+      <a href="#season-winter">冬<span class="sn">北风 · 击鼓 · 式微</span></a>
+    </div>
+    <div class="toc-mini">
+      <a href="#s-taoyao">桃夭</a><a href="#s-biaoyoumei">摽有梅</a><a href="#s-yeyousijun">野有死麕</a>
+      <a href="#s-getan">葛覃</a><a href="#s-boxi">伯兮</a><a href="#s-caige">采葛</a>
+      <a href="#s-jianjia">蒹葭</a><a href="#s-xishuai">蟋蟀</a><a href="#s-dongshan">东山</a>
+      <a href="#s-beifeng">北风</a><a href="#s-jigu">击鼓</a><a href="#s-shiwei">式微</a>
+    </div>
+
+    <!-- ===== 春 ===== -->
+    <div class="season-banner" id="season-spring">
+      <h3>春 · 三首</h3>
+      <p>桃花开、梅子落、林中遇——春天在《诗经》里首先是婚恋的季节：催嫁、求偶、野合的礼与情，都挤在这一季的暖风里。</p>
+    </div>
+
+    <div class="poem-card" id="s-taoyao">
+      <div class="head"><span class="no">春·一</span><span class="name">《桃夭》</span><span class="guo">周南 · 风</span><span class="season-tag">婚嫁贺歌</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">西周早中期，周南地区民间贺婚之歌。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">河南西南至鄂北（南阳—襄阳一线）。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">「桃之夭夭，灼灼其华」——仲春桃花盛开，正是周人嫁娶的吉时（《周礼》仲春会男女）。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza">桃之<ruby>夭夭<rt>yāo yāo</rt></ruby>，灼灼其华。之子于归，宜其室家。</div>
+        <div class="stanza">桃之夭夭，有<ruby>蕡<rt>fén</rt></ruby>其实。之子于归，宜其家室。</div>
+        <div class="stanza">桃之夭夭，其叶<ruby>蓁蓁<rt>zhēn zhēn</rt></ruby>。之子于归，宜其家人。</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">桃花含苞多娇艳，红花灼灼开满枝。这位姑娘要出嫁，和美宜其家。</div>
+        <div class="t-line">桃花含苞多娇艳，果实累累挂满枝。这位姑娘要出嫁，和美宜其室。</div>
+        <div class="t-line">桃花含苞多娇艳，叶儿茂密绿成荫。这位姑娘要出嫁，和美宜家人。</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>一场春秋婚礼的现场口号。花→果→叶，从美貌祝到多子、再到家庭兴旺，三章就是三道祝福。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英题解：祝贺女子出嫁。夭夭状少好，灼灼状花之红盛——以桃喻新娘，是中国文学最早的「人面桃花」。《毛诗序》说「后妃之所致也」，民间读法则更直接：村子里姑娘要过门了，邻里合唱送嫁。桃在预兆学里主「宜家宜室」；后世俗语「桃花运」的根，可追到这首短歌。读时不妨想象鼓乐里，送嫁队伍走过桃林。
+      </div>
+    </div>
+
+    <div class="poem-card" id="s-biaoyoumei">
+      <div class="head"><span class="no">春·二</span><span class="name">《摽有梅》</span><span class="guo">召南 · 风</span><span class="season-tag">催嫁物候</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">西周至春秋，召南（陕南—豫西—鄂西北）民歌。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">陕西汉中至河南南阳西缘一带。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">梅子由多而少——春尽夏初，待嫁女子眼看节令溜走。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza"><ruby>摽<rt>biào</rt></ruby>有梅，其实七兮。求我庶士，<ruby>迨<rt>dài</rt></ruby>其吉兮。</div>
+        <div class="stanza">摽有梅，其实三兮。求我庶士，迨其今兮。</div>
+        <div class="stanza">摽有梅，<ruby>顷筐<rt>qīng kuāng</rt></ruby><ruby>塈<rt>jì</rt></ruby>之。求我庶士，迨其谓之。</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">梅子熟了落纷纷，树上还留七成。有心追求我的人，要趁良辰吉日。</div>
+        <div class="t-line">梅子熟了落纷纷，树上只剩三成。有心追求我的人，要趁今日莫再等。</div>
+        <div class="t-line">梅子熟了落纷纷，顷筐要来扫干净。有心追求我的人，开口说定就成亲。</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>用梅子掉落倒计时的催婚歌。七成→三成→扫净，焦虑感一章紧过一章。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英释「摽」为坠落；三章梅实递减，是女子自计青春的物候钟。《周礼·地官·媒氏》：「仲春之月，令会男女……奔者不禁。」过了吉时，礼法也松开口子。此诗把制度焦虑写成闺中独白：不是哀怨弃妇，而是主动喊话「庶士」——春末催嫁的戏剧张力，全在「迨其吉／迨其今／迨其谓之」三步加速里。
+      </div>
+    </div>
+
+    <div class="poem-card" id="s-yeyousijun">
+      <div class="head"><span class="no">春·三</span><span class="name">《野有死麕》</span><span class="guo">召南 · 风</span><span class="season-tag">林中遇合</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">西周至春秋，召南民歌；与《摽有梅》同属南方风土。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">汉水上游山地、林野地带。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">春日山野，死麕、白茅、林有朴樕——野外定情的场景。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza">野有死<ruby>麕<rt>jūn</rt></ruby>，白茅包之。有女怀春，吉士诱之。</div>
+        <div class="stanza">林有朴<ruby>樕<rt>sù</rt></ruby>，野有死鹿。白茅纯束，有女如玉。</div>
+        <div class="stanza">舒而<ruby>脱脱<rt>tuì tuì</rt></ruby>兮，无感我<ruby>帨<rt>shuì</rt></ruby>兮，无使<ruby>尨<rt>máng</rt></ruby>也吠。</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">野地里一头死獐，用白茅轻轻包好。有位姑娘春心萌动，美男子上前求爱。</div>
+        <div class="t-line">林中有丛生小树，野地有一头死鹿。白茅索儿捆得整齐，姑娘洁美如玉。</div>
+        <div class="t-line">慢慢地、轻轻地啊，别扯动我的佩巾，别惊得狗儿汪汪叫。</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>《诗经》里最大胆的野外恋歌。末章姑娘既接纳又嘱咐——怕狗叫，怕被发现。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英注：麕即獐，猎人获兽以白茅包裹作贽礼，是求爱信物；「怀春」一词即出于此。末章改换韵律与人称，像姑娘贴耳的低语——舒缓、别动我帨（佩巾）、别惹狗叫。朱熹《诗集传》斥为「淫奔」，现代读者却看见礼与欲的拉锯：吉士有贽、有玉人，仍须把脚步放轻。春日林野里的心跳声，比庙堂赋诗更近人间。
+      </div>
+    </div>
+
+    <!-- ===== 夏 ===== -->
+    <div class="season-banner" id="season-summer">
+      <h3>夏 · 三首</h3>
+      <p>葛藤长、伯也执殳、一日三秋——夏天是劳作与远役的季节：归宁父母、征夫不归、相思拉长成整季的热风。</p>
+    </div>
+
+    <div class="poem-card" id="s-getan">
+      <div class="head"><span class="no">夏·一</span><span class="name">《葛覃》</span><span class="guo">周南 · 风</span><span class="season-tag">归宁父母</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">西周，周南；写新妇准备回娘家。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">河南西南至鄂北。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">葛之覃兮，施于中谷——夏日葛藤蔓生，正可刈制为衣。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza">葛之<ruby>覃<rt>tán</rt></ruby>兮，施于中谷，维叶萋萋。黄鸟于飞，集于灌木，其鸣<ruby>喈喈<rt>jiē jiē</rt></ruby>。</div>
+        <div class="stanza">葛之覃兮，施于中谷，维叶莫莫。是刈是<ruby>濩<rt>huò</rt></ruby>，为<ruby>絺<rt>chī</rt></ruby>为<ruby>绤<rt>xì</rt></ruby>，服之无<ruby>斁<rt>yì</rt></ruby>。</div>
+        <div class="stanza">言告师氏，言告言归。薄污我私，薄浣我衣。害浣害否，归宁父母。</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">葛藤长又长，蔓延山谷中，叶儿绿萋萋。黄莺飞来飞去，落在灌木上，叽叽喳喳叫得齐。</div>
+        <div class="t-line">葛藤长又长，蔓延山谷中，叶儿密又茂。割下煮熟它，织成细布粗布，穿上不厌弃。</div>
+        <div class="t-line">告诉女师长，我要回娘家。洗洗贴身衣，洗洗外罩衣。哪些该洗哪些不用，我要归宁看父母。</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>新妇第一件大事：洗干净衣服，回娘家省亲。夏天劳作与家庭礼仪叠在一起。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英按：《毛序》美后妃「在父母家」志在女功；诗面则是新嫁娘「归宁」前的日常——刈葛、煮葛、织絺绤，再向师氏请假。黄鸟喈喈是夏谷声景；「害浣害否」口语极生活：哪些洗、哪些不洗，像在叮嘱自己。《礼记》诸侯夫人归宁有严格礼制，这首诗把礼制还原成洗衣清单，故事就从宫廷走到了闺房。
+      </div>
+    </div>
+
+    <div class="poem-card" id="s-boxi">
+      <div class="head"><span class="no">夏·二</span><span class="name">《伯兮》</span><span class="guo">卫风 · 风</span><span class="season-tag">征妇思伯</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">春秋卫国；丈夫从王伐郑（一说），妻在家苦思。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">豫北淇县、滑县一带。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">「其雨其雨，杲杲出日」——望雨得晴，夏日相思的焦灼。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza">伯兮<ruby>朅<rt>qiè</rt></ruby>兮，邦之<ruby>桀<rt>jié</rt></ruby>兮。伯也执<ruby>殳<rt>shū</rt></ruby>，为王前驱。</div>
+        <div class="stanza">自伯之东，首如飞蓬。岂无膏沐？谁适为容！</div>
+        <div class="stanza">其雨其雨，杲杲出日。<ruby>愿言<rt>yuàn yán</rt></ruby>思伯，甘心首疾。</div>
+        <div class="stanza">焉得<ruby>谖<rt>xuān</rt></ruby>草，言树之背。愿言思伯，使我心痗。</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">我的大哥真威武，国中一等英雄。他手执长殳，为王作先锋。</div>
+        <div class="t-line">自从大哥去了东方，我的头发乱如飞蓬。难道没有发油？为谁打扮呀！</div>
+        <div class="t-line">盼着下雨吧下雨吧，却是烈日杲杲。一心思念大哥，情愿想得头疼。</div>
+        <div class="t-line">哪里去找忘忧草，种在北堂阶下。一心思念大哥，使我心痛如病。</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>「自伯之东，首如飞蓬」「谁适为容」——成语与妆容叙事的源头；「一日不见，如三秋兮」的姊妹篇氛围。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英注：伯为排行，女子称其夫；殳是长杖兵器，前驱即先锋。《卫风》多写战争阴影下的家庭。名句「岂无膏沐？谁适为容」被《战国策》至后世闺怨诗反复化用；「甘心首疾」把相思写成自愿的病。谖草即萱草，古人以为可以忘忧，种于北堂——「北堂」后成母亲居处的代称，故事从思夫又分出一支思亲的文化史。
+      </div>
+    </div>
+
+    <div class="poem-card" id="s-caige">
+      <div class="head"><span class="no">夏·三</span><span class="name">《采葛》</span><span class="guo">王风 · 风</span><span class="season-tag">一日三秋</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">东周王畿；恋人或友人暂别的短歌。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">河南洛阳一带。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">采葛、采萧、采艾——夏秋采集劳作，叠成时间的错觉。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza">彼采葛兮，一日不见，如三月兮！</div>
+        <div class="stanza">彼采萧兮，一日不见，如三秋兮！</div>
+        <div class="stanza">彼采艾兮，一日不见，如三岁兮！</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">那人去采葛啊，一天不见面，好像隔了三个月！</div>
+        <div class="t-line">那人去采蒿啊，一天不见面，好像隔了三个秋天！</div>
+        <div class="t-line">那人去采艾啊，一天不见面，好像隔了三年！</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>汉语「一日三秋」的原典。短到只有三章，却把时间感觉拉成弹簧。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英谓：此诗写怀人，采葛、采萧、采艾皆日常劳作，未必实写对方去向，而是用采集之事起兴。三月→三秋→三岁，夸张递进，是口语里最成功的时间魔术。《毛序》以为「惧谗」，现代多读为恋歌或友情。成语「一日三秋」即从此出；王畿衰世里，人们把短别过成长久——故事简单，却最容易被每个人认领。
+      </div>
+    </div>
+
+    <!-- ===== 秋 ===== -->
+    <div class="season-banner" id="season-autumn">
+      <h3>秋 · 三首</h3>
+      <p>芦苇苍苍、蟋蟀在堂、零雨其濛——秋天是可望不可即、岁暮自警、征人还乡的季节。</p>
+    </div>
+
+    <div class="poem-card" id="s-jianjia">
+      <div class="head"><span class="no">秋·一</span><span class="name">《蒹葭》</span><span class="guo">秦风 · 风</span><span class="season-tag">秋水伊人</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">春秋秦国（陇右至关中西部）民歌。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">甘肃天水至陕西宝鸡、渭水上游一带。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">蒹葭苍苍，白露为霜——典型的深秋水边景象。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza"><ruby>蒹葭<rt>jiān jiā</rt></ruby>苍苍，白露为霜。所谓伊人，在水一方。</div>
+        <div class="stanza">溯洄从之，道阻且长。溯游从之，宛在水中央。</div>
+        <div class="stanza">蒹葭萋萋，白露未晞。所谓伊人，在水之湄。</div>
+        <div class="stanza">溯洄从之，道阻且<ruby>跻<rt>jī</rt></ruby>。溯游从之，宛在水中坻。</div>
+        <div class="stanza">蒹葭采采，白露未已。所谓伊人，在水之<ruby>涘<rt>sì</rt></ruby>。</div>
+        <div class="stanza">溯洄从之，道阻且右。溯游从之，宛在水中<ruby>沚<rt>zhǐ</rt></ruby>。</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">芦苇苍苍，白露结成霜。我心中的人啊，在水的那一方。逆流去寻，路险又长；顺流去寻，仿佛就在水中央。</div>
+        <div class="t-line">芦苇萋萋，白露还未干。我心中的人啊，在水的那一岸。逆流去寻，路险难登；顺流去寻，仿佛就在水中小洲。</div>
+        <div class="t-line">芦苇密集，白露还未完。我心中的人啊，在水的那一边。逆流去寻，路弯又偏；顺流去寻，仿佛就在水中沙滩。</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>可望而不可即的秋日追寻。秦风的苍凉气质，全在水雾与芦苇里。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英题解：企慕诗。伊人是谁——恋人、贤人、理想——诗不坐实，正因不坐实才成永恒象征。「宛在」二字是关键：好像在，又抓不住。秦地多水泽芦苇，白露为霜的物候把追求写成季节本身的寒意。《诗经》里极少如此空灵；后世「秋水伊人」成典，书法家、词人一再回响，故事不在情节，而在永远差一步的距离。
+      </div>
+    </div>
+
+    <div class="poem-card" id="s-xishuai">
+      <div class="head"><span class="no">秋·二</span><span class="name">《蟋蟀》</span><span class="guo">唐风 · 风</span><span class="season-tag">岁暮自警</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">春秋晋地（唐风即晋风）贵族自警之歌。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">山西南部翼城、曲沃、绛县一带（晋国故地）。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">「蟋蟀在堂」——秋虫入室，岁聿其莫。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza">蟋蟀在堂，岁聿其莫。今我不乐，日月其除。无已大康，职思其居。好乐无荒，良士<ruby>瞿瞿<rt>jù jù</rt></ruby>。</div>
+        <div class="stanza">蟋蟀在堂，岁聿其逝。今我不乐，日月其迈。无已大康，职思其外。好乐无荒，良士<ruby>蹶蹶<rt>guì guì</rt></ruby>。</div>
+        <div class="stanza">蟋蟀在堂，役车其休。今我不乐，日月其<ruby>慆<rt>tāo</rt></ruby>。无已大康，职思其忧。好乐无荒，良士休休。</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">蟋蟀进了堂屋，一年快到尽头。今天再不快乐，日月就要消逝。不要太过安乐，要想着本职。享乐而不荒废，贤士警觉谨慎。</div>
+        <div class="t-line">蟋蟀进了堂屋，一年即将过去。今天再不快乐，日月就要流走。不要太过安乐，要想着分外事。享乐而不荒废，贤士勤敏振作。</div>
+        <div class="t-line">蟋蟀进了堂屋，役车也停歇了。今天再不快乐，日月就要跑掉。不要太过安乐，要想着忧患。享乐而不荒废，贤士宽和安详。</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>秋天的自律独白：想行乐，又怕荒废——晋人性格里的拧巴与清醒。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英据《毛序》「刺晋僖公」过俭，诗意实为「及时行乐却不可荒」的中道。《唐风》地瘠民贫，故多忧深思远；蟋蟀入堂是华北秋冬物候，与《七月》「十月蟋蟀入我床下」同系。三章「瞿瞿／蹶蹶／休休」，自警语气一层松一层——故事不在事件，而在岁暮一个人坐在堂屋里跟自己谈判：乐，还是职思其忧？
+      </div>
+    </div>
+
+    <div class="poem-card" id="s-dongshan">
+      <div class="head"><span class="no">秋·三</span><span class="name">《东山》</span><span class="guo">豳风 · 风</span><span class="season-tag">征人还乡</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">西周初年；旧说周公东征归来士卒之作。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">士卒故乡在豳（陕西彬州），东征指向今山东一带。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">「我来自东，零雨其濛」——秋雨绵绵的归途。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza">我徂东山，<ruby>慆慆<rt>tāo tāo</rt></ruby>不归。我来自东，零雨其濛。我东曰归，我心西悲。制彼裳衣，勿士行枚。娟娟者蠋，烝在桑野。敦彼独宿，亦在车下。</div>
+        <div class="stanza">我徂东山，慆慆不归。我来自东，零雨其濛。果臝之实，亦施于宇。伊威在室，蠨蛸在户。町畽鹿场，熠耀宵行。不可畏也，伊可怀也。</div>
+        <div class="stanza">我徂东山，慆慆不归。我来自东，零雨其濛。鹳鸣于垤，妇叹于室。洒扫穹窒，我征聿至。有敦瓜苦，烝在栗薪。自我不见，于今三年。</div>
+        <div class="stanza">我徂东山，慆慆不归。我来自东，零雨其濛。仓庚于飞，熠耀其羽。之子于归，皇驳其马。亲结其缡，九十其仪。其新孔嘉，其旧如之何？</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">我去东山远征，久久不能回。我从东边归来，细雨濛濛。听说要西归，心已西飞悲。缝好便服，再不用衔枚夜行。山蚕娟娟，爬在桑野；孤身独睡，缩在车下。</div>
+        <div class="t-line">我去东山远征，久久不能回。我从东边归来，细雨濛濛。瓜蒌果实爬上了屋檐，潮虫满屋跑，喜蛛结在门上，田地成了鹿场，萤火夜里游。这些并不可怕，反教人更加思念。</div>
+        <div class="t-line">我去东山远征，久久不能回。我从东边归来，细雨濛濛。鹳鸟在蚁冢上叫，妻子在屋里叹息。扫房堵鼠洞，我这征人就要到了。团团的苦瓜，搁在栗柴上。自我不见，至今三年。</div>
+        <div class="t-line">我去东山远征，久久不能回。我从东边归来，细雨濛濛。黄莺展翅，羽毛闪闪。想起她出嫁时，花马驳杂，母亲为她结上佩巾，礼仪一件又一件。新婚诚然美满，久别的旧侣如今又当如何？</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>整部《诗经》最像短篇小说的还乡：雨、虫、荒园、妻叹、婚礼回忆，一层层叠回来。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英采周公东征之说（见《尚书大传》等），诗以士卒第一人称写成。四章皆以「零雨其濛」起，像蒙太奇的雨声轨。家园「伊威在室」的荒凉描写，是中国文学最早的「战后再见故乡」；末章突然闪回婚礼「亲结其缡」，问出「其旧如之何」——久别的夫妻还能否如新婚？秋雨里的这一问，比凯旋歌更动人。
+      </div>
+    </div>
+
+    <!-- ===== 冬 ===== -->
+    <div class="season-banner" id="season-winter">
+      <h3>冬 · 三首</h3>
+      <p>北风其凉、死生契阔、胡为乎中露——冬天是逃亡、戍役与寄居的季节；也可回看《采薇》末章「雨雪霏霏」，同属冬的情感谱系。</p>
+    </div>
+
+    <div class="poem-card" id="s-beifeng">
+      <div class="head"><span class="no">冬·一</span><span class="name">《北风》</span><span class="guo">邶风 · 风</span><span class="season-tag">风雨同行</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">春秋邶／卫；政治暴虐下的逃亡之歌。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">豫北安阳、鹤壁一带。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">北风其凉，雨雪其雱——寒风大雪中的出走。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza">北风其凉，雨雪其<ruby>雱<rt>páng</rt></ruby>。惠而好我，携手同行。其虚其邪？既亟只且！</div>
+        <div class="stanza">北风其<ruby>喈<rt>jiē</rt></ruby>，雨雪其霏。惠而好我，携手同归。其虚其邪？既亟只且！</div>
+        <div class="stanza">莫赤匪狐，莫黑匪乌。惠而好我，携手同车。其虚其邪？既亟只且！</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">北风冰冷，雪花猛扬。你仁爱又喜欢我，我们携手同行。还要慢慢磨蹭吗？事情紧急得很！</div>
+        <div class="t-line">北风呼啸，雪花霏霏。你仁爱又喜欢我，我们携手同归。还要慢慢磨蹭吗？事情紧急得很！</div>
+        <div class="t-line">不红的不是狐狸，不黑的不是乌鸦。你仁爱又喜欢我，我们携手同车。还要慢慢磨蹭吗？事情紧急得很！</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>暴政下的「打包走人」。风雪越紧，同行的邀约越急——冬日公路片。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英从《毛序》「刺虐」：卫国政治暴恶，百姓相携而去。「其虚其邪？既亟只且」是催促口语——还摆谱犹豫什么，赶紧走！赤狐黑乌，旧说象征小人当道。风雪意象与《采薇》「雨雪霏霏」同属冬，但《采薇》是归人，《北风》是逃人：一个冬天，两种命运。
+      </div>
+    </div>
+
+    <div class="poem-card" id="s-jigu">
+      <div class="head"><span class="no">冬·二</span><span class="name">《击鼓》</span><span class="guo">邶风 · 风</span><span class="season-tag">死生契阔</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">春秋卫国；州吁之乱前后的戍卒之怨（见《左传·隐公四年》）。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">卫都朝歌一带，远戍至陈、宋边境。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">「土国城漕」徭役与冬春征戍交织；誓言写在苦寒的兵营里。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza">击鼓其镗，踊跃用兵。土国城漕，我独南行。</div>
+        <div class="stanza">从孙子仲，平陈与宋。不我以归，忧心有忡。</div>
+        <div class="stanza">爰居爰处？爰丧其马？于以求之？于林之下。</div>
+        <div class="stanza">死生契阔，与子成说。执子之手，与子偕老。</div>
+        <div class="stanza">于嗟阔兮，不我活兮。于嗟洵兮，不我信兮。</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">战鼓咚咚响，兵士踊跃练兵。别人在国修城筑漕，独有我向南远征。</div>
+        <div class="t-line">跟随孙子仲，去平陈国与宋国。不让我归去，忧心忡忡。</div>
+        <div class="t-line">哪里歇？哪里住？马儿丢失何处寻？去哪里找？在那山林下。</div>
+        <div class="t-line">死生离合，我曾与你约定。握住你的手，与你白头到老。</div>
+        <div class="t-line">可叹如今隔绝，不让我们相聚。可叹诺言落空，不再信任守约。</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>「执子之手，与子偕老」原是征人回忆里的婚誓，不是婚礼现场的甜——读懂反差，才懂它的重量。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英引《左传》：卫州吁联合宋、陈、蔡伐郑，戍卒久役不得归。诗的高潮「死生契阔，与子成说。执子之手，与子偕老」——成说即成约，是出征前与妻子（或同伴）的誓词；下文立刻崩塌为「不我活兮」「不我信兮」。后世把「执子之手」写成婚礼金句，原典却是冬营里的失约之痛。故事性正在这撕裂：最暖的誓言，嵌在最冷的兵役里。
+      </div>
+    </div>
+
+    <div class="poem-card" id="s-shiwei">
+      <div class="head"><span class="no">冬·三</span><span class="name">《式微》</span><span class="guo">邶风 · 风</span><span class="season-tag">天寒劝归</span></div>
+      <div class="meta">
+        <div class="row"><span class="label">时代</span><span class="txt">春秋；旧说黎侯寓卫，其臣劝归。</span></div>
+        <div class="row"><span class="label">今地</span><span class="txt">黎国故地在今山西长治壶关一带，寓居卫地（豫北）。</span></div>
+        <div class="row"><span class="label">物候</span><span class="txt">「微君之躬，胡为乎泥中」——天黑露冷、泥水浸身的冬夜苦役。</span></div>
+      </div>
+      <div class="poem">
+        <div class="stanza"><ruby>式微<rt>shì wēi</rt></ruby>式微，胡不归？微君之故，胡为乎中露？</div>
+        <div class="stanza">式微式微，胡不归？微君之躬，胡为乎泥中？</div>
+      </div>
+      <div class="trans">
+        <span class="t-label">白话翻译</span>
+        <div class="t-line">天黑了天黑了，为什么还不回家？若非为了君主的事，怎会身沾霜露？</div>
+        <div class="t-line">天黑了天黑了，为什么还不回家？若非为了君主之身，怎会陷在泥中？</div>
+      </div>
+      <div class="exp"><b>穿越体验：</b>最短的劝归歌之一。天黑、露冷、泥中——冬天的服役压缩成八句。</div>
+      <div class="story"><span class="s-label">程译注 · 古典故事</span>
+        程俊英从《毛序》：黎侯为狄所逐，寓于卫，其臣劝之曰归。《尔雅》「式微式微」谓天暮；两章只换「中露／泥中」「之故／之躬」，却写出寄人篱下的屈辱与催归的急切。后人用「式微」指衰落，语源即此。冬夜泥露里问「胡不归」，与《采薇》归途雨雪、《北风》携手同行，构成邶风冬天的三连问：归？逃？还是继续熬？
+      </div>
+    </div>
+  </section>
+
 
   <section>
     <h2 class="section-title">地图视角：关中—中原菱形</h2>
     <div class="note">
-      <p>这十首串起来，正好画出一个"关中—中原"的菱形：</p>
+      <p>十首代表作与四季十二首串起来，正好画出一个更大的"关中—中原—晋秦"版图：</p>
       <ul>
         <li>西端：镐京（西安）——《鹿鸣》《丰年》的宗庙与宴饮</li>
-        <li>西北：豳地（彬州）——《七月》的农耕摇篮</li>
-        <li>东北：朝歌（淇县）、新郑（郑州）——《氓》《溱洧》的市井烟火</li>
-        <li>东南：周南（南阳—襄阳）——《关雎》《芣苢》的南方之境</li>
-        <li>中心：洛邑（洛阳）——《君子于役》的天子脚下</li>
+        <li>西北：豳地（彬州）——《七月》《东山》的农耕与还乡</li>
+        <li>西缘秦地：天水—宝鸡——《蒹葭》秋水伊人</li>
+        <li>东北：朝歌（淇县）、新郑（郑州）——《氓》《溱洧》《击鼓》《北风》的卫郑烟火</li>
+        <li>北缘晋唐：翼城—绛县——《蟋蟀》岁暮自警</li>
+        <li>东南：周南 / 召南（南阳—襄阳—汉中）——《关雎》《桃夭》《摽有梅》</li>
+        <li>中心：洛邑（洛阳）——《君子于役》《采葛》的天子脚下</li>
       </ul>
       <p>这是周代文明的核心圈，也是今天中国人口最密集、历史层累最厚的地带。按这个地图走一遍，等于用脚丈量《诗经》。</p>
     </div>
@@ -536,13 +959,20 @@
         <li><b>张定浩《诗的开端：如何理解〈诗经〉》</b>（上海文艺出版社，2026年6月）——诗人批评家逐字逐句讲"这些诗何以成为诗"，被书评界称为"如何读诗的方法论示范"。入选《文学报》2026年8月好书榜。</li>
       </ul>
       <h3>穿越顺序</h3>
-      <p>关雎→芣苢→静女（先尝恋爱与日常）→溱洧→氓（再看社交与悲剧）→君子于役→七月（沉入日子）→鹿鸣→采薇（上升到体制与战争）→丰年（收在精神层）。每首十分钟，十首读完，一个时代的生活轮廓就立起来了。</p>
+      <p>关雎→芣苢→静女（先尝恋爱与日常）→溱洧→氓（再看社交与悲剧）→君子于役→七月（沉入日子）→鹿鸣→采薇（上升到体制与战争）→丰年（收在精神层）。然后按春夏秋冬各读三首：桃夭／摽有梅／野有死麕 → 葛覃／伯兮／采葛 → 蒹葭／蟋蟀／东山 → 北风／击鼓／式微。故事栏对照程译注与《毛诗序》《左传》，可读出礼与情、役与归的张力。</p>
+      <h3>典故速查</h3>
+      <ul>
+        <li>《毛诗序》《毛传》《郑笺》——汉唐经学对题旨的经典叙述（美刺、后妃、刺虐等），宜与现代民俗读法对照。</li>
+        <li>《左传》《史记》——《击鼓》与州吁伐郑、《采薇》与猃狁，可从史书侧证。</li>
+        <li>《周礼·媒氏》《仪礼》——仲春会男女、乡饮酒歌《鹿鸣》，理解诗如何嵌入礼制现场。</li>
+        <li>方玉润《诗经原始》、朱熹《诗集传》——清人与宋人的文学性细读，常与程译注互补。</li>
+      </ul>
     </div>
   </section>
 
   <footer>
-    <p>整理于 2026 年 8 月 22 日 · 据群聊讨论整理成页</p>
-    <p style="margin-top:6px;">原文据通行本《诗经》，生僻字注音依据程俊英《诗经译注》；白话翻译为参考意译，供对照理解</p>
+    <p>整理于 2026 年 8 月 22 日 · 2026 年 9 月 20 日增补四季十二首与故事栏</p>
+    <p style="margin-top:6px;">原文据通行本《诗经》，生僻字注音与题解多依据程俊英《诗经译注》；故事栏综合《毛诗序》《左传》《周礼》《仪礼》及方玉润、朱熹等说，白话翻译为参考意译，供对照理解</p>
   </footer>
 
 </div>
