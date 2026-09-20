@@ -1,0 +1,57 @@
+name: Assemble uploaded HTML
+on:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: Branch to write assembled files into
+        required: true
+        type: string
+      commit_message:
+        description: Commit message
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_branch }}
+      - name: Assemble from base64 chunks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import base64, hashlib, json, pathlib
+          root = pathlib.Path(".")
+          chunk_dir = root / "_b64_chunks"
+          manifest = json.loads((chunk_dir / "manifest.json").read_text())
+          for name, meta in manifest.items():
+              parts = []
+              for i in range(meta["parts"]):
+                  p = chunk_dir / f"{name}.b64.{i:02d}"
+                  parts.append(p.read_text().strip())
+              data = base64.b64decode("".join(parts))
+              digest = hashlib.sha256(data).hexdigest()
+              if digest != meta["sha256"]:
+                  raise SystemExit(f"hash mismatch for {name}: {digest} != {meta['sha256']}")
+              (root / name).write_bytes(data)
+              print(f"wrote {name} {len(data)} bytes sha256={digest}")
+          PY
+      - name: Commit and push assembled files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "wangdwn"
+          git config user.email "wangdwn@users.noreply.github.com"
+          git add shijing.html index.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "${{ inputs.commit_message }}"
+          git push origin "HEAD:${{ inputs.target_branch }}"
