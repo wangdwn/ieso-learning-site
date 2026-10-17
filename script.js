@@ -3408,11 +3408,18 @@ function openTutorialModal(title, category) {
       </div>
     </div>
 
-    <div style="display:flex;gap:12px;">
-      <a href="https://www.icourse163.org" target="_blank" class="btn btn-primary" style="flex:1;justify-content:center;">
-        <i class="fas fa-external-link-alt"></i> 前往学习
+    <div style="background:var(--gray-50);padding:16px 20px;border-radius:12px;margin-bottom:24px;font-size:14px;line-height:1.7;color:var(--text-secondary);">
+      <strong style="color:var(--text-primary);">怎么用这份大纲</strong>：先按章节自查掌握程度，再去题库按学科刷题；外链教材与官网入口在「学习资源」。
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <a href="#quiz" class="btn btn-primary" style="flex:1;min-width:140px;justify-content:center;" onclick="closeModal(); setTimeout(()=>{ const el=document.getElementById('quiz')||document.querySelector('.quiz-section'); if(el) el.scrollIntoView({behavior:'smooth'}); }, 50);">
+        <i class="fas fa-pen"></i> 去刷题库
       </a>
-      <button onclick="closeModal()" class="btn btn-outline" style="flex:1;justify-content:center;">关闭</button>
+      <a href="#resources" class="btn btn-outline" style="flex:1;min-width:140px;justify-content:center;" onclick="closeModal(); setTimeout(()=>{ const el=document.getElementById('resources')||document.querySelector('.resources-section'); if(el) el.scrollIntoView({behavior:'smooth'}); }, 50);">
+        <i class="fas fa-book-open"></i> 学习资源
+      </a>
+      <button onclick="closeModal()" class="btn btn-outline" style="flex:1;min-width:100px;justify-content:center;">关闭</button>
     </div>
   `;
 
