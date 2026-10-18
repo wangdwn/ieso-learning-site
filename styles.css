@@ -125,23 +125,6 @@ body.menu-open { overflow: hidden; }
   color: var(--primary);
   background: rgba(79,70,229,0.08);
 }
-.nav-link-shijing {
-  color: #8c2f2f;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.nav-link-shijing:hover, .nav-link-shijing.active {
-  color: #8c2f2f;
-  background: rgba(140,47,47,0.1);
-}
-[data-theme="dark"] .nav-link-shijing {
-  color: #e8c48a;
-}
-[data-theme="dark"] .nav-link-shijing:hover,
-[data-theme="dark"] .nav-link-shijing.active {
-  color: #e8c48a;
-  background: rgba(232,196,138,0.12);
-}
 @media (max-width: 1100px) and (min-width: 769px) {
   .nav-link { padding: 8px 10px; font-size: 13px; }
   .nav-list { gap: 2px; }
@@ -1782,80 +1765,6 @@ body.menu-open { overflow: hidden; }
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
-}
-
-/* ====== 诗经拓展阅读 ====== */
-.shijing-promo {
-  padding: 40px 0 8px;
-  background: var(--bg-body);
-}
-.shijing-promo-card {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 22px 28px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  text-decoration: none;
-  color: inherit;
-  transition: var(--transition);
-}
-.shijing-promo-card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-light);
-  transform: translateY(-2px);
-}
-.shijing-promo-tag {
-  flex-shrink: 0;
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: rgba(140, 47, 47, 0.1);
-  color: #8c2f2f;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-[data-theme="dark"] .shijing-promo-tag {
-  background: rgba(248, 180, 180, 0.15);
-  color: #f8b4b4;
-}
-.shijing-promo-copy {
-  flex: 1;
-  min-width: 0;
-}
-.shijing-promo-copy h2 {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-primary);
-  margin-bottom: 4px;
-}
-.shijing-promo-copy p {
-  font-size: 14px;
-  color: var(--text-secondary);
-}
-.shijing-promo-go {
-  flex-shrink: 0;
-  font-weight: 700;
-  color: var(--primary);
-}
-.btn-shijing-apple {
-  background: linear-gradient(135deg, #8c2f2f, #a8543f);
-  color: #fff8ec;
-  box-shadow: 0 4px 20px rgba(140, 47, 47, 0.4);
-}
-.btn-shijing-apple:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(140, 47, 47, 0.5);
-}
-@media (max-width: 680px) {
-  .shijing-promo-card {
-    flex-wrap: wrap;
-    padding: 18px 20px;
-  }
-  .shijing-promo-go { width: 100%; }
 }
 
 /* ====== 四大学科展示区 ====== */
